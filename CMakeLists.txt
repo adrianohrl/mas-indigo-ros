@@ -37,11 +37,13 @@ include_directories(
 add_executable(system_manager_node 
 	src/system_manager_node.cpp
 	src/SystemManagerNode.cpp
+	src/tasks/Skill.cpp
+	src/tasks/Resource.cpp
 	)
 
 add_dependencies(system_manager_node 
 	mrta_vc_gen_cpp
-	${mrta_vc_EXPORTED_TARGETS}
+	${catkin_EXPORTED_TARGETS}
 	)
 
 target_link_libraries(system_manager_node
@@ -55,7 +57,7 @@ add_executable(system_user_interface_node
 
 add_dependencies(system_user_interface_node 
 	mrta_vc_gen_cpp
-	${mrta_vc_EXPORTED_TARGETS}
+	${catkin_EXPORTED_TARGETS}
 	)
 
 target_link_libraries(system_user_interface_node
@@ -69,7 +71,7 @@ add_executable(system_robot_interface_node
 
 add_dependencies(system_robot_interface_node 
 	mrta_vc_gen_cpp
-	${mrta_vc_EXPORTED_TARGETS}
+	${catkin_EXPORTED_TARGETS}
 	)
 
 target_link_libraries(system_robot_interface_node
