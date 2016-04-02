@@ -1,30 +1,31 @@
 /**
- *  SystemManagerNode.h
+ *  SpeechAnalyserNode.h
  *
  *  Version: 0.0.0.0
- *  Created on: 26/03/2016
+ *  Created on: 01/04/2016
  *  Modified on: *********
- *  Author: Adriano Henrique Rossette Leite (adrianohrl@gmail.com)
+ *  Authors: Adriano Henrique Rossette Leite (adrianohrl@gmail.com)
+ *           Luís Victor Pessiqueli Bonin (luis-bonin@hotmail.com)
  *  Maintainer: Expertinos UNIFEI (expertinos.unifei@gmail.com)
  */
 
-#ifndef SYSTEM_MANAGER_NODE_H_
-#define SYSTEM_MANAGER_NODE_H_
+#ifndef SPEECH_ANALYSER_NODE_H_
+#define SPEECH_ANALYSER_NODE_H_
 
 #include <ros/ros.h>
 
 namespace mrta_vc 
 {
 
-	class SystemManagerNode 
+	class SpeechAnalyserNode 
 	{
 
 	public:
 
 		/** Construtors */
-		SystemManagerNode(ros::NodeHandle nh);
+		SpeechAnalyserNode(ros::NodeHandle nh);
 		/** Destrutor */
-		~SystemManagerNode();
+		~SpeechAnalyserNode();
 
 		/** métodos publicos relacionados ao gerenciamento do nó */
 		void spin();
@@ -38,4 +39,4 @@ namespace mrta_vc
 
 }
 
-#endif /* SYSTEM_MANAGER_NODE_H_ */
+#endif /* SPEECH_ANALYSER_NODE_H_ */

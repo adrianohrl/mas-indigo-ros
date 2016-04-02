@@ -3,17 +3,18 @@
  *
  *  Version: 1.0.0.0
  *  Created on: 04/08/2015
- *  Modified on: **
- *  Author: Heverton Machado Soares (sm.heverton@gmail.com)
+ *  Modified on: *********
+ *  Authors: Adriano Henrique Rossette Leite (adrianohrl@unifei.edu.br)
+ *           Heverton Machado Soares (sm.heverton@gmail.com)
  *  Maintainer: Expertinos UNIFEI (expertinos.unifei@gmail.com)
  */
 
-#include "br/edu/unifei/expertinos/mrta_vc/tasks/Resource.h"
+#include "unifei/expertinos/mrta_vc/tasks/Resource.h"
 
 /**
  *
  */
-br::edu::unifei::expertinos::mrta_vc::tasks::Resource::Resource(int id, std::string name, std::string description) 
+unifei::expertinos::mrta_vc::tasks::Resource::Resource(int id, std::string name, std::string description) 
 {
 	id_ = id;
 	name_ = name;
@@ -23,7 +24,7 @@ br::edu::unifei::expertinos::mrta_vc::tasks::Resource::Resource(int id, std::str
 /**
  *
  */
-br::edu::unifei::expertinos::mrta_vc::tasks::Resource::Resource(const ::mrta_vc::Resource::ConstPtr& resource_msg) 
+unifei::expertinos::mrta_vc::tasks::Resource::Resource(const ::mrta_vc::Resource::ConstPtr& resource_msg) 
 {
 	id_ = resource_msg->id;	
 	name_ = resource_msg->name;
@@ -33,7 +34,7 @@ br::edu::unifei::expertinos::mrta_vc::tasks::Resource::Resource(const ::mrta_vc:
 /**
  *
  */
-br::edu::unifei::expertinos::mrta_vc::tasks::Resource::Resource(::mrta_vc::Resource resource_msg) 
+unifei::expertinos::mrta_vc::tasks::Resource::Resource(::mrta_vc::Resource resource_msg) 
 {
 	id_ = resource_msg.id;	
 	name_ = resource_msg.name;
@@ -43,14 +44,14 @@ br::edu::unifei::expertinos::mrta_vc::tasks::Resource::Resource(::mrta_vc::Resou
 /**
  *
  */
-br::edu::unifei::expertinos::mrta_vc::tasks::Resource::~Resource() 
+unifei::expertinos::mrta_vc::tasks::Resource::~Resource() 
 {
 }
 
 /**
  *
  */
-int br::edu::unifei::expertinos::mrta_vc::tasks::Resource::getId() 
+int unifei::expertinos::mrta_vc::tasks::Resource::getId() 
 {
 	return id_;
 }
@@ -58,7 +59,7 @@ int br::edu::unifei::expertinos::mrta_vc::tasks::Resource::getId()
 /**
  *
  */
-std::string br::edu::unifei::expertinos::mrta_vc::tasks::Resource::getName() 
+std::string unifei::expertinos::mrta_vc::tasks::Resource::getName() 
 {
 	return name_;
 }
@@ -66,7 +67,7 @@ std::string br::edu::unifei::expertinos::mrta_vc::tasks::Resource::getName()
 /**
  *
  */
-std::string br::edu::unifei::expertinos::mrta_vc::tasks::Resource::getDescription() 
+std::string unifei::expertinos::mrta_vc::tasks::Resource::getDescription() 
 {
 	return description_;
 }
@@ -74,7 +75,7 @@ std::string br::edu::unifei::expertinos::mrta_vc::tasks::Resource::getDescriptio
 /**
  *
  */
-void br::edu::unifei::expertinos::mrta_vc::tasks::Resource::setDescription(std::string description) 
+void unifei::expertinos::mrta_vc::tasks::Resource::setDescription(std::string description) 
 {
 	description_ = description;
 }
@@ -82,7 +83,7 @@ void br::edu::unifei::expertinos::mrta_vc::tasks::Resource::setDescription(std::
 /**
  *
  */
-bool br::edu::unifei::expertinos::mrta_vc::tasks::Resource::equals(Resource resource) 
+bool unifei::expertinos::mrta_vc::tasks::Resource::equals(Resource resource) 
 {
 	return id_ == resource.id_;
 }
@@ -90,7 +91,7 @@ bool br::edu::unifei::expertinos::mrta_vc::tasks::Resource::equals(Resource reso
 /**
  *
  */
-::mrta_vc::Resource br::edu::unifei::expertinos::mrta_vc::tasks::Resource::toMsg() 
+::mrta_vc::Resource unifei::expertinos::mrta_vc::tasks::Resource::toMsg() 
 {
 	::mrta_vc::Resource resource_msg;
 	resource_msg.id = id_;
@@ -102,7 +103,7 @@ bool br::edu::unifei::expertinos::mrta_vc::tasks::Resource::equals(Resource reso
 /**
  *
  */
-bool br::edu::unifei::expertinos::mrta_vc::tasks::Resource::operator==(const Resource& resource)
+bool unifei::expertinos::mrta_vc::tasks::Resource::operator==(const Resource& resource)
 {
 	return id_ == resource.id_;
 }
@@ -110,7 +111,7 @@ bool br::edu::unifei::expertinos::mrta_vc::tasks::Resource::operator==(const Res
 /**
  *
  */
-bool br::edu::unifei::expertinos::mrta_vc::tasks::Resource::operator!=(const Resource& resource) 
+bool unifei::expertinos::mrta_vc::tasks::Resource::operator!=(const Resource& resource) 
 {
 	return id_ != resource.id_;
 }

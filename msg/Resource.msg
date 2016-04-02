@@ -1,3 +1,3 @@
-uint8 id
+uint32 id
 string name
 string description
