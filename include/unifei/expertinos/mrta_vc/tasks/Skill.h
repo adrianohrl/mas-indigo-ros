@@ -14,6 +14,7 @@
 
 #include "Resource.h"
 #include "mrta_vc/Skill.h"
+#include "unifei/expertinos/mrta_vc/tasks/SkillLevels.h"
 
 namespace unifei 
 {
@@ -27,14 +28,14 @@ namespace unifei
 				{
 
 				public:
-					Skill(Resource resource, int level = 0);
+					Skill(Resource resource, SkillLevelEnum level = SkillLevels::getDefault());
 					Skill(const ::mrta_vc::Skill::ConstPtr& skill_msg);
 					Skill(::mrta_vc::Skill skill_msg);		
 					~Skill();
 
-					int getLevel();
+					SkillLevelEnum getLevel();
 					Resource getResource();
-					void setLevel(int level);
+					void setLevel(SkillLevelEnum level);
 					bool isSufficient(Skill skill);
 					int compareTo(Skill skill);
 					::mrta_vc::Skill toMsg();
@@ -44,7 +45,7 @@ namespace unifei
 
 				private:
 					Resource resource_;
-					int level_;
+					SkillLevelEnum level_;
 				};
 			}
 		}
