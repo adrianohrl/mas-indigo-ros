@@ -39,8 +39,20 @@ include_directories(
 add_executable(system_manager_node 
 	src/system_manager_node.cpp
 	src/SystemManagerNode.cpp
+	src/tasks/TaskPriorities.cpp
+	src/tasks/TaskStates.cpp
+	src/tasks/TaskSatisfactions.cpp
 	src/tasks/Skill.cpp
+	src/tasks/SkillLevels.cpp
 	src/tasks/Resource.cpp
+	src/places/Location.cpp
+	src/places/Place.cpp
+	src/places/Campus.cpp
+	src/places/ExternalArea.cpp
+	src/places/Building.cpp
+	src/places/Floor.cpp
+	src/places/Office.cpp
+	src/places/Desk.cpp
 	)
 
 add_dependencies(system_manager_node 

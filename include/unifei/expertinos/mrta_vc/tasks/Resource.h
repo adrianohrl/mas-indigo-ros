@@ -45,6 +45,7 @@ namespace unifei
 					int id_;
 					std::string name_;
 					std::string description_;	
+
 				};
 			}
 		}
