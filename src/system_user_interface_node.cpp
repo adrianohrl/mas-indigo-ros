@@ -3,7 +3,7 @@
  *
  *  Version: 0.0.0.0
  *  Created on: 26/03/2016
- *  Modified on: *********
+ *  Modified on: 26/03/2016
  *  Author: Adriano Henrique Rossette Leite (adrianohrl@gmail.com)
  *  Maintainer: Expertinos UNIFEI (expertinos.unifei@gmail.com)
  */

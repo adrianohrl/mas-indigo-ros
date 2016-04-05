@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="_name" default="adrianohrl"/>
+	<group ns="$(arg _name)">
+		<node name="system_user_interface_node" pkg="mrta_vc" type="system_user_interface_node" output="screen">
+		</node>
+		<node name="task_builder_node" pkg="mrta_vc" type="task_builder_node" output="screen">
+		</node>
+		<node name="speech_analyser_node" pkg="mrta_vc" type="speech_analyser_node" output="screen">
+		</node>
+		<!--node name="speech_recognizer_node" pkg="?????" type="??????" output="screen">
+		</node-->
+	</group>
+</launch>

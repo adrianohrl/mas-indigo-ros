@@ -3,17 +3,18 @@
  *
  *  Version: 1.0.0.0
  *  Created on: 04/08/2015
- *  Modified on: **
- *  Author: Heverton Machado Soares (sm.heverton@gmail.com)
+ *  Modified on: *********
+ *  Authors: Adriano Henrique Rossette Leite (adrianohrl@unifei.edu.br)
+ *           Heverton Machado Soares (sm.heverton@gmail.com)
  *  Maintainer: Expertinos UNIFEI (expertinos.unifei@gmail.com)
  */
 
-#include "br/edu/unifei/expertinos/mrta_vc/tasks/Skill.h"
+#include "unifei/expertinos/mrta_vc/tasks/Skill.h"
 
 /**
  *
  */
-br::edu::unifei::expertinos::mrta_vc::tasks::Skill::Skill(Resource resource, int level) : resource_(resource)
+unifei::expertinos::mrta_vc::tasks::Skill::Skill(Resource resource, int level) : resource_(resource)
 {	
 	level_ = level;
 }
@@ -21,7 +22,7 @@ br::edu::unifei::expertinos::mrta_vc::tasks::Skill::Skill(Resource resource, int
 /**
  *
  */
-br::edu::unifei::expertinos::mrta_vc::tasks::Skill::Skill(const ::mrta_vc::Skill::ConstPtr& skill_msg) : resource_(skill_msg->resource)
+unifei::expertinos::mrta_vc::tasks::Skill::Skill(const ::mrta_vc::Skill::ConstPtr& skill_msg) : resource_(skill_msg->resource)
 {	
 	level_ = skill_msg->level;
 }
@@ -29,7 +30,7 @@ br::edu::unifei::expertinos::mrta_vc::tasks::Skill::Skill(const ::mrta_vc::Skill
 /**
  *
  */
-br::edu::unifei::expertinos::mrta_vc::tasks::Skill::Skill(::mrta_vc::Skill skill_msg) : resource_(skill_msg.resource)
+unifei::expertinos::mrta_vc::tasks::Skill::Skill(::mrta_vc::Skill skill_msg) : resource_(skill_msg.resource)
 {	
 	level_ = skill_msg.level;
 }
@@ -37,14 +38,14 @@ br::edu::unifei::expertinos::mrta_vc::tasks::Skill::Skill(::mrta_vc::Skill skill
 /**
  *
  */
-br::edu::unifei::expertinos::mrta_vc::tasks::Skill::~Skill() 
+unifei::expertinos::mrta_vc::tasks::Skill::~Skill() 
 {
 }
 
 /**
  *
  */
-int br::edu::unifei::expertinos::mrta_vc::tasks::Skill::getLevel() 
+int unifei::expertinos::mrta_vc::tasks::Skill::getLevel() 
 {
 	return level_;
 }
@@ -52,7 +53,7 @@ int br::edu::unifei::expertinos::mrta_vc::tasks::Skill::getLevel()
 /**
  *
  */
-br::edu::unifei::expertinos::mrta_vc::tasks::Resource br::edu::unifei::expertinos::mrta_vc::tasks::Skill::getResource() 
+unifei::expertinos::mrta_vc::tasks::Resource unifei::expertinos::mrta_vc::tasks::Skill::getResource() 
 {
 	return resource_;
 }
@@ -60,7 +61,7 @@ br::edu::unifei::expertinos::mrta_vc::tasks::Resource br::edu::unifei::expertino
 /**
  *
  */
-void br::edu::unifei::expertinos::mrta_vc::tasks::Skill::setLevel(int level) 
+void unifei::expertinos::mrta_vc::tasks::Skill::setLevel(int level) 
 {
 	level_ = level;
 }
@@ -68,7 +69,7 @@ void br::edu::unifei::expertinos::mrta_vc::tasks::Skill::setLevel(int level)
 /**
  *
  */
-bool br::edu::unifei::expertinos::mrta_vc::tasks::Skill::isSufficient(Skill skill) 
+bool unifei::expertinos::mrta_vc::tasks::Skill::isSufficient(Skill skill) 
 {
 	return resource_.equals(skill.resource_) && level_ <= skill.level_;	
 }
@@ -76,7 +77,7 @@ bool br::edu::unifei::expertinos::mrta_vc::tasks::Skill::isSufficient(Skill skil
 /**
  * implementar
  */
-int br::edu::unifei::expertinos::mrta_vc::tasks::Skill::compareTo(Skill skill) 
+int unifei::expertinos::mrta_vc::tasks::Skill::compareTo(Skill skill) 
 {
 	return 0;
 }
@@ -84,7 +85,7 @@ int br::edu::unifei::expertinos::mrta_vc::tasks::Skill::compareTo(Skill skill)
 /**
  *
  */
-::mrta_vc::Skill br::edu::unifei::expertinos::mrta_vc::tasks::Skill::toMsg() 
+::mrta_vc::Skill unifei::expertinos::mrta_vc::tasks::Skill::toMsg() 
 {
 	::mrta_vc::Skill skill_msg;
 	skill_msg.resource = resource_.toMsg();
@@ -95,7 +96,7 @@ int br::edu::unifei::expertinos::mrta_vc::tasks::Skill::compareTo(Skill skill)
 /**
  *
  */
-bool br::edu::unifei::expertinos::mrta_vc::tasks::Skill::operator==(const Skill& skill)
+bool unifei::expertinos::mrta_vc::tasks::Skill::operator==(const Skill& skill)
 {
 	return resource_ == skill.resource_;
 }
@@ -103,7 +104,7 @@ bool br::edu::unifei::expertinos::mrta_vc::tasks::Skill::operator==(const Skill&
 /**
  *
  */
-bool br::edu::unifei::expertinos::mrta_vc::tasks::Skill::operator!=(const Skill& skill) 
+bool unifei::expertinos::mrta_vc::tasks::Skill::operator!=(const Skill& skill) 
 {
 	return resource_ != skill.resource_;
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="_name" default="robotino" />
+	<include file="$(find mrta_vc)/launch/robot.launch">
+		<arg name="name" value="$(arg _name)"/>
+	</include>	
+	<arg name="_port" default="192.168.0.171:12080"/>
+	<group ns="$(arg _name)">
+		<include file="$(find robotino_node)/launch/robotino_node.launch">
+			<arg name="hostname" value="$(arg _port)"/>
+		</include>	
+		<include file="$(find robotino_navigation)/launch/navigation.launch">
+			<arg name="lro" value="$(find mrta_vc)/map/lro.yaml"/>
+		</include>	
+	</group>
+</launch>

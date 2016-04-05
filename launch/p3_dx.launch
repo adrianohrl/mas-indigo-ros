@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="_name" default="p3_dx" />
+	<include file="$(find mrta_vc)/launch/robot.launch">
+		<arg name="name" value="$(arg _name)" />
+	</include>
+	<arg name="_port" default="/dev/ttyS0"/>
+	<group ns="$(arg _name)">
+		<node name="RosAria" pkg="rosaria" type="RosAria" output="screen">
+			<param name="_port" value="$(arg _port)"/>
+		</node>
+	</group>
+</launch>

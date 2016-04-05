@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="_name" default="p3_dx"/>
+	<group ns="$(arg _name)">
+		<node name="system_robot_interface_node" pkg="mrta_vc" type="system_robot_interface_node" output="screen">
+		</node>
+	</group>
+</launch>

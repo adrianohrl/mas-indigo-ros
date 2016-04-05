@@ -11,16 +11,18 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
 	FILES
 	Agent.msg
+	Allocation.msg
 	Location.msg
+	Place.msg
 	Resource.msg
 	Skill.msg
 	Task.msg
-	TaskAllocation.msg
 	)
 
 generate_messages(
 	DEPENDENCIES
 	geometry_msgs
+	mrta_vc
 	std_msgs
 	)
 
@@ -43,7 +45,7 @@ add_executable(system_manager_node
 
 add_dependencies(system_manager_node 
 	mrta_vc_gen_cpp
-	${catkin_EXPORTED_TARGETS}
+	${mrta_vc_EXPORTED_TARGETS}
 	)
 
 target_link_libraries(system_manager_node
@@ -57,7 +59,7 @@ add_executable(system_user_interface_node
 
 add_dependencies(system_user_interface_node 
 	mrta_vc_gen_cpp
-	${catkin_EXPORTED_TARGETS}
+	${mrta_vc_EXPORTED_TARGETS}
 	)
 
 target_link_libraries(system_user_interface_node
@@ -71,9 +73,51 @@ add_executable(system_robot_interface_node
 
 add_dependencies(system_robot_interface_node 
 	mrta_vc_gen_cpp
-	${catkin_EXPORTED_TARGETS}
+	${mrta_vc_EXPORTED_TARGETS}
 	)
 
 target_link_libraries(system_robot_interface_node
+	${catkin_LIBRARIES}
+	)
+
+add_executable(system_database_interface_node 
+	src/system_database_interface_node.cpp
+	src/SystemDatabaseInterfaceNode.cpp
+	)
+
+add_dependencies(system_database_interface_node 
+	mrta_vc_gen_cpp
+	${mrta_vc_EXPORTED_TARGETS}
+	)
+
+target_link_libraries(system_database_interface_node
+	${catkin_LIBRARIES}
+	)
+
+add_executable(task_builder_node 
+	src/task_builder_node.cpp
+	src/TaskBuilderNode.cpp
+	)
+
+add_dependencies(task_builder_node 
+	mrta_vc_gen_cpp
+	${mrta_vc_EXPORTED_TARGETS}
+	)
+
+target_link_libraries(task_builder_node
+	${catkin_LIBRARIES}
+	)
+
+add_executable(speech_analyser_node 
+	src/speech_analyser_node.cpp
+	src/SpeechAnalyserNode.cpp
+	)
+
+add_dependencies(speech_analyser_node 
+	mrta_vc_gen_cpp
+	${mrta_vc_EXPORTED_TARGETS}
+	)
+
+target_link_libraries(speech_analyser_node
 	${catkin_LIBRARIES}
 	)
