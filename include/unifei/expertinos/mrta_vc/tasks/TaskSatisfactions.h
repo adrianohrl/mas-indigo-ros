@@ -22,23 +22,28 @@ namespace unifei
 		{
 			namespace tasks
 			{
-				typedef enum 
+				namespace satisfactions
 				{
-					VERY_DISSATISFIED,
-					HORRIBLE,
-					DISSATISFIED,
-					VERY_BAD,
-					SOMEWHAT_DISSATISFIED,
-					BAD,
-					NEITHER_DISSATISFIED_NOR_SATISFIED,
-					FAIR_ENOUGH,
-					SOMEWHAT_SATISFIED,
-					GOOD,
-					SATISFIED,
-					VERY_GOOD,
-					VERY_SATISFIED,
-					EXCELLENT
-				} TaskSatisfactionEnum;
+					typedef enum 
+					{
+						VERY_DISSATISFIED,
+						HORRIBLE,
+						DISSATISFIED,
+						VERY_BAD,
+						SOMEWHAT_DISSATISFIED,
+						BAD,
+						NEITHER_DISSATISFIED_NOR_SATISFIED,
+						FAIR_ENOUGH,
+						SOMEWHAT_SATISFIED,
+						GOOD,
+						SATISFIED,
+						VERY_GOOD,
+						VERY_SATISFIED,
+						EXCELLENT
+					} TaskSatisfactionEnum;
+				}
+				
+				typedef satisfactions::TaskSatisfactionEnum TaskSatisfactionEnum;
 
 				class TaskSatisfactions
 				{

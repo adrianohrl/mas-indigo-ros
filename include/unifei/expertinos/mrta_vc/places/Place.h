@@ -16,13 +16,14 @@
 #include "mrta_vc/Place.h"
 #include "unifei/expertinos/mrta_vc/places/Location.h"
 
-#define NONE -1
-#define CAMPUS 0
-#define EXTERNAL_AREA 1
-#define BUILDING 2
-#define FLOOR 3
-#define OFFICE 4
-#define DESK 5
+#define NON_PLACE -1
+#define PLACE 0
+#define CAMPUS 1
+#define EXTERNAL_AREA 2
+#define BUILDING 3
+#define FLOOR 4
+#define OFFICE 5
+#define DESK 6
 
 namespace unifei 
 {
@@ -36,7 +37,7 @@ namespace unifei
 				{
 
 				public:
-					Place(int id, std::string name, geometry_msgs::Polygon boundary, double x, double y, double theta = 0);
+					Place(int id, std::string name, geometry_msgs::Polygon boundary, double x = 0, double y = 0, double theta = 0);
 					Place(int id, std::string name, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg);
 					Place(const ::mrta_vc::Place::ConstPtr& place_msg);
 					Place(::mrta_vc::Place place_msg);		
@@ -46,12 +47,14 @@ namespace unifei
 					std::string getName();
 					geometry_msgs::Polygon getBoundary();
 					void setBoundary(geometry_msgs::Polygon boundary);
-					virtual ::mrta_vc::Place toMsg();
+					::mrta_vc::Place toMsg();
+					bool equals(Place place);
 					bool operator==(const Place& place);
 					bool operator!=(const Place& place);
+					void operator=(const Place& place);
 
 				protected:
-					virtual int getType() = 0;
+					int getType();
 
 				private:
 					int id_;

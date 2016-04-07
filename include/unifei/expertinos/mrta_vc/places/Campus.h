@@ -31,7 +31,7 @@ namespace unifei
 					Campus(const ::mrta_vc::Place::ConstPtr& place_msg);
 					Campus(::mrta_vc::Place campus_msg);
 					~Campus();
-
+					
 				protected:
 					int getType();
 

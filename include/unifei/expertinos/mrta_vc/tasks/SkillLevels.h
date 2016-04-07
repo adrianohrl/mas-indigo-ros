@@ -22,14 +22,19 @@ namespace unifei
 		{
 			namespace tasks
 			{
-				typedef enum 
+				namespace levels
 				{
-					NONE,
-					LOW,
-					MODERATE,
-					HIGH,
-					RESOURCEFUL,
-				} SkillLevelEnum;
+					typedef enum 
+					{
+						NONE,
+						LOW,
+						MODERATE,
+						HIGH,
+						RESOURCEFUL,
+					} SkillLevelEnum;
+				}
+				
+				typedef levels::SkillLevelEnum SkillLevelEnum;
 
 				class SkillLevels
 				{

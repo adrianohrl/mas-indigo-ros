@@ -22,14 +22,19 @@ namespace unifei
 		{
 			namespace tasks
 			{
-				typedef enum 
+				namespace priorities
 				{
-					LOW,
-					NORMAL,
-					IMPORTANT,
-					CRITICAL
+					typedef enum 
+					{
+						LOW,
+						NORMAL,
+						IMPORTANT,
+						CRITICAL
 
-				} TaskPriorityEnum;
+					} TaskPriorityEnum;
+				}
+				
+				typedef priorities::TaskPriorityEnum TaskPriorityEnum;
 
 				class TaskPriorities
 				{

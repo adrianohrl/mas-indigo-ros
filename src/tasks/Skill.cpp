@@ -67,22 +67,6 @@ void unifei::expertinos::mrta_vc::tasks::Skill::setLevel(SkillLevelEnum level)
 }
 
 /**
- * TESTAR
- */
-bool unifei::expertinos::mrta_vc::tasks::Skill::isSufficient(Skill skill) 
-{ 
-	return resource_.equals(skill.resource_) && unifei::expertinos::mrta_vc::tasks::SkillLevels::toCode(level_) <= unifei::expertinos::mrta_vc::tasks::SkillLevels::toCode(skill.level_);	
-}
-
-/**
- * IMPLEMENTAR
- */
-int unifei::expertinos::mrta_vc::tasks::Skill::compareTo(Skill skill) 
-{
-	return 0;
-}
-
-/**
  *
  */
 ::mrta_vc::Skill unifei::expertinos::mrta_vc::tasks::Skill::toMsg() 
@@ -91,6 +75,30 @@ int unifei::expertinos::mrta_vc::tasks::Skill::compareTo(Skill skill)
 	skill_msg.resource = resource_.toMsg();
 	skill_msg.level = unifei::expertinos::mrta_vc::tasks::SkillLevels::toCode(level_);
 	return skill_msg;
+}
+
+/**
+ * TESTAR
+ */
+bool unifei::expertinos::mrta_vc::tasks::Skill::isSufficient(Skill skill) 
+{ 
+	return equals(skill) && unifei::expertinos::mrta_vc::tasks::SkillLevels::toCode(level_) <= unifei::expertinos::mrta_vc::tasks::SkillLevels::toCode(skill.level_);	
+}
+
+/**
+ * 
+ */
+bool unifei::expertinos::mrta_vc::tasks::Skill::equals(Skill skill) 
+{ 
+	return resource_.equals(skill.resource_);	
+}
+
+/**
+ * IMPLEMENTAR
+ */
+int unifei::expertinos::mrta_vc::tasks::Skill::compareTo(Skill skill) 
+{
+	return 0;
 }
 
 /**
@@ -107,4 +115,13 @@ bool unifei::expertinos::mrta_vc::tasks::Skill::operator==(const Skill& skill)
 bool unifei::expertinos::mrta_vc::tasks::Skill::operator!=(const Skill& skill) 
 {
 	return resource_ != skill.resource_;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::tasks::Skill::operator=(const Skill &skill)
+{ 
+	resource_ = skill.resource_;
+	level_ = skill.level_;
 }

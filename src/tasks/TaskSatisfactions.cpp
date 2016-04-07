@@ -13,31 +13,31 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toEnumerated(int code)
+unifei::expertinos::mrta_vc::tasks::satisfactions::TaskSatisfactionEnum unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toEnumerated(int code)
 {
-	unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum enumerated;
+	unifei::expertinos::mrta_vc::tasks::satisfactions::TaskSatisfactionEnum enumerated;
 	switch (code)
 	{
 		case -3:
-			enumerated = VERY_DISSATISFIED;
+			enumerated = unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_DISSATISFIED;
 			break;
 		case -2:
-			enumerated = DISSATISFIED;
+			enumerated = unifei::expertinos::mrta_vc::tasks::satisfactions::DISSATISFIED;
 			break;
 		case -1:
-			enumerated = SOMEWHAT_DISSATISFIED;
+			enumerated = unifei::expertinos::mrta_vc::tasks::satisfactions::SOMEWHAT_DISSATISFIED;
 			break;
 		case 0:
-			enumerated = NEITHER_DISSATISFIED_NOR_SATISFIED;
+			enumerated = unifei::expertinos::mrta_vc::tasks::satisfactions::NEITHER_DISSATISFIED_NOR_SATISFIED;
 			break;
 		case 1:
-			enumerated = SOMEWHAT_SATISFIED;
+			enumerated = unifei::expertinos::mrta_vc::tasks::satisfactions::SOMEWHAT_SATISFIED;
 			break;
 		case 2:
-			enumerated = SATISFIED;
+			enumerated = unifei::expertinos::mrta_vc::tasks::satisfactions::SATISFIED;
 			break;
 		case 3:
-			enumerated = VERY_SATISFIED;
+			enumerated = unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_SATISFIED;
 			break;
 		default:
 			enumerated = getDefault();
@@ -48,37 +48,37 @@ unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum unifei::expertinos::mrt
 /**
  *
  */
-int unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toCode(unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum enumerated)
+int unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toCode(unifei::expertinos::mrta_vc::tasks::satisfactions::TaskSatisfactionEnum enumerated)
 {
 	int code;
 	switch (enumerated)
 	{
-		case VERY_DISSATISFIED:
-		case HORRIBLE:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_DISSATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::HORRIBLE:
 			code = -3;
 			break;
-		case DISSATISFIED:
-		case VERY_BAD:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::DISSATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_BAD:
 			code = -2;
 			break;
-		case SOMEWHAT_DISSATISFIED:
-		case BAD:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::SOMEWHAT_DISSATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::BAD:
 			code = -1;
 			break;
-		case NEITHER_DISSATISFIED_NOR_SATISFIED:
-		case FAIR_ENOUGH:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::NEITHER_DISSATISFIED_NOR_SATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::FAIR_ENOUGH:
 			code = 0;
 			break;
-		case SOMEWHAT_SATISFIED:
-		case GOOD:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::SOMEWHAT_SATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::GOOD:
 			code = 1;
 			break;
-		case SATISFIED:
-		case VERY_GOOD:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::SATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_GOOD:
 			code = 2;
 			break;
-		case VERY_SATISFIED:
-		case EXCELLENT:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_SATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::EXCELLENT:
 			code = 3;
 			break;
 		default:			
@@ -90,51 +90,51 @@ int unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toCode(unifei::expert
 /**
  *
  */
-std::string unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toString(unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum enumerated)
+std::string unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toString(unifei::expertinos::mrta_vc::tasks::satisfactions::TaskSatisfactionEnum enumerated)
 {
 	std::string enumerated_name;
 	switch (enumerated)
 	{
-		case VERY_DISSATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_DISSATISFIED:
 			enumerated_name = "VERY_DISSATISFIED";
 			break;
-		case HORRIBLE:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::HORRIBLE:
 			enumerated_name = "HORRIBLE";
 			break;
-		case DISSATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::DISSATISFIED:
 			enumerated_name = "DISSATISFIED";
 			break;
-		case VERY_BAD:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_BAD:
 			enumerated_name = "VERY_BAD";
 			break;
-		case SOMEWHAT_DISSATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::SOMEWHAT_DISSATISFIED:
 			enumerated_name = "SOMEWHAT_DISSATISFIED";
 			break;
-		case BAD:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::BAD:
 			enumerated_name = "BAD";
 			break;
-		case NEITHER_DISSATISFIED_NOR_SATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::NEITHER_DISSATISFIED_NOR_SATISFIED:
 			enumerated_name = "NEITHER_DISSATISFIED_NOR_SATISFIED";
 			break;
-		case FAIR_ENOUGH:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::FAIR_ENOUGH:
 			enumerated_name = "FAIR_ENOUGH";
 			break;
-		case SOMEWHAT_SATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::SOMEWHAT_SATISFIED:
 			enumerated_name = "SOMEWHAT_SATISFIED";
 			break;
-		case GOOD:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::GOOD:
 			enumerated_name = "GOOD";
 			break;
-		case SATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::SATISFIED:
 			enumerated_name = "SATISFIED";
 			break;
-		case VERY_GOOD:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_GOOD:
 			enumerated_name = "VERY_GOOD";
 			break;
-		case VERY_SATISFIED:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_SATISFIED:
 			enumerated_name = "VERY_SATISFIED";
 			break;
-		case EXCELLENT:
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::EXCELLENT:
 			enumerated_name = "EXCELLENT";
 			break;
 		default:
@@ -146,23 +146,23 @@ std::string unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toString(unif
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::getDefault()
+unifei::expertinos::mrta_vc::tasks::satisfactions::TaskSatisfactionEnum unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::getDefault()
 {
-	return NEITHER_DISSATISFIED_NOR_SATISFIED;
+	return unifei::expertinos::mrta_vc::tasks::satisfactions::NEITHER_DISSATISFIED_NOR_SATISFIED;
 }
 
 /**
  *
  */
-std::vector<unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum> unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::getAll()
+std::vector<unifei::expertinos::mrta_vc::tasks::satisfactions::TaskSatisfactionEnum> unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::getAll()
 {
-	std::vector<TaskSatisfactionEnum> enumerateds;
-	enumerateds.push_back(VERY_DISSATISFIED);
-	enumerateds.push_back(DISSATISFIED);
-	enumerateds.push_back(SOMEWHAT_DISSATISFIED);
-	enumerateds.push_back(NEITHER_DISSATISFIED_NOR_SATISFIED);
-	enumerateds.push_back(SOMEWHAT_SATISFIED);
-	enumerateds.push_back(SATISFIED);
-	enumerateds.push_back(VERY_SATISFIED);
+	std::vector<satisfactions::TaskSatisfactionEnum> enumerateds;
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_DISSATISFIED);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::satisfactions::DISSATISFIED);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::satisfactions::SOMEWHAT_DISSATISFIED);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::satisfactions::NEITHER_DISSATISFIED_NOR_SATISFIED);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::satisfactions::SOMEWHAT_SATISFIED);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::satisfactions::SATISFIED);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_SATISFIED);
 	return enumerateds;
 }

@@ -34,6 +34,7 @@ namespace unifei
 
 					Campus getCampus();
 					::mrta_vc::Place toMsg();
+					void operator=(const ExternalArea& external_area);
 
 				protected:
 					int getType();
