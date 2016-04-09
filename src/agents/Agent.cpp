@@ -127,7 +127,7 @@ bool unifei::expertinos::mrta_vc::agents::Agent::equals(Agent agent)
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::agents::Agent::operator==(const Agent& agent)
+bool unifei::expertinos::mrta_vc::agents::Agent::operator==(const unifei::expertinos::mrta_vc::agents::Agent& agent)
 {
 	return id_ == agent.id_;
 }
@@ -135,7 +135,7 @@ bool unifei::expertinos::mrta_vc::agents::Agent::operator==(const Agent& agent)
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::agents::Agent::operator!=(const Agent& agent) 
+bool unifei::expertinos::mrta_vc::agents::Agent::operator!=(const unifei::expertinos::mrta_vc::agents::Agent& agent) 
 {
 	return id_ != agent.id_;
 }
@@ -143,7 +143,7 @@ bool unifei::expertinos::mrta_vc::agents::Agent::operator!=(const Agent& agent)
 /**
  *
  */
-void unifei::expertinos::mrta_vc::agents::Agent::operator=(const Agent& agent) 
+void unifei::expertinos::mrta_vc::agents::Agent::operator=(const unifei::expertinos::mrta_vc::agents::Agent& agent) 
 {
 	id_ = agent.id_;
 	location_ = agent.location_;

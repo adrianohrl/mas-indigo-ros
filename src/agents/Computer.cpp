@@ -91,7 +91,7 @@ int unifei::expertinos::mrta_vc::agents::Computer::getType()
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::agents::Computer::equals(Computer computer) 
+bool unifei::expertinos::mrta_vc::agents::Computer::equals(unifei::expertinos::mrta_vc::agents::Computer computer) 
 {
 	return hostname_ == computer.hostname_;
 }
@@ -99,7 +99,7 @@ bool unifei::expertinos::mrta_vc::agents::Computer::equals(Computer computer)
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::agents::Computer::operator==(const Computer& computer)
+bool unifei::expertinos::mrta_vc::agents::Computer::operator==(const unifei::expertinos::mrta_vc::agents::Computer& computer)
 {
 	return hostname_ == computer.hostname_;
 }
@@ -107,7 +107,7 @@ bool unifei::expertinos::mrta_vc::agents::Computer::operator==(const Computer& c
 /**
  *
  */
-void unifei::expertinos::mrta_vc::agents::Computer::operator=(const Computer& computer) 
+void unifei::expertinos::mrta_vc::agents::Computer::operator=(const unifei::expertinos::mrta_vc::agents::Computer& computer) 
 {
 	unifei::expertinos::mrta_vc::agents::Agent::operator=(computer);
 	hostname_ = computer.hostname_;

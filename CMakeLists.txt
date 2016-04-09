@@ -39,6 +39,7 @@ include_directories(
 add_executable(system_manager_node 
 	src/system_manager_node.cpp
 	src/SystemManagerNode.cpp
+	src/tasks/Allocation.cpp
 	src/tasks/Task.cpp
 	src/tasks/TaskPriorities.cpp
 	src/tasks/TaskStates.cpp

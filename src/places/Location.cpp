@@ -148,7 +148,7 @@ void unifei::expertinos::mrta_vc::places::Location::setPose(Location location)
 /**
  *
  */
-void unifei::expertinos::mrta_vc::places::Location::operator=(const Location& location)
+void unifei::expertinos::mrta_vc::places::Location::operator=(const unifei::expertinos::mrta_vc::places::Location& location)
 {
 	x_ = location.x_;
 	y_ = location.y_;

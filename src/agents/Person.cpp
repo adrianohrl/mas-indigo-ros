@@ -78,7 +78,7 @@ int unifei::expertinos::mrta_vc::agents::Person::getType()
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::agents::Person::equals(Person person) 
+bool unifei::expertinos::mrta_vc::agents::Person::equals(unifei::expertinos::mrta_vc::agents::Person person) 
 {
 	return name_ == person.name_;
 }
@@ -86,7 +86,7 @@ bool unifei::expertinos::mrta_vc::agents::Person::equals(Person person)
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::agents::Person::operator==(const Person& person)
+bool unifei::expertinos::mrta_vc::agents::Person::operator==(const unifei::expertinos::mrta_vc::agents::Person& person)
 {
 	return name_ == person.name_;
 }
@@ -94,7 +94,7 @@ bool unifei::expertinos::mrta_vc::agents::Person::operator==(const Person& perso
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::agents::Person::operator!=(const Person& person) 
+bool unifei::expertinos::mrta_vc::agents::Person::operator!=(const unifei::expertinos::mrta_vc::agents::Person& person) 
 {
 	return name_ != person.name_;
 }
@@ -102,7 +102,7 @@ bool unifei::expertinos::mrta_vc::agents::Person::operator!=(const Person& perso
 /**
  *
  */
-void unifei::expertinos::mrta_vc::agents::Person::operator=(const Person& person) 
+void unifei::expertinos::mrta_vc::agents::Person::operator=(const unifei::expertinos::mrta_vc::agents::Person& person) 
 {
 	unifei::expertinos::mrta_vc::agents::Agent::operator=(person);
 	name_ = person.name_;

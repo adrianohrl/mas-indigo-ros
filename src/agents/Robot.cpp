@@ -137,7 +137,7 @@ void unifei::expertinos::mrta_vc::agents::Robot::setVelocity(geometry_msgs::Twis
 /**
  *
  */
-void unifei::expertinos::mrta_vc::agents::Robot::operator=(const Robot& robot) 
+void unifei::expertinos::mrta_vc::agents::Robot::operator=(const unifei::expertinos::mrta_vc::agents::Robot& robot) 
 {
 	unifei::expertinos::mrta_vc::agents::Computer::operator=(robot);
 	holonomic_ = robot.holonomic_;

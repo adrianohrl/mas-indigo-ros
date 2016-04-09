@@ -245,7 +245,7 @@ bool unifei::expertinos::mrta_vc::tasks::Task::hasExpired()
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Task::equals(Task task) 
+bool unifei::expertinos::mrta_vc::tasks::Task::equals(unifei::expertinos::mrta_vc::tasks::Task task) 
 {
 	return name_ == task.name_;
 }
@@ -253,7 +253,7 @@ bool unifei::expertinos::mrta_vc::tasks::Task::equals(Task task)
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Task::operator==(const Task& task)
+bool unifei::expertinos::mrta_vc::tasks::Task::operator==(const unifei::expertinos::mrta_vc::tasks::Task& task)
 {
 	return name_ == task.name_;
 }
@@ -261,7 +261,7 @@ bool unifei::expertinos::mrta_vc::tasks::Task::operator==(const Task& task)
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Task::operator!=(const Task& task) 
+bool unifei::expertinos::mrta_vc::tasks::Task::operator!=(const unifei::expertinos::mrta_vc::tasks::Task& task) 
 {
 	return name_ != task.name_;
 }
@@ -269,7 +269,7 @@ bool unifei::expertinos::mrta_vc::tasks::Task::operator!=(const Task& task)
 /**
  *
  */
-void unifei::expertinos::mrta_vc::tasks::Task::operator=(const Task &task)
+void unifei::expertinos::mrta_vc::tasks::Task::operator=(const unifei::expertinos::mrta_vc::tasks::Task &task)
 { 
 	id_ = task.id_;
 	name_ = task.name_;

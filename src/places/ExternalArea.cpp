@@ -77,7 +77,7 @@ int unifei::expertinos::mrta_vc::places::ExternalArea::getType()
 /**
  *
  */
-void unifei::expertinos::mrta_vc::places::ExternalArea::operator=(const ExternalArea& external_area)
+void unifei::expertinos::mrta_vc::places::ExternalArea::operator=(const unifei::expertinos::mrta_vc::places::ExternalArea& external_area)
 {
 	unifei::expertinos::mrta_vc::places::Place::operator=(external_area);
 	campus_ = external_area.campus_;

@@ -36,6 +36,9 @@ unifei::expertinos::mrta_vc::tasks::states::TaskStateEnum unifei::expertinos::mr
 		case 5:
 			enumerated = unifei::expertinos::mrta_vc::tasks::states::FAILED;
 			break;
+		case 6:
+			enumerated = unifei::expertinos::mrta_vc::tasks::states::CANCELLED;
+			break;
 		default:
 			enumerated = getDefault();
 	}
@@ -67,6 +70,10 @@ int unifei::expertinos::mrta_vc::tasks::TaskStates::toCode(unifei::expertinos::m
 			break;
 		case unifei::expertinos::mrta_vc::tasks::states::FAILED:
 			code = 5;
+			break;
+			break;
+		case unifei::expertinos::mrta_vc::tasks::states::CANCELLED:
+			code = 6;
 			break;
 		default:			
 			code = toCode(getDefault());
@@ -100,6 +107,9 @@ std::string unifei::expertinos::mrta_vc::tasks::TaskStates::toString(unifei::exp
 		case unifei::expertinos::mrta_vc::tasks::states::FAILED:
 			enumerated_name = "FAILED";
 			break;
+		case unifei::expertinos::mrta_vc::tasks::states::CANCELLED:
+			enumerated_name = "CANCELLED";
+			break;
 		default:
 			enumerated_name = toString(getDefault());
 	}
@@ -126,5 +136,6 @@ std::vector<unifei::expertinos::mrta_vc::tasks::states::TaskStateEnum> unifei::e
 	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::states::SUCCEEDED);
 	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::states::ABORTED);
 	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::states::FAILED);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::states::CANCELLED);
 	return enumerateds;
 }

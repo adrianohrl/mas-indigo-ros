@@ -77,7 +77,7 @@ unifei::expertinos::mrta_vc::places::Office unifei::expertinos::mrta_vc::places:
 /**
  *
  */
-void unifei::expertinos::mrta_vc::places::Desk::operator=(const Desk& desk)
+void unifei::expertinos::mrta_vc::places::Desk::operator=(const unifei::expertinos::mrta_vc::places::Desk& desk)
 {
 	unifei::expertinos::mrta_vc::places::Place::operator=(desk);
 	office_ = desk.office_;

@@ -50,13 +50,13 @@ namespace unifei
 					bool wasSucceeded();
 					bool wasAborted();
 					bool wasCancelled();
-					void addRobot(unifei::expertinos::mrta_vc::agents::Robot> robot);
-					void removeRobot(unifei::expertinos::mrta_vc::agents::Robot> robot);
+					void addRobot(unifei::expertinos::mrta_vc::agents::Robot robot);
+					void removeRobot(unifei::expertinos::mrta_vc::agents::Robot robot);
 					void setState(TaskStateEnum state);
 					void setSatisfaction(TaskSatisfactionEnum satisfaction);
 					void setAllocationTimestamp(ros::Time allocation_timestamp);
 					void setStartTimestamp(ros::Time start_timestamp);
-					void setEndTimestamp(ros::Timestamp end_timestamp);
+					void setEndTimestamp(ros::Time end_timestamp);
 					::mrta_vc::Allocation toMsg();
 					void allocate(std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots);
 					void start();
@@ -71,7 +71,7 @@ namespace unifei
 
 				private:
 					Task task_;
-					std::vector<unifei::expertinos::mrta::agents::Robot> robots_;
+					std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots_;
 					TaskStateEnum state_;
 					TaskSatisfactionEnum satisfaction_;
 					ros::Time allocation_timestamp_;

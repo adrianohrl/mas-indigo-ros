@@ -103,7 +103,7 @@ void unifei::expertinos::mrta_vc::agents::VoiceCommander::setComputer(unifei::ex
 /**
  *
  */
-void unifei::expertinos::mrta_vc::agents::VoiceCommander::operator=(const VoiceCommander& voice_commander) 
+void unifei::expertinos::mrta_vc::agents::VoiceCommander::operator=(const unifei::expertinos::mrta_vc::agents::VoiceCommander& voice_commander) 
 {
 	unifei::expertinos::mrta_vc::agents::Person::operator=(voice_commander);
 	login_name_ = voice_commander.login_name_;

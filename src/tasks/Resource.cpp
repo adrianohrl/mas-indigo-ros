@@ -95,7 +95,7 @@ void unifei::expertinos::mrta_vc::tasks::Resource::setDescription(std::string de
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Resource::equals(Resource resource) 
+bool unifei::expertinos::mrta_vc::tasks::Resource::equals(unifei::expertinos::mrta_vc::tasks::Resource resource) 
 {
 	return name_ == resource.name_;
 }
@@ -103,7 +103,7 @@ bool unifei::expertinos::mrta_vc::tasks::Resource::equals(Resource resource)
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Resource::operator==(const Resource& resource)
+bool unifei::expertinos::mrta_vc::tasks::Resource::operator==(const unifei::expertinos::mrta_vc::tasks::Resource& resource)
 {
 	return name_ == resource.name_;
 }
@@ -111,7 +111,7 @@ bool unifei::expertinos::mrta_vc::tasks::Resource::operator==(const Resource& re
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Resource::operator!=(const Resource& resource) 
+bool unifei::expertinos::mrta_vc::tasks::Resource::operator!=(const unifei::expertinos::mrta_vc::tasks::Resource& resource) 
 {
 	return name_ != resource.name_;
 }
@@ -119,7 +119,7 @@ bool unifei::expertinos::mrta_vc::tasks::Resource::operator!=(const Resource& re
 /**
  *
  */
-void unifei::expertinos::mrta_vc::tasks::Resource::operator=(const Resource &resource)
+void unifei::expertinos::mrta_vc::tasks::Resource::operator=(const unifei::expertinos::mrta_vc::tasks::Resource &resource)
 { 
 	id_ = resource.id_;
 	name_ = resource.name_;

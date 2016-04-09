@@ -77,7 +77,7 @@ int unifei::expertinos::mrta_vc::places::Office::getType()
 /**
  *
  */
-void unifei::expertinos::mrta_vc::places::Office::operator=(const Office& office)
+void unifei::expertinos::mrta_vc::places::Office::operator=(const unifei::expertinos::mrta_vc::places::Office& office)
 {
 	unifei::expertinos::mrta_vc::places::Place::operator=(office);
 	floor_ = office.floor_;

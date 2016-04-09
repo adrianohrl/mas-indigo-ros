@@ -29,6 +29,7 @@ namespace unifei
 						NOT_ALLOCATED,
 						WAITING_ACCEPTATION,
 						EXECUTING,
+						CANCELLED,
 						SUCCEEDED,
 						ABORTED,
 						FAILED

@@ -77,7 +77,7 @@ unifei::expertinos::mrta_vc::places::Campus unifei::expertinos::mrta_vc::places:
 /**
  *
  */
-void unifei::expertinos::mrta_vc::places::Building::operator=(const Building& building)
+void unifei::expertinos::mrta_vc::places::Building::operator=(const unifei::expertinos::mrta_vc::places::Building& building)
 {
 	unifei::expertinos::mrta_vc::places::Place::operator=(building);
 	campus_ = building.campus_;
