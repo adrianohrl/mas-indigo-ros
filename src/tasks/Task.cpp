@@ -25,12 +25,13 @@ unifei::expertinos::mrta_vc::tasks::Task::Task() : sender_(::mrta_vc::Agent()), 
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::Task::Task(int id, std::string name, std::string description, std::vector<unifei::expertinos::mrta_vc::tasks::Skill> desired_skills, unifei::expertinos::mrta_vc::agents::VoiceCommander sender, unifei::expertinos::mrta_vc::agents::Person receiver, unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum priority) : desired_skills_(desired_skills), sender_(sender), receiver_(receiver)
+unifei::expertinos::mrta_vc::tasks::Task::Task(int id, std::string name, std::string description, std::vector<unifei::expertinos::mrta_vc::tasks::Skill> desired_skills, unifei::expertinos::mrta_vc::agents::VoiceCommander sender, unifei::expertinos::mrta_vc::agents::Person receiver, ros::Time deadline, unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum priority) : desired_skills_(desired_skills), sender_(sender), receiver_(receiver)
 {
 	id_ = id;
 	name_ = name;
 	description_ = description;	
 	priority_ = priority;
+	deadline_ = deadline;
 }
 
 /**
@@ -129,6 +130,14 @@ unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum unifei::experti
 /**
  *
  */
+ros::Time unifei::expertinos::mrta_vc::tasks::Task::getDeadline() 
+{
+	return deadline_;
+}
+
+/**
+ *
+ */
 void unifei::expertinos::mrta_vc::tasks::Task::setId(int id) 
 {
 	id_ = id;
@@ -201,6 +210,22 @@ void unifei::expertinos::mrta_vc::tasks::Task::setPriority(unifei::expertinos::m
 /**
  *
  */
+void unifei::expertinos::mrta_vc::tasks::Task::setDeadline(ros::Time deadline) 
+{
+	deadline_ = deadline;
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::tasks::Task::hasExpired() 
+{
+	return deadline_ < ros::Time::now();
+}
+
+/**
+ *
+ */
 ::mrta_vc::Task unifei::expertinos::mrta_vc::tasks::Task::toMsg() 
 {
 	::mrta_vc::Task task_msg;
@@ -213,6 +238,7 @@ void unifei::expertinos::mrta_vc::tasks::Task::setPriority(unifei::expertinos::m
 	task_msg.sender = sender_.toMsg();
 	task_msg.receiver = receiver_.toMsg();
 	task_msg.priority = unifei::expertinos::mrta_vc::tasks::TaskPriorities::toCode(priority_);
+	task_msg.deadline = deadline_;
 	return task_msg;
 }
 
@@ -252,4 +278,5 @@ void unifei::expertinos::mrta_vc::tasks::Task::operator=(const Task &task)
 	sender_ = task.sender_;
 	receiver_ = task.receiver_;
 	priority_ = task.priority_;
+	deadline_ = task.deadline_;
 }

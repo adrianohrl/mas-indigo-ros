@@ -42,7 +42,7 @@ namespace unifei
 					int compareTo(Skill skill);
 					bool operator==(const Skill& skill);
 					bool operator!=(const Skill& skill);
-					void operator=(const Skill &skill);
+					void operator=(const Skill& skill);
 
 				private:
 					Resource resource_;

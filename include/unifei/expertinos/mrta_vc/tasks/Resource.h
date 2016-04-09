@@ -40,7 +40,7 @@ namespace unifei
 					bool equals(Resource resource);
 					bool operator==(const Resource& resource);
 					bool operator!=(const Resource& resource);
-					void operator=(const Resource &resource);
+					void operator=(const Resource& resource);
 
 				private:
 					int id_;

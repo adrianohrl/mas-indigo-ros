@@ -5,6 +5,7 @@ mrta_vc/Skill[] desired_skills
 mrta_vc/Agent sender
 mrta_vc/Agent receiver
 uint8 priority
+time deadline
 
 # Priorities:
 # 1 -> LOW
