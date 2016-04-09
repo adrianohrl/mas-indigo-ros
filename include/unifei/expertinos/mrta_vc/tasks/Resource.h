@@ -36,10 +36,11 @@ namespace unifei
 					std::string getName();
 					std::string getDescription();
 					void setDescription(std::string description);
-					bool equals(Resource resource);
 					::mrta_vc::Resource toMsg();
+					bool equals(Resource resource);
 					bool operator==(const Resource& resource);
 					bool operator!=(const Resource& resource);
+					void operator=(const Resource& resource);
 
 				private:
 					int id_;

@@ -39,6 +39,8 @@ include_directories(
 add_executable(system_manager_node 
 	src/system_manager_node.cpp
 	src/SystemManagerNode.cpp
+	src/tasks/Allocation.cpp
+	src/tasks/Task.cpp
 	src/tasks/TaskPriorities.cpp
 	src/tasks/TaskStates.cpp
 	src/tasks/TaskSatisfactions.cpp
@@ -53,6 +55,11 @@ add_executable(system_manager_node
 	src/places/Floor.cpp
 	src/places/Office.cpp
 	src/places/Desk.cpp
+	src/agents/Agent.cpp
+	src/agents/Computer.cpp
+	src/agents/Person.cpp
+	src/agents/Robot.cpp
+	src/agents/VoiceCommander.cpp
 	)
 
 add_dependencies(system_manager_node 

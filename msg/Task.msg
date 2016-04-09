@@ -1,10 +1,11 @@
 uint32 id
 string name
 string description
-uint8 priority
-mrta_vc/Skill[] desiredSkills
+mrta_vc/Skill[] desired_skills
 mrta_vc/Agent sender
 mrta_vc/Agent receiver
+uint8 priority
+time deadline
 
 # Priorities:
 # 1 -> LOW

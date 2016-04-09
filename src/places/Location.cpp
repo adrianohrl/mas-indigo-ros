@@ -126,6 +126,16 @@ void unifei::expertinos::mrta_vc::places::Location::setPose(::mrta_vc::Location 
 /**
  *
  */
+void unifei::expertinos::mrta_vc::places::Location::setPose(Location location) 
+{
+	x_ = location.x_;
+	y_ = location.y_;
+	theta_ = location.theta_;
+}
+
+/**
+ *
+ */
 ::mrta_vc::Location unifei::expertinos::mrta_vc::places::Location::toMsg() 
 {
 	::mrta_vc::Location location_msg;
@@ -133,4 +143,14 @@ void unifei::expertinos::mrta_vc::places::Location::setPose(::mrta_vc::Location 
 	location_msg.y = y_;
 	location_msg.theta = theta_;
 	return location_msg;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::places::Location::operator=(const unifei::expertinos::mrta_vc::places::Location& location)
+{
+	x_ = location.x_;
+	y_ = location.y_;
+	theta_ = location.theta_;
 }

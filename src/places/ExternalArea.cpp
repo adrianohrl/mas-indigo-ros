@@ -50,17 +50,17 @@ unifei::expertinos::mrta_vc::places::ExternalArea::~ExternalArea()
 /**
  *
  */
-int unifei::expertinos::mrta_vc::places::ExternalArea::getType() 
+unifei::expertinos::mrta_vc::places::Campus unifei::expertinos::mrta_vc::places::ExternalArea::getCampus() 
 {
-	return EXTERNAL_AREA;
+	return campus_;
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Campus unifei::expertinos::mrta_vc::places::ExternalArea::getCampus() 
+int unifei::expertinos::mrta_vc::places::ExternalArea::getType() 
 {
-	return campus_;
+	return EXTERNAL_AREA;
 }
 
 
@@ -72,4 +72,13 @@ unifei::expertinos::mrta_vc::places::Campus unifei::expertinos::mrta_vc::places:
 	::mrta_vc::Place external_area_msg = Place::toMsg();
 	// external_area_msg.campus = campus_.toMsg();
 	return external_area_msg;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::places::ExternalArea::operator=(const unifei::expertinos::mrta_vc::places::ExternalArea& external_area)
+{
+	unifei::expertinos::mrta_vc::places::Place::operator=(external_area);
+	campus_ = external_area.campus_;
 }

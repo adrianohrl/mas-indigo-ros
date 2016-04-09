@@ -22,15 +22,21 @@ namespace unifei
 		{
 			namespace tasks
 			{
-				typedef enum 
+				namespace states
 				{
-					NOT_ALLOCATED,
-					WAITING_ACCEPTATION,
-					EXECUTING,
-					SUCCEEDED,
-					ABORTED,
-					FAILED
-				} TaskStateEnum;
+					typedef enum 
+					{
+						NOT_ALLOCATED,
+						WAITING_ACCEPTATION,
+						EXECUTING,
+						CANCELLED,
+						SUCCEEDED,
+						ABORTED,
+						FAILED
+					} TaskStateEnum;
+				}
+				
+				typedef states::TaskStateEnum TaskStateEnum;
 
 				class TaskStates
 				{

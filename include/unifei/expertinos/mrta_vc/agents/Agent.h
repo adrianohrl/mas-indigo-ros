@@ -11,8 +11,15 @@
 #ifndef AGENT_H_
 #define AGENT_H_
 
-#include <string>
 #include "mrta_vc/Agent.h"
+#include "unifei/expertinos/mrta_vc/places/Location.h"
+
+#define NON_AGENT -1
+#define AGENT 0
+#define PERSON 1
+#define COMPUTER 2
+#define ROBOT 3
+#define VOICE_COMMANDER 4
 
 namespace unifei 
 {
@@ -20,30 +27,37 @@ namespace unifei
 	{
 		namespace mrta_vc
 		{
-			namespace tasks
+			namespace agents
 			{
 				class Agent 
 				{
 
 				public:
-					Agent(int id, std::string name, std::string description);
-					Agent(const ::mrta_vc::Agent::ConstPtr& resource_msg);
-					Agent(::mrta_vc::Agent resource_msg);		
+					Agent(int id, double x = 0, double y = 0, double theta = 0);
+					Agent(int id, geometry_msgs::Pose pose_msg);
+					Agent(const ::mrta_vc::Agent::ConstPtr& agent_msg);
+					Agent(::mrta_vc::Agent agent_msg);		
 					~Agent();
 
 					int getId();
-					std::string getName();
-					std::string getDescription();
-					void setDescription(std::string description);
-					bool equals(Agent resource);
+					unifei::expertinos::mrta_vc::places::Location getLocation();
+					void setLocation(double x = 0, double y = 0, double theta = 0);
+					void setLocation(geometry_msgs::Pose pose_msg);
+					void setLocation(unifei::expertinos::mrta_vc::places::Location location);
 					::mrta_vc::Agent toMsg();
-					bool operator==(const Agent& resource);
-					bool operator!=(const Agent& resource);
+					bool equals(Agent agent);
+					bool operator==(const Agent& agent);
+					bool operator!=(const Agent& agent);
+					void operator=(const Agent& agent);
+
+				protected:
+					int getType();
 
 				private:
 					int id_;
-					std::string name_;
-					std::string description_;	
+					unifei::expertinos::mrta_vc::places::Location location_;
+					
+					bool isValidType(int type);
 
 				};
 			}

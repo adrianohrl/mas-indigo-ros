@@ -13,28 +13,31 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::TaskStateEnum unifei::expertinos::mrta_vc::tasks::TaskStates::toEnumerated(int code)
+unifei::expertinos::mrta_vc::tasks::states::TaskStateEnum unifei::expertinos::mrta_vc::tasks::TaskStates::toEnumerated(int code)
 {
-	unifei::expertinos::mrta_vc::tasks::TaskStateEnum enumerated;
+	unifei::expertinos::mrta_vc::tasks::states::TaskStateEnum enumerated;
 	switch (code)
 	{
 		case 0:
-			enumerated = NOT_ALLOCATED;
+			enumerated = unifei::expertinos::mrta_vc::tasks::states::NOT_ALLOCATED;
 			break;
 		case 1:
-			enumerated = WAITING_ACCEPTATION;
+			enumerated = unifei::expertinos::mrta_vc::tasks::states::WAITING_ACCEPTATION;
 			break;
 		case 2:
-			enumerated = EXECUTING;
+			enumerated = unifei::expertinos::mrta_vc::tasks::states::EXECUTING;
 			break;
 		case 3:
-			enumerated = SUCCEEDED;
+			enumerated = unifei::expertinos::mrta_vc::tasks::states::SUCCEEDED;
 			break;
 		case 4:
-			enumerated = ABORTED;
+			enumerated = unifei::expertinos::mrta_vc::tasks::states::ABORTED;
 			break;
 		case 5:
-			enumerated = FAILED;
+			enumerated = unifei::expertinos::mrta_vc::tasks::states::FAILED;
+			break;
+		case 6:
+			enumerated = unifei::expertinos::mrta_vc::tasks::states::CANCELLED;
 			break;
 		default:
 			enumerated = getDefault();
@@ -45,28 +48,32 @@ unifei::expertinos::mrta_vc::tasks::TaskStateEnum unifei::expertinos::mrta_vc::t
 /**
  *
  */
-int unifei::expertinos::mrta_vc::tasks::TaskStates::toCode(unifei::expertinos::mrta_vc::tasks::TaskStateEnum enumerated)
+int unifei::expertinos::mrta_vc::tasks::TaskStates::toCode(unifei::expertinos::mrta_vc::tasks::states::TaskStateEnum enumerated)
 {
 	int code;
 	switch (enumerated)
 	{
-		case NOT_ALLOCATED:
+		case unifei::expertinos::mrta_vc::tasks::states::NOT_ALLOCATED:
 			code = 0;
 			break;
-		case WAITING_ACCEPTATION:
+		case unifei::expertinos::mrta_vc::tasks::states::WAITING_ACCEPTATION:
 			code = 1;
 			break;
-		case EXECUTING:
+		case unifei::expertinos::mrta_vc::tasks::states::EXECUTING:
 			code = 2;
 			break;
-		case SUCCEEDED:
+		case unifei::expertinos::mrta_vc::tasks::states::SUCCEEDED:
 			code = 3;
 			break;
-		case ABORTED:
+		case unifei::expertinos::mrta_vc::tasks::states::ABORTED:
 			code = 4;
 			break;
-		case FAILED:
+		case unifei::expertinos::mrta_vc::tasks::states::FAILED:
 			code = 5;
+			break;
+			break;
+		case unifei::expertinos::mrta_vc::tasks::states::CANCELLED:
+			code = 6;
 			break;
 		default:			
 			code = toCode(getDefault());
@@ -77,28 +84,31 @@ int unifei::expertinos::mrta_vc::tasks::TaskStates::toCode(unifei::expertinos::m
 /**
  *
  */
-std::string unifei::expertinos::mrta_vc::tasks::TaskStates::toString(unifei::expertinos::mrta_vc::tasks::TaskStateEnum enumerated)
+std::string unifei::expertinos::mrta_vc::tasks::TaskStates::toString(unifei::expertinos::mrta_vc::tasks::states::TaskStateEnum enumerated)
 {
 	std::string enumerated_name;
 	switch (enumerated)
 	{
-		case NOT_ALLOCATED:
+		case unifei::expertinos::mrta_vc::tasks::states::NOT_ALLOCATED:
 			enumerated_name = "NOT_ALLOCATED";
 			break;
-		case WAITING_ACCEPTATION:
+		case unifei::expertinos::mrta_vc::tasks::states::WAITING_ACCEPTATION:
 			enumerated_name = "WAITING_ACCEPTATION";
 			break;
-		case EXECUTING:
+		case unifei::expertinos::mrta_vc::tasks::states::EXECUTING:
 			enumerated_name = "EXECUTING";
 			break;
-		case SUCCEEDED:
+		case unifei::expertinos::mrta_vc::tasks::states::SUCCEEDED:
 			enumerated_name = "SUCCEEDED";
 			break;
-		case ABORTED:
+		case unifei::expertinos::mrta_vc::tasks::states::ABORTED:
 			enumerated_name = "ABORTED";
 			break;
-		case FAILED:
+		case unifei::expertinos::mrta_vc::tasks::states::FAILED:
 			enumerated_name = "FAILED";
+			break;
+		case unifei::expertinos::mrta_vc::tasks::states::CANCELLED:
+			enumerated_name = "CANCELLED";
 			break;
 		default:
 			enumerated_name = toString(getDefault());
@@ -109,22 +119,23 @@ std::string unifei::expertinos::mrta_vc::tasks::TaskStates::toString(unifei::exp
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::TaskStateEnum unifei::expertinos::mrta_vc::tasks::TaskStates::getDefault()
+unifei::expertinos::mrta_vc::tasks::states::TaskStateEnum unifei::expertinos::mrta_vc::tasks::TaskStates::getDefault()
 {
-	return NOT_ALLOCATED;
+	return unifei::expertinos::mrta_vc::tasks::states::NOT_ALLOCATED;
 }
 
 /**
  *
  */
-std::vector<unifei::expertinos::mrta_vc::tasks::TaskStateEnum> unifei::expertinos::mrta_vc::tasks::TaskStates::getAll()
+std::vector<unifei::expertinos::mrta_vc::tasks::states::TaskStateEnum> unifei::expertinos::mrta_vc::tasks::TaskStates::getAll()
 {
-	std::vector<TaskStateEnum> enumerateds;
-	enumerateds.push_back(NOT_ALLOCATED);
-	enumerateds.push_back(WAITING_ACCEPTATION);
-	enumerateds.push_back(EXECUTING);
-	enumerateds.push_back(SUCCEEDED);
-	enumerateds.push_back(ABORTED);
-	enumerateds.push_back(FAILED);
+	std::vector<states::TaskStateEnum> enumerateds;
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::states::NOT_ALLOCATED);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::states::WAITING_ACCEPTATION);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::states::EXECUTING);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::states::SUCCEEDED);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::states::ABORTED);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::states::FAILED);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::states::CANCELLED);
 	return enumerateds;
 }

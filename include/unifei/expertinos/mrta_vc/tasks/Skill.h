@@ -12,8 +12,8 @@
 #ifndef SKILL_H_
 #define SKILL_H_
 
-#include "Resource.h"
 #include "mrta_vc/Skill.h"
+#include "unifei/expertinos/mrta_vc/tasks/Resource.h"
 #include "unifei/expertinos/mrta_vc/tasks/SkillLevels.h"
 
 namespace unifei 
@@ -36,12 +36,13 @@ namespace unifei
 					SkillLevelEnum getLevel();
 					Resource getResource();
 					void setLevel(SkillLevelEnum level);
-					bool isSufficient(Skill skill);
-					int compareTo(Skill skill);
 					::mrta_vc::Skill toMsg();
-
+					bool isSufficient(Skill skill);
+					bool equals(Skill skill);
+					int compareTo(Skill skill);
 					bool operator==(const Skill& skill);
 					bool operator!=(const Skill& skill);
+					void operator=(const Skill& skill);
 
 				private:
 					Resource resource_;

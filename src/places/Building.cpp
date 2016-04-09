@@ -73,3 +73,12 @@ unifei::expertinos::mrta_vc::places::Campus unifei::expertinos::mrta_vc::places:
 	//building_msg.campus = campus_.toMsg();
 	return building_msg;
 }
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::places::Building::operator=(const unifei::expertinos::mrta_vc::places::Building& building)
+{
+	unifei::expertinos::mrta_vc::places::Place::operator=(building);
+	campus_ = building.campus_;
+}

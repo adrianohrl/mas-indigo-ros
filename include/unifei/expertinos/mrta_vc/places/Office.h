@@ -34,8 +34,7 @@ namespace unifei
 
 					Floor getFloor();
 					::mrta_vc::Place toMsg();
-					bool operator==(const Office& office);
-					bool operator!=(const Office& office);
+					void operator=(const Office& office);
 
 				protected:
 					int getType();

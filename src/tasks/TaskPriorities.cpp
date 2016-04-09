@@ -13,22 +13,22 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::TaskPriorityEnum unifei::expertinos::mrta_vc::tasks::TaskPriorities::toEnumerated(int code)
+unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum unifei::expertinos::mrta_vc::tasks::TaskPriorities::toEnumerated(int code)
 {
-	unifei::expertinos::mrta_vc::tasks::TaskPriorityEnum enumerated;
+	unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum enumerated;
 	switch (code)
 	{
 		case 1:
-			enumerated = LOW;
+			enumerated = unifei::expertinos::mrta_vc::tasks::priorities::LOW;
 			break;
 		case 2:
-			enumerated = NORMAL;
+			enumerated = unifei::expertinos::mrta_vc::tasks::priorities::NORMAL;
 			break;
 		case 3:
-			enumerated = IMPORTANT;
+			enumerated = unifei::expertinos::mrta_vc::tasks::priorities::IMPORTANT;
 			break;
 		case 4:
-			enumerated = CRITICAL;
+			enumerated = unifei::expertinos::mrta_vc::tasks::priorities::CRITICAL;
 			break;
 		default:
 			enumerated = getDefault();
@@ -39,21 +39,21 @@ unifei::expertinos::mrta_vc::tasks::TaskPriorityEnum unifei::expertinos::mrta_vc
 /**
  *
  */
-int unifei::expertinos::mrta_vc::tasks::TaskPriorities::toCode(unifei::expertinos::mrta_vc::tasks::TaskPriorityEnum enumerated)
+int unifei::expertinos::mrta_vc::tasks::TaskPriorities::toCode(unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum enumerated)
 {
 	int code;
 	switch (enumerated)
 	{
-		case LOW:
+		case unifei::expertinos::mrta_vc::tasks::priorities::LOW:
 			code = 1;
 			break;
-		case NORMAL:
+		case unifei::expertinos::mrta_vc::tasks::priorities::NORMAL:
 			code = 2;
 			break;
-		case IMPORTANT:
+		case unifei::expertinos::mrta_vc::tasks::priorities::IMPORTANT:
 			code = 3;
 			break;
-		case CRITICAL:
+		case unifei::expertinos::mrta_vc::tasks::priorities::CRITICAL:
 			code = 4;
 			break;
 		default:			
@@ -65,21 +65,21 @@ int unifei::expertinos::mrta_vc::tasks::TaskPriorities::toCode(unifei::expertino
 /**
  *
  */
-std::string unifei::expertinos::mrta_vc::tasks::TaskPriorities::toString(unifei::expertinos::mrta_vc::tasks::TaskPriorityEnum enumerated)
+std::string unifei::expertinos::mrta_vc::tasks::TaskPriorities::toString(unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum enumerated)
 {
 	std::string enumerated_name;
 	switch (enumerated)
 	{
-		case LOW:
+		case unifei::expertinos::mrta_vc::tasks::priorities::LOW:
 			enumerated_name = "LOW";
 			break;
-		case NORMAL:
+		case unifei::expertinos::mrta_vc::tasks::priorities::NORMAL:
 			enumerated_name = "NORMAL";
 			break;
-		case IMPORTANT:
+		case unifei::expertinos::mrta_vc::tasks::priorities::IMPORTANT:
 			enumerated_name = "IMPORTANT";
 			break;
-		case CRITICAL:
+		case unifei::expertinos::mrta_vc::tasks::priorities::CRITICAL:
 			enumerated_name = "CRITICAL";
 			break;
 		default:
@@ -91,20 +91,20 @@ std::string unifei::expertinos::mrta_vc::tasks::TaskPriorities::toString(unifei:
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::TaskPriorityEnum unifei::expertinos::mrta_vc::tasks::TaskPriorities::getDefault()
+unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum unifei::expertinos::mrta_vc::tasks::TaskPriorities::getDefault()
 {
-	return LOW;
+	return unifei::expertinos::mrta_vc::tasks::priorities::LOW;
 }
 
 /**
  *
  */
-std::vector<unifei::expertinos::mrta_vc::tasks::TaskPriorityEnum> unifei::expertinos::mrta_vc::tasks::TaskPriorities::getAll()
+std::vector<unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum> unifei::expertinos::mrta_vc::tasks::TaskPriorities::getAll()
 {
-	std::vector<TaskPriorityEnum> enumerateds;
-	enumerateds.push_back(LOW);
-	enumerateds.push_back(NORMAL);
-	enumerateds.push_back(IMPORTANT);
-	enumerateds.push_back(CRITICAL);
+	std::vector<unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum> enumerateds;
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::priorities::LOW);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::priorities::NORMAL);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::priorities::IMPORTANT);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::priorities::CRITICAL);
 	return enumerateds;
 }

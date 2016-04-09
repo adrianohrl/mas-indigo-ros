@@ -13,25 +13,25 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::SkillLevelEnum unifei::expertinos::mrta_vc::tasks::SkillLevels::toEnumerated(int code)
+unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum unifei::expertinos::mrta_vc::tasks::SkillLevels::toEnumerated(int code)
 {
-	unifei::expertinos::mrta_vc::tasks::SkillLevelEnum enumerated;
+	unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum enumerated;
 	switch (code)
 	{
 		case 0:
-			enumerated = NONE;
+			enumerated = unifei::expertinos::mrta_vc::tasks::levels::NONE;
 			break;
 		case 1:
-			enumerated = LOW;
+			enumerated = unifei::expertinos::mrta_vc::tasks::levels::LOW;
 			break;
 		case 2:
-			enumerated = MODERATE;
+			enumerated = unifei::expertinos::mrta_vc::tasks::levels::MODERATE;
 			break;
 		case 3:
-			enumerated = HIGH;
+			enumerated = unifei::expertinos::mrta_vc::tasks::levels::HIGH;
 			break;
 		case 4:
-			enumerated = RESOURCEFUL;
+			enumerated = unifei::expertinos::mrta_vc::tasks::levels::RESOURCEFUL;
 			break;
 		default:
 			enumerated = getDefault();
@@ -42,24 +42,24 @@ unifei::expertinos::mrta_vc::tasks::SkillLevelEnum unifei::expertinos::mrta_vc::
 /**
  *
  */
-int unifei::expertinos::mrta_vc::tasks::SkillLevels::toCode(unifei::expertinos::mrta_vc::tasks::SkillLevelEnum enumerated)
+int unifei::expertinos::mrta_vc::tasks::SkillLevels::toCode(unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum enumerated)
 {
 	int code;
 	switch (enumerated)
 	{
-		case NONE:
+		case unifei::expertinos::mrta_vc::tasks::levels::NONE:
 			code = 0;
 			break;
-		case LOW:
+		case unifei::expertinos::mrta_vc::tasks::levels::LOW:
 			code = 1;
 			break;
-		case MODERATE:
+		case unifei::expertinos::mrta_vc::tasks::levels::MODERATE:
 			code = 2;
 			break;
-		case HIGH:
+		case unifei::expertinos::mrta_vc::tasks::levels::HIGH:
 			code = 3;
 			break;
-		case RESOURCEFUL:
+		case unifei::expertinos::mrta_vc::tasks::levels::RESOURCEFUL:
 			code = 4;
 			break;
 		default:			
@@ -71,24 +71,24 @@ int unifei::expertinos::mrta_vc::tasks::SkillLevels::toCode(unifei::expertinos::
 /**
  *
  */
-std::string unifei::expertinos::mrta_vc::tasks::SkillLevels::toString(unifei::expertinos::mrta_vc::tasks::SkillLevelEnum enumerated)
+std::string unifei::expertinos::mrta_vc::tasks::SkillLevels::toString(unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum enumerated)
 {
 	std::string enumerated_name;
 	switch (enumerated)
 	{
-		case NONE:
+		case unifei::expertinos::mrta_vc::tasks::levels::NONE:
 			enumerated_name = "NONE";
 			break;
-		case LOW:
+		case unifei::expertinos::mrta_vc::tasks::levels::LOW:
 			enumerated_name = "LOW";
 			break;
-		case MODERATE:
+		case unifei::expertinos::mrta_vc::tasks::levels::MODERATE:
 			enumerated_name = "MODERATE";
 			break;
-		case HIGH:
+		case unifei::expertinos::mrta_vc::tasks::levels::HIGH:
 			enumerated_name = "HIGH";
 			break;
-		case RESOURCEFUL:
+		case unifei::expertinos::mrta_vc::tasks::levels::RESOURCEFUL:
 			enumerated_name = "RESOURCEFUL";
 			break;
 		default:
@@ -100,21 +100,21 @@ std::string unifei::expertinos::mrta_vc::tasks::SkillLevels::toString(unifei::ex
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::SkillLevelEnum unifei::expertinos::mrta_vc::tasks::SkillLevels::getDefault()
+unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum unifei::expertinos::mrta_vc::tasks::SkillLevels::getDefault()
 {
-	return NONE;
+	return unifei::expertinos::mrta_vc::tasks::levels::NONE;
 }
 
 /**
  *
  */
-std::vector<unifei::expertinos::mrta_vc::tasks::SkillLevelEnum> unifei::expertinos::mrta_vc::tasks::SkillLevels::getAll()
+std::vector<unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum> unifei::expertinos::mrta_vc::tasks::SkillLevels::getAll()
 {
-	std::vector<SkillLevelEnum> enumerateds;
-	enumerateds.push_back(NONE);
-	enumerateds.push_back(LOW);
-	enumerateds.push_back(MODERATE);
-	enumerateds.push_back(HIGH);
-	enumerateds.push_back(RESOURCEFUL);
+	std::vector<levels::SkillLevelEnum> enumerateds;
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::levels::NONE);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::levels::LOW);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::levels::MODERATE);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::levels::HIGH);
+	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::levels::RESOURCEFUL);
 	return enumerateds;
 }

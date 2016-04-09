@@ -31,7 +31,7 @@ mrta_vc::SpeechAnalyserNode::~SpeechAnalyserNode()
  */
 void mrta_vc::SpeechAnalyserNode::spin() 
 {
-	ROS_INFO("System Database Interface Node is up and running!!!");
+	ROS_INFO("Speech Analyser Node is up and running!!!");
 	ros::Rate loop_rate(10.0);
 	while (nh_.ok()) 
 	{

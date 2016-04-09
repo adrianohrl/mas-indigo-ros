@@ -50,17 +50,17 @@ unifei::expertinos::mrta_vc::places::Office::~Office()
 /**
  *
  */
-int unifei::expertinos::mrta_vc::places::Office::getType() 
+unifei::expertinos::mrta_vc::places::Floor unifei::expertinos::mrta_vc::places::Office::getFloor() 
 {
-	return OFFICE;
+	return floor_;
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Floor unifei::expertinos::mrta_vc::places::Office::getFloor() 
+int unifei::expertinos::mrta_vc::places::Office::getType() 
 {
-	return floor_;
+	return OFFICE;
 }
 
 
@@ -72,4 +72,13 @@ unifei::expertinos::mrta_vc::places::Floor unifei::expertinos::mrta_vc::places::
 	::mrta_vc::Place floor_msg = Place::toMsg();
 	//floor_msg.floor = floor_.toMsg();
 	return floor_msg;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::places::Office::operator=(const unifei::expertinos::mrta_vc::places::Office& office)
+{
+	unifei::expertinos::mrta_vc::places::Place::operator=(office);
+	floor_ = office.floor_;
 }

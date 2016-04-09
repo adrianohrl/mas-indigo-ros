@@ -100,6 +100,14 @@ bool unifei::expertinos::mrta_vc::places::Place::isValidType(int type)
 /**
  *
  */
+int unifei::expertinos::mrta_vc::places::Place::getType() 
+{
+	return PLACE;
+}
+
+/**
+ *
+ */
 void unifei::expertinos::mrta_vc::places::Place::setBoundary(geometry_msgs::Polygon boundary) 
 {
 	boundary_ = boundary;
@@ -122,7 +130,7 @@ void unifei::expertinos::mrta_vc::places::Place::setBoundary(geometry_msgs::Poly
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::places::Place::operator==(const Place& place)
+bool unifei::expertinos::mrta_vc::places::Place::operator==(const unifei::expertinos::mrta_vc::places::Place& place)
 {
 	return id_ == place.id_;
 }
@@ -130,7 +138,18 @@ bool unifei::expertinos::mrta_vc::places::Place::operator==(const Place& place)
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::places::Place::operator!=(const Place& place) 
+bool unifei::expertinos::mrta_vc::places::Place::operator!=(const unifei::expertinos::mrta_vc::places::Place& place) 
 {
 	return id_ != place.id_;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::places::Place::operator=(const unifei::expertinos::mrta_vc::places::Place& place) 
+{
+	unifei::expertinos::mrta_vc::places::Location::operator=(place);
+	id_ = place.id_;
+	name_ = place.name_;
+	boundary_ = place.boundary_;
 }

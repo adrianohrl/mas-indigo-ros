@@ -34,6 +34,7 @@ namespace unifei
 
 					Building getBuilding();
 					::mrta_vc::Place toMsg();
+					void operator=(const Floor& floor);
 
 				protected:
 					int getType();

@@ -34,8 +34,7 @@ namespace unifei
 
 					Office getOffice();
 					::mrta_vc::Place toMsg();
-					bool operator==(const Desk& desk);
-					bool operator!=(const Desk& desk);
+					void operator=(const Desk& desk);
 
 				protected:
 					int getType();
