@@ -39,6 +39,7 @@ include_directories(
 add_executable(system_manager_node 
 	src/system_manager_node.cpp
 	src/SystemManagerNode.cpp
+	src/system/AllocationManager.cpp
 	src/tasks/Allocation.cpp
 	src/tasks/Task.cpp
 	src/tasks/TaskPriorities.cpp
@@ -74,6 +75,11 @@ target_link_libraries(system_manager_node
 add_executable(system_user_interface_node 
 	src/system_user_interface_node.cpp
 	src/SystemUserInterfaceNode.cpp
+	src/agents/VoiceCommander.cpp
+	src/agents/Computer.cpp
+	src/agents/Person.cpp
+	src/agents/Agent.cpp
+	src/places/Location.cpp
 	)
 
 add_dependencies(system_user_interface_node 
@@ -88,6 +94,10 @@ target_link_libraries(system_user_interface_node
 add_executable(system_robot_interface_node 
 	src/system_robot_interface_node.cpp
 	src/SystemRobotInterfaceNode.cpp
+	src/agents/Robot.cpp
+	src/agents/Computer.cpp
+	src/agents/Agent.cpp
+	src/places/Location.cpp
 	)
 
 add_dependencies(system_robot_interface_node 

@@ -13,9 +13,10 @@
 /**
  * Constructor
  */
-mrta_vc::SystemRobotInterfaceNode::SystemRobotInterfaceNode(ros::NodeHandle nh) :
-	nh_(nh)
+mrta_vc::SystemRobotInterfaceNode::SystemRobotInterfaceNode(ros::NodeHandle nh) : unifei::expertinos::mrta_vc::agents::Robot(), nh_(nh)
 {
+	beacon_timer_ = nh_.createTimer(ros::Duration(ROBOT_BEACON_INTERVAL_DURATION), &mrta_vc::SystemRobotInterfaceNode::beaconTimerCallback, this);
+	beacon_pub_ = nh_.advertise<mrta_vc::Agent>("/robot_beacon", 1);
 }
 
 /**
@@ -23,6 +24,7 @@ mrta_vc::SystemRobotInterfaceNode::SystemRobotInterfaceNode(ros::NodeHandle nh) 
  */
 mrta_vc::SystemRobotInterfaceNode::~SystemRobotInterfaceNode()
 {
+	beacon_pub_.shutdown();
 }
 
 /**
@@ -37,4 +39,12 @@ void mrta_vc::SystemRobotInterfaceNode::spin()
 		ros::spinOnce();
 		loop_rate.sleep();
 	}
+}
+
+/**
+ * 
+ */
+void mrta_vc::SystemRobotInterfaceNode::beaconTimerCallback(const ros::TimerEvent& event) 
+{
+	beacon_pub_.publish(unifei::expertinos::mrta_vc::agents::Robot::toMsg());
 }

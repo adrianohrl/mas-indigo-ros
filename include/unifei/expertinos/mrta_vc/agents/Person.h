@@ -11,7 +11,6 @@
 #ifndef PERSON_H_
 #define PERSON_H_
 
-#include <string>
 #include "unifei/expertinos/mrta_vc/agents/Agent.h"
 
 namespace unifei 
@@ -34,16 +33,22 @@ namespace unifei
 
 					std::string getName();
 					::mrta_vc::Agent toMsg();
+					std::string toString();
 					bool equals(Person person);
 					bool operator==(const Person& person);
 					bool operator!=(const Person& person);
 					void operator=(const Person& person);
 					
 				protected:
+					Person();
+					
 					int getType();
+					void setName(std::string name);
 
 				private:
 					std::string name_;
+					
+					std::string getClassName();
 
 				};
 			}

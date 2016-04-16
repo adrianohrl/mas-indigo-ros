@@ -37,14 +37,19 @@ namespace unifei
 					void setLoginName(std::string login_name);
 					void setComputer(Computer computer);
 					::mrta_vc::Agent toMsg();
+					std::string toString();
 					void operator=(const VoiceCommander& VoiceCommander);
 					
 				protected:
+					VoiceCommander();
+					
 					int getType();
 
 				private:
 					std::string login_name_;
 					Computer computer_;
+					
+					std::string getClassName();
 
 				};
 			}

@@ -13,6 +13,13 @@
 /**
  *
  */
+unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander() : Person(), computer_(::mrta_vc::Agent())
+{
+}
+
+/**
+ *
+ */
 unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(int id, std::string name, std::string login_name, Computer computer, double x, double y, double theta) : Person(id, name, x, y, theta), computer_(computer)
 {
 	login_name_ = login_name;
@@ -76,6 +83,14 @@ int unifei::expertinos::mrta_vc::agents::VoiceCommander::getType()
 /**
  *
  */
+std::string unifei::expertinos::mrta_vc::agents::VoiceCommander::getClassName() 
+{
+	return "VOICE COMMANDER";
+}
+
+/**
+ *
+ */
 void unifei::expertinos::mrta_vc::agents::VoiceCommander::setLoginName(std::string login_name) 
 {
 	login_name_ = login_name;
@@ -94,10 +109,20 @@ void unifei::expertinos::mrta_vc::agents::VoiceCommander::setComputer(unifei::ex
  */
 ::mrta_vc::Agent unifei::expertinos::mrta_vc::agents::VoiceCommander::toMsg() 
 {
-	::mrta_vc::Agent voice_commander_msg = Agent::toMsg();
+	::mrta_vc::Agent voice_commander_msg = unifei::expertinos::mrta_vc::agents::Person::toMsg();
 	voice_commander_msg.login_name = login_name_;
 	//voice_commander_msg.computer = computer_.toMsg();
 	return voice_commander_msg;
+}
+
+/**
+ *
+ */
+std::string unifei::expertinos::mrta_vc::agents::VoiceCommander::toString() 
+{
+	std::stringstream aux;
+	aux << unifei::expertinos::mrta_vc::agents::Person::toString() << " - login: " << login_name_ << " - computer: " << computer_.getHostname();
+	return aux.str();
 }
 
 /**

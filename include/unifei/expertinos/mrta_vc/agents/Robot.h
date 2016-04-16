@@ -40,10 +40,14 @@ namespace unifei
 					void setVelocity(double x = 0, double y = 0, double theta = 0);
 					void setVelocity(geometry_msgs::Twist twist_msg);
 					::mrta_vc::Agent toMsg();
+					std::string toString();
 					void operator=(const Robot& Robot);
 					
 				protected:
+					Robot();
+					
 					int getType();
+					void setHolonomic(bool holonomic);
 
 				private:
 					bool holonomic_;
@@ -51,6 +55,8 @@ namespace unifei
 					double vel_y_;
 					double vel_theta_;
 
+					std::string getClassName();
+					
 				};
 			}
 		}

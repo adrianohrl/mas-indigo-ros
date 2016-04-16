@@ -118,3 +118,19 @@ std::vector<unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum> unifei::
 	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::levels::RESOURCEFUL);
 	return enumerateds;
 }
+
+/**
+ *
+ */
+int unifei::expertinos::mrta_vc::tasks::SkillLevels::compare(unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum level1, unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum level2)
+{
+	return toCode(level1) - toCode(level2);
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::tasks::SkillLevels::isSufficient(unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum level, unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum desired_level)
+{
+	return compare(level, desired_level) >= 0;
+}

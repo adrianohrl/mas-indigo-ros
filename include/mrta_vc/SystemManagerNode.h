@@ -12,6 +12,7 @@
 #define SYSTEM_MANAGER_NODE_H_
 
 #include <ros/ros.h>
+#include "unifei/expertinos/mrta_vc/tasks/Allocation.h"
 
 namespace mrta_vc 
 {
@@ -33,6 +34,11 @@ namespace mrta_vc
 	
 		/** atributos privados relacionados ao nó */
 		ros::NodeHandle nh_;
+		ros::Subscriber robot_beacon_sub_;
+		ros::Subscriber user_beacon_sub_;
+		
+		void robotBeaconCallback(const mrta_vc::Agent::ConstPtr& beacon_msg);
+		void userBeaconCallback(const mrta_vc::Agent::ConstPtr& beacon_msg);
 
 	};
 

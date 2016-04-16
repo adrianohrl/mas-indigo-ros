@@ -12,11 +12,14 @@
 #define SYSTEM_ROBOT_INTERFACE_NODE_H_
 
 #include <ros/ros.h>
+#include "unifei/expertinos/mrta_vc/agents/Robot.h"
+
+#define ROBOT_BEACON_INTERVAL_DURATION 10.0
 
 namespace mrta_vc 
 {
 
-	class SystemRobotInterfaceNode 
+	class SystemRobotInterfaceNode : unifei::expertinos::mrta_vc::agents::Robot
 	{
 
 	public:
@@ -33,6 +36,10 @@ namespace mrta_vc
 	
 		/** atributos privados relacionados ao nó */
 		ros::NodeHandle nh_;
+		ros::Timer beacon_timer_;
+		ros::Publisher beacon_pub_;
+		
+		void beaconTimerCallback(const ros::TimerEvent& event);
 
 	};
 

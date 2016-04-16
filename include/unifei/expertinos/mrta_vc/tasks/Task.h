@@ -54,7 +54,7 @@ namespace unifei
 					void setReceiver(unifei::expertinos::mrta_vc::agents::Person receiver);
 					void setPriority(TaskPriorityEnum priority);
 					void setDeadline(ros::Time deadline);
-					bool hasExpired();
+					bool isExpired();
 					::mrta_vc::Task toMsg();
 					bool equals(Task task);
 					int compareTo(Task task);

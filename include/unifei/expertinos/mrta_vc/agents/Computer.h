@@ -11,7 +11,6 @@
 #ifndef COMPUTER_H_
 #define COMPUTER_H_
 
-#include <string>
 #include "unifei/expertinos/mrta_vc/agents/Agent.h"
 
 namespace unifei 
@@ -35,17 +34,24 @@ namespace unifei
 					std::string getHostname();
 					bool isMobile();
 					::mrta_vc::Agent toMsg();
+					std::string toString();
 					bool equals(Computer computer);
 					bool operator==(const Computer& computer);
 					bool operator!=(const Computer& computer);
 					void operator=(const Computer& computer);
 					
 				protected:
+					Computer();
+				
 					int getType();
+					void setHostname(std::string hostname);
+					void setMobile(bool mobile);
 
 				private:
 					std::string hostname_;
 					bool mobile_;
+					
+					std::string getClassName();
 
 				};
 			}

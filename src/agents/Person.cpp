@@ -13,6 +13,13 @@
 /**
  *
  */
+unifei::expertinos::mrta_vc::agents::Person::Person() : Agent()
+{
+}
+
+/**
+ *
+ */
 unifei::expertinos::mrta_vc::agents::Person::Person(int id, std::string name, double x, double y, double theta) : Agent(id, x, y, theta)
 {
 	name_ = name;
@@ -68,11 +75,37 @@ int unifei::expertinos::mrta_vc::agents::Person::getType()
 /**
  *
  */
+std::string unifei::expertinos::mrta_vc::agents::Person::getClassName() 
+{
+	return "PERSON";
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::Person::setName(std::string name) 
+{
+	name_ = name;
+}
+
+/**
+ *
+ */
 ::mrta_vc::Agent unifei::expertinos::mrta_vc::agents::Person::toMsg() 
 {
-	::mrta_vc::Agent person_msg = Agent::toMsg();
+	::mrta_vc::Agent person_msg = unifei::expertinos::mrta_vc::agents::Agent::toMsg();
 	person_msg.name = name_;
 	return person_msg;
+}
+
+/**
+ *
+ */
+std::string unifei::expertinos::mrta_vc::agents::Person::toString() 
+{
+	std::stringstream aux;
+	aux << unifei::expertinos::mrta_vc::agents::Agent::toString() << " - name: " << name_;
+	return aux.str();
 }
 
 /**

@@ -11,6 +11,8 @@
 #ifndef AGENT_H_
 #define AGENT_H_
 
+#include <sstream>
+#include <string>
 #include "mrta_vc/Agent.h"
 #include "unifei/expertinos/mrta_vc/places/Location.h"
 
@@ -45,19 +47,24 @@ namespace unifei
 					void setLocation(geometry_msgs::Pose pose_msg);
 					void setLocation(unifei::expertinos::mrta_vc::places::Location location);
 					::mrta_vc::Agent toMsg();
+					std::string toString();
 					bool equals(Agent agent);
 					bool operator==(const Agent& agent);
 					bool operator!=(const Agent& agent);
 					void operator=(const Agent& agent);
 
 				protected:
+					Agent();
+				
 					int getType();
+					void setId(int id);
 
 				private:
 					int id_;
 					unifei::expertinos::mrta_vc::places::Location location_;
 					
 					bool isValidType(int type);
+					std::string getClassName();
 
 				};
 			}

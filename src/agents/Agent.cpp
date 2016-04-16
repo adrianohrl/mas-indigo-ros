@@ -13,6 +13,13 @@
 /**
  *
  */
+unifei::expertinos::mrta_vc::agents::Agent::Agent()
+{	
+}
+
+/**
+ *
+ */
 unifei::expertinos::mrta_vc::agents::Agent::Agent(int id, double x, double y, double theta) : location_(x, y, theta)
 {
 	id_ = id;	
@@ -84,6 +91,22 @@ int unifei::expertinos::mrta_vc::agents::Agent::getType()
 /**
  *
  */
+std::string unifei::expertinos::mrta_vc::agents::Agent::getClassName() 
+{
+	return "AGENT";
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::Agent::setId(int id) 
+{
+	id_ = id;
+}
+
+/**
+ *
+ */
 void unifei::expertinos::mrta_vc::agents::Agent::setLocation(double x, double y, double theta) 
 {
 	location_.setPose(x, y, theta);
@@ -114,6 +137,16 @@ void unifei::expertinos::mrta_vc::agents::Agent::setLocation(unifei::expertinos:
 	agent_msg.id = id_;
 	agent_msg.location = location_.toMsg();
 	return agent_msg;
+}
+
+/**
+ *
+ */
+std::string unifei::expertinos::mrta_vc::agents::Agent::toString() 
+{
+	std::stringstream aux;
+	aux << "[" << getClassName() << "] id: " << id_;
+	return aux.str();
 }
 
 /**

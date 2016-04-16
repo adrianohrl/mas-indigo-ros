@@ -13,6 +13,13 @@
 /**
  *
  */
+unifei::expertinos::mrta_vc::agents::Computer::Computer() : Agent()
+{
+}
+
+/**
+ *
+ */
 unifei::expertinos::mrta_vc::agents::Computer::Computer(int id, std::string hostname, bool mobile, double x, double y, double theta) : Agent(id, x, y, theta)
 {
 	hostname_ = hostname;
@@ -80,12 +87,46 @@ int unifei::expertinos::mrta_vc::agents::Computer::getType()
 /**
  *
  */
+std::string unifei::expertinos::mrta_vc::agents::Computer::getClassName() 
+{
+	return "COMPUTER";
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::Computer::setHostname(std::string hostname) 
+{
+	hostname_ = hostname;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::Computer::setMobile(bool mobile) 
+{
+	mobile_ = mobile;
+}
+
+/**
+ *
+ */
 ::mrta_vc::Agent unifei::expertinos::mrta_vc::agents::Computer::toMsg() 
 {
-	::mrta_vc::Agent computer_msg = Agent::toMsg();
+	::mrta_vc::Agent computer_msg = unifei::expertinos::mrta_vc::agents::Agent::toMsg();
 	computer_msg.name = hostname_;
 	computer_msg.mobile = mobile_;
 	return computer_msg;
+}
+
+/**
+ *
+ */
+std::string unifei::expertinos::mrta_vc::agents::Computer::toString() 
+{
+	std::stringstream aux;
+	aux << unifei::expertinos::mrta_vc::agents::Agent::toString() << " - hostname: " << hostname_;
+	return aux.str();
 }
 
 /**

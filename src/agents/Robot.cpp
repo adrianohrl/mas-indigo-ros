@@ -13,6 +13,13 @@
 /**
  *
  */
+unifei::expertinos::mrta_vc::agents::Robot::Robot() : Computer()
+{
+}
+
+/**
+ *
+ */
 unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, bool holonomic, bool mobile, double x, double y, double theta) : Computer(id, hostname, mobile, x, y, theta)
 {
 	holonomic_ = holonomic;
@@ -104,6 +111,22 @@ int unifei::expertinos::mrta_vc::agents::Robot::getType()
 /**
  *
  */
+std::string unifei::expertinos::mrta_vc::agents::Robot::getClassName() 
+{
+	return "ROBOT";
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::Robot::setHolonomic(bool holonomic)
+{
+	holonomic_ = holonomic;
+}
+
+/**
+ *
+ */
 void unifei::expertinos::mrta_vc::agents::Robot::setVelocity(double x, double y, double theta) 
 {
 	vel_x_ = x;
@@ -126,12 +149,22 @@ void unifei::expertinos::mrta_vc::agents::Robot::setVelocity(geometry_msgs::Twis
  */
 ::mrta_vc::Agent unifei::expertinos::mrta_vc::agents::Robot::toMsg() 
 {
-	::mrta_vc::Agent robot_msg = Computer::toMsg();
+	::mrta_vc::Agent robot_msg = unifei::expertinos::mrta_vc::agents::Computer::toMsg();
 	robot_msg.holonomic = holonomic_;
 	robot_msg.velocity.linear.x = vel_x_;
 	robot_msg.velocity.linear.y = vel_y_;
 	robot_msg.velocity.angular.z = vel_theta_;
 	return robot_msg;
+}
+
+/**
+ *
+ */
+std::string unifei::expertinos::mrta_vc::agents::Robot::toString() 
+{
+	std::stringstream aux;
+	aux << unifei::expertinos::mrta_vc::agents::Computer::toString() << " - velocity: (" << vel_x_ << ", " << vel_y_ << ", " << vel_theta_ << ")";
+	return aux.str();
 }
 
 /**

@@ -12,11 +12,14 @@
 #define SYSTEM_USER_INTERFACE_NODE_H_
 
 #include <ros/ros.h>
+#include "unifei/expertinos/mrta_vc/agents/VoiceCommander.h"
+
+#define USER_BEACON_INTERVAL_DURATION 30.0
 
 namespace mrta_vc 
 {
 
-	class SystemUserInterfaceNode 
+	class SystemUserInterfaceNode : unifei::expertinos::mrta_vc::agents::VoiceCommander
 	{
 
 	public:
@@ -33,6 +36,11 @@ namespace mrta_vc
 	
 		/** atributos privados relacionados ao nó */
 		ros::NodeHandle nh_;
+		ros::Timer beacon_timer_;
+		ros::Publisher beacon_pub_;
+		
+		void beaconTimerCallback(const ros::TimerEvent& event);
+		void setComputerUp();
 
 	};
 

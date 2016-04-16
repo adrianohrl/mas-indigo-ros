@@ -37,7 +37,8 @@ namespace unifei
 					Resource getResource();
 					void setLevel(SkillLevelEnum level);
 					::mrta_vc::Skill toMsg();
-					bool isSufficient(Skill skill);
+					bool isSufficient(SkillLevelEnum desired_level);
+					bool isSufficient(Skill desired_skill);
 					bool equals(Skill skill);
 					int compareTo(Skill skill);
 					bool operator==(const Skill& skill);

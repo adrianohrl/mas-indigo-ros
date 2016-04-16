@@ -42,7 +42,8 @@ unifei::expertinos::mrta_vc::tasks::Task::Task(const ::mrta_vc::Task::ConstPtr& 
 	id_ = task_msg->id;	
 	name_ = task_msg->name;
 	description_ = task_msg->description;	
-	for(int i = 0; i < task_msg->desired_skills.size(); i++) {
+	for(int i = 0; i < task_msg->desired_skills.size(); i++) 
+	{
 		Skill skill(task_msg->desired_skills.at(i)); 		
 		desired_skills_.push_back(skill);	
 	}	
@@ -57,7 +58,8 @@ unifei::expertinos::mrta_vc::tasks::Task::Task(::mrta_vc::Task task_msg) : sende
 	id_ = task_msg.id;	
 	name_ = task_msg.name;
 	description_ = task_msg.description;
-	for(int i = 0; i < task_msg.desired_skills.size(); i++) {
+	for(int i = 0; i < task_msg.desired_skills.size(); i++) 
+	{
 		Skill skill(task_msg.desired_skills.at(i)); 		
 		desired_skills_.push_back(skill);	
 	}	
@@ -162,9 +164,12 @@ void unifei::expertinos::mrta_vc::tasks::Task::setDescription(std::string descri
 /**
  *
  */
-void unifei::expertinos::mrta_vc::tasks::Task::addSkill(unifei::expertinos::mrta_vc::tasks::Skill skill) {
-	for (int i = 0; i < desired_skills_.size(); i++){
-		if(skill.equals(desired_skills_.at(i))){
+void unifei::expertinos::mrta_vc::tasks::Task::addSkill(unifei::expertinos::mrta_vc::tasks::Skill skill) 
+{
+	for (int i = 0; i < desired_skills_.size(); i++)
+	{
+		if(skill.equals(desired_skills_.at(i)))
+		{
 			return;
 		}
 	}	
@@ -174,9 +179,12 @@ void unifei::expertinos::mrta_vc::tasks::Task::addSkill(unifei::expertinos::mrta
 /**
  *
  */
-void unifei::expertinos::mrta_vc::tasks::Task::removeSkill(unifei::expertinos::mrta_vc::tasks::Skill skill) {
-	for (int i = 0; i < desired_skills_.size(); i++){
-		if(skill.equals(desired_skills_.at(i))){
+void unifei::expertinos::mrta_vc::tasks::Task::removeSkill(unifei::expertinos::mrta_vc::tasks::Skill skill) 
+{
+	for (int i = 0; i < desired_skills_.size(); i++)
+	{
+		if(skill.equals(desired_skills_.at(i)))
+		{
 			desired_skills_.erase(desired_skills_.begin() + i);
 			return;
 		}
@@ -218,9 +226,9 @@ void unifei::expertinos::mrta_vc::tasks::Task::setDeadline(ros::Time deadline)
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Task::hasExpired() 
+bool unifei::expertinos::mrta_vc::tasks::Task::isExpired() 
 {
-	return deadline_ < ros::Time::now();
+	return deadline_.toSec() != 0.0 && deadline_ < ros::Time::now();
 }
 
 /**
@@ -232,7 +240,8 @@ bool unifei::expertinos::mrta_vc::tasks::Task::hasExpired()
 	task_msg.id = id_;
 	task_msg.name = name_;
 	task_msg.description = description_;
-	for(int i = 0; i < desired_skills_.size(); i++) {
+	for(int i = 0; i < desired_skills_.size(); i++) 
+	{
 		task_msg.desired_skills.push_back(desired_skills_.at(i).toMsg());
 	}
 	task_msg.sender = sender_.toMsg();

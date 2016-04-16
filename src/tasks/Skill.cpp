@@ -80,9 +80,17 @@ void unifei::expertinos::mrta_vc::tasks::Skill::setLevel(unifei::expertinos::mrt
 /**
  * TESTAR
  */
-bool unifei::expertinos::mrta_vc::tasks::Skill::isSufficient(unifei::expertinos::mrta_vc::tasks::Skill skill) 
+bool unifei::expertinos::mrta_vc::tasks::Skill::isSufficient(unifei::expertinos::mrta_vc::tasks::SkillLevelEnum desired_level) 
 { 
-	return equals(skill) && unifei::expertinos::mrta_vc::tasks::SkillLevels::toCode(level_) <= unifei::expertinos::mrta_vc::tasks::SkillLevels::toCode(skill.level_);	
+	return unifei::expertinos::mrta_vc::tasks::SkillLevels::isSufficient(level_, desired_level);	
+}
+
+/**
+ * TESTAR
+ */
+bool unifei::expertinos::mrta_vc::tasks::Skill::isSufficient(unifei::expertinos::mrta_vc::tasks::Skill desired_skill) 
+{ 
+	return equals(desired_skill) && isSufficient(desired_skill.level_);
 }
 
 /**

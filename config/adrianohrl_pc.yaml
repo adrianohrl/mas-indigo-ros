@@ -1,0 +1,5 @@
+id: 1
+name: 'Adriano Henrique Rossette Leite'
+login_name: 'adrianohrl'
+location: {x: 0.1, y: 0.5, theta: 0.0}
+computer: {id: 2, hostname: 'adrianohrl_pc', mobile: false, location: {x: 0.1, y: 0.5, theta: deg(90.0)}}
