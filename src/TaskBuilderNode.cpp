@@ -14,9 +14,9 @@
 /**
  * Constructor
  */
-mrta_vc::TaskBuilderNode::TaskBuilderNode(ros::NodeHandle nh) :
-	nh_(nh)
+mrta_vc::TaskBuilderNode::TaskBuilderNode(ros::NodeHandle nh) : nh_(nh)
 {
+	abort_srv_ = nh_.advertiseService("abort", &mrta_vc::TaskBuilderNode::abort, this);
 }
 
 /**
@@ -38,4 +38,12 @@ void mrta_vc::TaskBuilderNode::spin()
 		ros::spinOnce();
 		loop_rate.sleep();
 	}
+}
+
+/**
+ * 
+ */
+bool mrta_vc::TaskBuilderNode::abort(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response)
+{
+	return true;
 }

@@ -6,6 +6,7 @@ find_package(catkin REQUIRED COMPONENTS
 	message_generation
 	roscpp
 	std_msgs
+	std_srvs
 	)
 
 add_message_files(
@@ -24,6 +25,7 @@ generate_messages(
 	geometry_msgs
 	mrta_vc
 	std_msgs
+	std_srvs
 	)
 
 catkin_package(

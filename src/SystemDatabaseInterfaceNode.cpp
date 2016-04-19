@@ -14,8 +14,7 @@
 /**
  * Constructor
  */
-mrta_vc::SystemDatabaseInterfaceNode::SystemDatabaseInterfaceNode(ros::NodeHandle nh) :
-	nh_(nh)
+mrta_vc::SystemDatabaseInterfaceNode::SystemDatabaseInterfaceNode(ros::NodeHandle nh) : nh_(nh)
 {
 }
 
