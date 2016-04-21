@@ -36,6 +36,14 @@ unifei::expertinos::mrta_vc::agents::Agent::Agent(int id, geometry_msgs::Pose po
 /**
  *
  */
+unifei::expertinos::mrta_vc::agents::Agent::Agent(int id, unifei::expertinos::mrta_vc::places::Location location) : location_(location)
+{
+	id_ = id;	
+}
+
+/**
+ *
+ */
 unifei::expertinos::mrta_vc::agents::Agent::Agent(const ::mrta_vc::Agent::ConstPtr& agent_msg) : location_(agent_msg->location)
 {
 	id_ = agent_msg->id;

@@ -14,7 +14,7 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots, TaskStateEnum state, TaskSatisfactionEnum satisfaction) : task_(task), robots_(robots)
+unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(unifei::expertinos::mrta_vc::tasks::Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots, unifei::expertinos::mrta_vc::tasks::TaskStateEnum state, unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum satisfaction) : task_(task), robots_(robots)
 {
 	state_ = state;
 	satisfaction_ = satisfaction;
@@ -23,7 +23,7 @@ unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(Task task, std::vecto
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots, TaskStateEnum state, TaskSatisfactionEnum satisfaction, ros::Time allocation_timestamp, ros::Time start_timestamp, ros::Time end_timestamp) : task_(task), robots_(robots)
+unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(unifei::expertinos::mrta_vc::tasks::Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots, unifei::expertinos::mrta_vc::tasks::TaskStateEnum state, unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum satisfaction, ros::Time allocation_timestamp, ros::Time start_timestamp, ros::Time end_timestamp) : task_(task), robots_(robots)
 {
 	state_ = state;
 	satisfaction_ = satisfaction;

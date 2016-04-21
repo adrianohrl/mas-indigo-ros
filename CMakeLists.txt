@@ -19,6 +19,11 @@ add_message_files(
 	Skill.msg
 	Task.msg
 	)
+	
+add_service_files(
+	FILES
+	ValidatePassword.srv
+)
 
 generate_messages(
 	DEPENDENCIES
@@ -42,6 +47,7 @@ add_executable(system_manager_node
 	src/system_manager_node.cpp
 	src/SystemManagerNode.cpp
 	src/system/AllocationManager.cpp
+	src/system/DatabaseInterface.cpp
 	src/tasks/Allocation.cpp
 	src/tasks/Task.cpp
 	src/tasks/TaskPriorities.cpp
@@ -61,6 +67,7 @@ add_executable(system_manager_node
 	src/agents/Agent.cpp
 	src/agents/Computer.cpp
 	src/agents/Person.cpp
+	src/agents/HierarchyLevels.cpp
 	src/agents/Robot.cpp
 	src/agents/VoiceCommander.cpp
 	)
@@ -80,6 +87,7 @@ add_executable(system_user_interface_node
 	src/agents/VoiceCommander.cpp
 	src/agents/Computer.cpp
 	src/agents/Person.cpp
+	src/agents/HierarchyLevels.cpp
 	src/agents/Agent.cpp
 	src/places/Location.cpp
 	)
@@ -114,6 +122,29 @@ target_link_libraries(system_robot_interface_node
 add_executable(system_database_interface_node 
 	src/system_database_interface_node.cpp
 	src/SystemDatabaseInterfaceNode.cpp
+	src/system/DatabaseInterface.cpp
+	src/tasks/Allocation.cpp
+	src/tasks/Task.cpp
+	src/tasks/TaskPriorities.cpp
+	src/tasks/TaskStates.cpp
+	src/tasks/TaskSatisfactions.cpp
+	src/tasks/Skill.cpp
+	src/tasks/SkillLevels.cpp
+	src/tasks/Resource.cpp
+	src/places/Location.cpp
+	src/places/Place.cpp
+	src/places/Campus.cpp
+	src/places/ExternalArea.cpp
+	src/places/Building.cpp
+	src/places/Floor.cpp
+	src/places/Office.cpp
+	src/places/Desk.cpp
+	src/agents/Agent.cpp
+	src/agents/Computer.cpp
+	src/agents/Person.cpp
+	src/agents/HierarchyLevels.cpp
+	src/agents/Robot.cpp
+	src/agents/VoiceCommander.cpp
 	)
 
 add_dependencies(system_database_interface_node 

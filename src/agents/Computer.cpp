@@ -13,14 +13,14 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Computer::Computer() : Agent()
+unifei::expertinos::mrta_vc::agents::Computer::Computer() : unifei::expertinos::mrta_vc::agents::Agent()
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Computer::Computer(int id, std::string hostname, bool mobile, double x, double y, double theta) : Agent(id, x, y, theta)
+unifei::expertinos::mrta_vc::agents::Computer::Computer(int id, std::string hostname, bool mobile, double x, double y, double theta) : unifei::expertinos::mrta_vc::agents::Agent(id, x, y, theta)
 {
 	hostname_ = hostname;
 	mobile_ = mobile;
@@ -29,7 +29,7 @@ unifei::expertinos::mrta_vc::agents::Computer::Computer(int id, std::string host
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Computer::Computer(int id, std::string hostname, bool mobile, geometry_msgs::Pose pose_msg) : Agent(id, pose_msg)
+unifei::expertinos::mrta_vc::agents::Computer::Computer(int id, std::string hostname, bool mobile, geometry_msgs::Pose pose_msg) : unifei::expertinos::mrta_vc::agents::Agent(id, pose_msg)
 {
 	hostname_ = hostname;
 	mobile_ = mobile;	
@@ -38,7 +38,16 @@ unifei::expertinos::mrta_vc::agents::Computer::Computer(int id, std::string host
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Computer::Computer(const ::mrta_vc::Agent::ConstPtr& computer_msg) : Agent(computer_msg)
+unifei::expertinos::mrta_vc::agents::Computer::Computer(int id, std::string hostname, bool mobile, unifei::expertinos::mrta_vc::places::Location location) : unifei::expertinos::mrta_vc::agents::Agent(id, location)
+{
+	hostname_ = hostname;
+	mobile_ = mobile;	
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::agents::Computer::Computer(const ::mrta_vc::Agent::ConstPtr& computer_msg) : unifei::expertinos::mrta_vc::agents::Agent(computer_msg)
 {
 	hostname_ = computer_msg->name;
 	mobile_ = computer_msg->mobile;

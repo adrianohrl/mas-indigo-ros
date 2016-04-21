@@ -13,40 +13,53 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Person::Person() : Agent()
+unifei::expertinos::mrta_vc::agents::Person::Person() : unifei::expertinos::mrta_vc::agents::Agent()
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Person::Person(int id, std::string name, double x, double y, double theta) : Agent(id, x, y, theta)
-{
-	name_ = name;
-}
-
-/**
- *
- */
-unifei::expertinos::mrta_vc::agents::Person::Person(int id, std::string name, geometry_msgs::Pose pose_msg) : Agent(id, pose_msg)
+unifei::expertinos::mrta_vc::agents::Person::Person(int id, std::string name, unifei::expertinos::mrta_vc::agents::HierarchyLevelEnum hierarchy_level, double x, double y, double theta) : unifei::expertinos::mrta_vc::agents::Agent(id, x, y, theta)
 {
 	name_ = name;
+	hierarchy_level_ = hierarchy_level;
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Person::Person(const ::mrta_vc::Agent::ConstPtr& person_msg) : Agent(person_msg)
+unifei::expertinos::mrta_vc::agents::Person::Person(int id, std::string name, HierarchyLevelEnum hierarchy_level, geometry_msgs::Pose pose_msg) : unifei::expertinos::mrta_vc::agents::Agent(id, pose_msg)
+{
+	name_ = name;
+	hierarchy_level_ = hierarchy_level;
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::agents::Person::Person(int id, std::string name, HierarchyLevelEnum hierarchy_level, unifei::expertinos::mrta_vc::places::Location location) : unifei::expertinos::mrta_vc::agents::Agent(id, location)
+{
+	name_ = name;
+	hierarchy_level_ = hierarchy_level;
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::agents::Person::Person(const ::mrta_vc::Agent::ConstPtr& person_msg) : unifei::expertinos::mrta_vc::agents::Agent(person_msg)
 {
 	name_ = person_msg->name;
+	hierarchy_level_ = unifei::expertinos::mrta_vc::agents::HierarchyLevels::toEnumerated(person_msg->hierarchy_level);
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Person::Person(::mrta_vc::Agent person_msg) : Agent(person_msg)
+unifei::expertinos::mrta_vc::agents::Person::Person(::mrta_vc::Agent person_msg) : unifei::expertinos::mrta_vc::agents::Agent(person_msg)
 {
 	name_ = person_msg.name;
+	hierarchy_level_ = unifei::expertinos::mrta_vc::agents::HierarchyLevels::toEnumerated(person_msg.hierarchy_level);
 }
 
 /**
@@ -62,6 +75,14 @@ unifei::expertinos::mrta_vc::agents::Person::~Person()
 std::string unifei::expertinos::mrta_vc::agents::Person::getName() 
 {
 	return name_;
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::agents::HierarchyLevelEnum unifei::expertinos::mrta_vc::agents::Person::getHierarchyLevel() 
+{
+	return hierarchy_level_;
 }
 
 /**
@@ -91,10 +112,19 @@ void unifei::expertinos::mrta_vc::agents::Person::setName(std::string name)
 /**
  *
  */
+void unifei::expertinos::mrta_vc::agents::Person::setHierarchyLevel(unifei::expertinos::mrta_vc::agents::HierarchyLevelEnum hierarchy_level) 
+{
+	hierarchy_level_ = hierarchy_level;
+}
+
+/**
+ *
+ */
 ::mrta_vc::Agent unifei::expertinos::mrta_vc::agents::Person::toMsg() 
 {
 	::mrta_vc::Agent person_msg = unifei::expertinos::mrta_vc::agents::Agent::toMsg();
 	person_msg.name = name_;
+	person_msg.hierarchy_level = unifei::expertinos::mrta_vc::agents::HierarchyLevels::toCode(hierarchy_level_);
 	return person_msg;
 }
 
@@ -104,7 +134,7 @@ void unifei::expertinos::mrta_vc::agents::Person::setName(std::string name)
 std::string unifei::expertinos::mrta_vc::agents::Person::toString() 
 {
 	std::stringstream aux;
-	aux << unifei::expertinos::mrta_vc::agents::Agent::toString() << " - name: " << name_;
+	aux << unifei::expertinos::mrta_vc::agents::Agent::toString() << " - name: " << name_ << " - hierarchy level: " << unifei::expertinos::mrta_vc::agents::HierarchyLevels::toString(hierarchy_level_);
 	return aux.str();
 }
 

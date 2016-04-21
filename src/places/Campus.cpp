@@ -13,28 +13,28 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Campus::Campus(int id, std::string name, geometry_msgs::Polygon boundary, double x, double y, double theta) : Place(id, name, boundary, x, y, theta)
+unifei::expertinos::mrta_vc::places::Campus::Campus(int id, std::string name, geometry_msgs::Polygon boundary, double x, double y, double theta) : unifei::expertinos::mrta_vc::places::Place(id, name, boundary, x, y, theta)
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Campus::Campus(int id, std::string name, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg) : Place(id, name, boundary, pose_msg)
+unifei::expertinos::mrta_vc::places::Campus::Campus(int id, std::string name, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg) : unifei::expertinos::mrta_vc::places::Place(id, name, boundary, pose_msg)
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Campus::Campus(const ::mrta_vc::Place::ConstPtr& campus_msg) : Place(campus_msg)
+unifei::expertinos::mrta_vc::places::Campus::Campus(const ::mrta_vc::Place::ConstPtr& campus_msg) : unifei::expertinos::mrta_vc::places::Place(campus_msg)
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Campus::Campus(::mrta_vc::Place campus_msg) : Place(campus_msg)
+unifei::expertinos::mrta_vc::places::Campus::Campus(::mrta_vc::Place campus_msg) : unifei::expertinos::mrta_vc::places::Place(campus_msg)
 {
 }
 

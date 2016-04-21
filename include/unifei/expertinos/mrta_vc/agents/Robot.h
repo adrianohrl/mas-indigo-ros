@@ -28,6 +28,7 @@ namespace unifei
 				public:
 					Robot(int id, std::string hostname, bool holonomic, bool mobile = true, double x = 0, double y = 0, double theta = 0);
 					Robot(int id, std::string hostname, bool holonomic, bool mobile, geometry_msgs::Pose pose_msg);
+					Robot(int id, std::string hostname, bool holonomic, bool mobile, unifei::expertinos::mrta_vc::places::Location location);
 					Robot(const ::mrta_vc::Agent::ConstPtr& robot_msg);
 					Robot(::mrta_vc::Agent robot_msg);		
 					~Robot();

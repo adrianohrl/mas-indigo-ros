@@ -13,21 +13,21 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Office::Office(int id, std::string name, Floor floor, geometry_msgs::Polygon boundary, double x, double y, double theta) : Place(id, name, boundary, x, y, theta), floor_(floor)
+unifei::expertinos::mrta_vc::places::Office::Office(int id, std::string name, unifei::expertinos::mrta_vc::places::Floor floor, geometry_msgs::Polygon boundary, double x, double y, double theta) : unifei::expertinos::mrta_vc::places::Place(id, name, boundary, x, y, theta), floor_(floor)
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Office::Office(int id, std::string name, Floor floor, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg) : Place(id, name, boundary, pose_msg), floor_(floor)
+unifei::expertinos::mrta_vc::places::Office::Office(int id, std::string name, unifei::expertinos::mrta_vc::places::Floor floor, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg) : unifei::expertinos::mrta_vc::places::Place(id, name, boundary, pose_msg), floor_(floor)
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Office::Office(const ::mrta_vc::Place::ConstPtr& office_msg) : Place(office_msg), floor_(::mrta_vc::Place()) //office_(office_msg->parent) 
+unifei::expertinos::mrta_vc::places::Office::Office(const ::mrta_vc::Place::ConstPtr& office_msg) : unifei::expertinos::mrta_vc::places::Place(office_msg), floor_(::mrta_vc::Place()) //office_(office_msg->parent) 
 {
 	// verificar se tem o floor 
 }
@@ -35,7 +35,7 @@ unifei::expertinos::mrta_vc::places::Office::Office(const ::mrta_vc::Place::Cons
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Office::Office(::mrta_vc::Place office_msg) : Place(office_msg), floor_(::mrta_vc::Place()) //office_(office_msg.parent) 
+unifei::expertinos::mrta_vc::places::Office::Office(::mrta_vc::Place office_msg) : unifei::expertinos::mrta_vc::places::Place(office_msg), floor_(::mrta_vc::Place()) //office_(office_msg.parent) 
 {
 	// verificar se tem o floor
 }

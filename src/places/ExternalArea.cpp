@@ -13,21 +13,21 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::ExternalArea::ExternalArea(int id, std::string name, Campus campus, geometry_msgs::Polygon boundary, double x, double y, double theta) : Place(id, name, boundary, x, y, theta), campus_(campus)
+unifei::expertinos::mrta_vc::places::ExternalArea::ExternalArea(int id, std::string name, unifei::expertinos::mrta_vc::places::Campus campus, geometry_msgs::Polygon boundary, double x, double y, double theta) : unifei::expertinos::mrta_vc::places::Place(id, name, boundary, x, y, theta), campus_(campus)
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::ExternalArea::ExternalArea(int id, std::string name, Campus campus, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg) : Place(id, name, boundary, pose_msg), campus_(campus)
+unifei::expertinos::mrta_vc::places::ExternalArea::ExternalArea(int id, std::string name, unifei::expertinos::mrta_vc::places::Campus campus, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg) : unifei::expertinos::mrta_vc::places::Place(id, name, boundary, pose_msg), campus_(campus)
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::ExternalArea::ExternalArea(const ::mrta_vc::Place::ConstPtr& external_area_msg) : Place(external_area_msg), campus_(::mrta_vc::Place())//campus_(external_area_msg->parent)
+unifei::expertinos::mrta_vc::places::ExternalArea::ExternalArea(const ::mrta_vc::Place::ConstPtr& external_area_msg) : unifei::expertinos::mrta_vc::places::Place(external_area_msg), campus_(::mrta_vc::Place())//campus_(external_area_msg->parent)
 {
 	// verificar se tem o campus 
 }
@@ -35,7 +35,7 @@ unifei::expertinos::mrta_vc::places::ExternalArea::ExternalArea(const ::mrta_vc:
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::ExternalArea::ExternalArea(::mrta_vc::Place external_area_msg) : Place(external_area_msg), campus_(::mrta_vc::Place())//campus_(external_area_msg.parent)
+unifei::expertinos::mrta_vc::places::ExternalArea::ExternalArea(::mrta_vc::Place external_area_msg) : unifei::expertinos::mrta_vc::places::Place(external_area_msg), campus_(::mrta_vc::Place())//campus_(external_area_msg.parent)
 {
 	// verificar se tem o campus
 }

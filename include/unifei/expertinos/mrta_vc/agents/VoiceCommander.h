@@ -26,16 +26,18 @@ namespace unifei
 				{
 
 				public:
-					VoiceCommander(int id, std::string name, std::string login_name, Computer computer, double x = 0, double y = 0, double theta = 0);
-					VoiceCommander(int id, std::string name, std::string login_name, Computer computer, geometry_msgs::Pose pose_msg);
+					VoiceCommander(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, double x, double y = 0.0, double theta = 0.0);
+					VoiceCommander(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, geometry_msgs::Pose pose_msg);
+					VoiceCommander(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, unifei::expertinos::mrta_vc::places::Location location);
+					VoiceCommander(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer);
 					VoiceCommander(const ::mrta_vc::Agent::ConstPtr& voice_commander_msg);
 					VoiceCommander(::mrta_vc::Agent voice_commander_msg);		
 					~VoiceCommander();
 
 					std::string getLoginName();
 					Computer getComputer();
-					void setLoginName(std::string login_name);
 					void setComputer(Computer computer);
+					bool isValid(std::string password);
 					::mrta_vc::Agent toMsg();
 					std::string toString();
 					void operator=(const VoiceCommander& VoiceCommander);
@@ -44,9 +46,12 @@ namespace unifei
 					VoiceCommander();
 					
 					int getType();
+					void setLoginName(std::string login_name);
+					void setPassword(std::string password);
 
 				private:
 					std::string login_name_;
+					std::string password_;
 					Computer computer_;
 					
 					std::string getClassName();

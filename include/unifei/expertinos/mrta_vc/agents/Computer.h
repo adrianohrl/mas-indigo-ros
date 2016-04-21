@@ -25,8 +25,9 @@ namespace unifei
 				{
 
 				public:
-					Computer(int id, std::string hostname, bool mobile = false, double x = 0, double y = 0, double theta = 0);
+					Computer(int id, std::string hostname, bool mobile = false, double x = 0.0, double y = 0.0, double theta = 0.0);
 					Computer(int id, std::string hostname, bool mobile, geometry_msgs::Pose pose_msg);
+					Computer(int id, std::string hostname, bool mobile, unifei::expertinos::mrta_vc::places::Location location);
 					Computer(const ::mrta_vc::Agent::ConstPtr& computer_msg);
 					Computer(::mrta_vc::Agent computer_msg);		
 					~Computer();

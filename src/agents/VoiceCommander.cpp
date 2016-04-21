@@ -13,22 +13,14 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander() : Person(), computer_(::mrta_vc::Agent())
+unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander() : unifei::expertinos::mrta_vc::agents::Person(), computer_(::mrta_vc::Agent())
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(int id, std::string name, std::string login_name, Computer computer, double x, double y, double theta) : Person(id, name, x, y, theta), computer_(computer)
-{
-	login_name_ = login_name;
-}
-
-/**
- *
- */
-unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(int id, std::string name, std::string login_name, Computer computer, geometry_msgs::Pose pose_msg) : Person(id, name, pose_msg), computer_(computer)
+unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(int id, std::string name, unifei::expertinos::mrta_vc::agents::HierarchyLevelEnum hierarchy_level, std::string login_name, unifei::expertinos::mrta_vc::agents::Computer computer, double x, double y, double theta) : unifei::expertinos::mrta_vc::agents::Person(id, name, hierarchy_level, x, y, theta), computer_(computer)
 {
 	login_name_ = login_name;
 }
@@ -36,7 +28,31 @@ unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(int id, std:
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(const ::mrta_vc::Agent::ConstPtr& voice_commander_msg) : Person(voice_commander_msg), computer_(::mrta_vc::Agent())
+unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(int id, std::string name, unifei::expertinos::mrta_vc::agents::HierarchyLevelEnum hierarchy_level, std::string login_name, unifei::expertinos::mrta_vc::agents::Computer computer, geometry_msgs::Pose pose_msg) : unifei::expertinos::mrta_vc::agents::Person(id, name, hierarchy_level, pose_msg), computer_(computer)
+{
+	login_name_ = login_name;
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(int id, std::string name, unifei::expertinos::mrta_vc::agents::HierarchyLevelEnum hierarchy_level, std::string login_name, unifei::expertinos::mrta_vc::agents::Computer computer, unifei::expertinos::mrta_vc::places::Location location) : unifei::expertinos::mrta_vc::agents::Person(id, name, hierarchy_level, location), computer_(computer)
+{
+	login_name_ = login_name;
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(int id, std::string name, unifei::expertinos::mrta_vc::agents::HierarchyLevelEnum hierarchy_level, std::string login_name, unifei::expertinos::mrta_vc::agents::Computer computer) : unifei::expertinos::mrta_vc::agents::Person(id, name, hierarchy_level, computer.getLocation()), computer_(computer)
+{
+	login_name_ = login_name;
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(const ::mrta_vc::Agent::ConstPtr& voice_commander_msg) : unifei::expertinos::mrta_vc::agents::Person(voice_commander_msg), computer_(::mrta_vc::Agent())
 {
 	login_name_ = voice_commander_msg->login_name;
 }
@@ -44,7 +60,7 @@ unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(const ::mrta
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(::mrta_vc::Agent voice_commander_msg) : Person(voice_commander_msg), computer_(::mrta_vc::Agent())
+unifei::expertinos::mrta_vc::agents::VoiceCommander::VoiceCommander(::mrta_vc::Agent voice_commander_msg) : unifei::expertinos::mrta_vc::agents::Person(voice_commander_msg), computer_(::mrta_vc::Agent())
 {
 	login_name_ = voice_commander_msg.login_name;
 }
@@ -99,9 +115,25 @@ void unifei::expertinos::mrta_vc::agents::VoiceCommander::setLoginName(std::stri
 /**
  *
  */
+void unifei::expertinos::mrta_vc::agents::VoiceCommander::setPassword(std::string password) 
+{
+	password_ = password;
+}
+
+/**
+ *
+ */
 void unifei::expertinos::mrta_vc::agents::VoiceCommander::setComputer(unifei::expertinos::mrta_vc::agents::Computer computer) 
 {
 	computer_ = computer;
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::agents::VoiceCommander::isValid(std::string password) 
+{
+	return password_ == password;
 }
 
 /**

@@ -13,11 +13,13 @@
 #define SYSTEM_DATABASE_INTERFACE_NODE_H_
 
 #include <ros/ros.h>
+#include "mrta_vc/ValidatePassword.h"
+#include "unifei/expertinos/mrta_vc/system/DatabaseInterface.h"
 
 namespace mrta_vc 
 {
 
-	class SystemDatabaseInterfaceNode 
+	class SystemDatabaseInterfaceNode : unifei::expertinos::mrta_vc::system::DatabaseInterface
 	{
 
 	public:
@@ -34,6 +36,9 @@ namespace mrta_vc
 	
 		/** atributos privados relacionados ao nó */
 		ros::NodeHandle nh_;
+		ros::ServiceServer validate_srv_;
+		
+		bool validatePasswordCallback(mrta_vc::ValidatePassword::Request& request, mrta_vc::ValidatePassword::Response& response);
 
 	};
 

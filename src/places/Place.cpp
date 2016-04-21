@@ -13,7 +13,7 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Place::Place(int id, std::string name, geometry_msgs::Polygon boundary, double x, double y, double theta) : Location(x, y, theta)
+unifei::expertinos::mrta_vc::places::Place::Place(int id, std::string name, geometry_msgs::Polygon boundary, double x, double y, double theta) : unifei::expertinos::mrta_vc::places::Location(x, y, theta)
 {
 	id_ = id;
 	name_ = name;
@@ -23,7 +23,7 @@ unifei::expertinos::mrta_vc::places::Place::Place(int id, std::string name, geom
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Place::Place(int id, std::string name, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg) : Location(pose_msg)
+unifei::expertinos::mrta_vc::places::Place::Place(int id, std::string name, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg) : unifei::expertinos::mrta_vc::places::Location(pose_msg)
 {
 	id_ = id;
 	name_ = name;
@@ -33,7 +33,7 @@ unifei::expertinos::mrta_vc::places::Place::Place(int id, std::string name, geom
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Place::Place(const ::mrta_vc::Place::ConstPtr& place_msg) : Location(place_msg->location) 
+unifei::expertinos::mrta_vc::places::Place::Place(const ::mrta_vc::Place::ConstPtr& place_msg) : unifei::expertinos::mrta_vc::places::Location(place_msg->location) 
 {
 	if (!isValidType(place_msg->type)) 
 	{
@@ -47,7 +47,7 @@ unifei::expertinos::mrta_vc::places::Place::Place(const ::mrta_vc::Place::ConstP
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Place::Place(::mrta_vc::Place place_msg) : Location(place_msg.location)
+unifei::expertinos::mrta_vc::places::Place::Place(::mrta_vc::Place place_msg) : unifei::expertinos::mrta_vc::places::Location(place_msg.location)
 {
 	if (!isValidType(place_msg.type)) 
 	{

@@ -13,14 +13,14 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Robot::Robot() : Computer()
+unifei::expertinos::mrta_vc::agents::Robot::Robot() : unifei::expertinos::mrta_vc::agents::Computer()
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, bool holonomic, bool mobile, double x, double y, double theta) : Computer(id, hostname, mobile, x, y, theta)
+unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, bool holonomic, bool mobile, double x, double y, double theta) : unifei::expertinos::mrta_vc::agents::Computer(id, hostname, mobile, x, y, theta)
 {
 	holonomic_ = holonomic;
 }
@@ -28,7 +28,7 @@ unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, 
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, bool holonomic, bool mobile, geometry_msgs::Pose pose_msg) : Computer(id, hostname, mobile, pose_msg)
+unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, bool holonomic, bool mobile, geometry_msgs::Pose pose_msg) : unifei::expertinos::mrta_vc::agents::Computer(id, hostname, mobile, pose_msg)
 {
 	holonomic_ = holonomic;	
 }
@@ -36,7 +36,15 @@ unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, 
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Robot::Robot(const ::mrta_vc::Agent::ConstPtr& robot_msg) : Computer(robot_msg)
+unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, bool holonomic, bool mobile, unifei::expertinos::mrta_vc::places::Location location) : unifei::expertinos::mrta_vc::agents::Computer(id, hostname, mobile, location)
+{
+	holonomic_ = holonomic;	
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::agents::Robot::Robot(const ::mrta_vc::Agent::ConstPtr& robot_msg) : unifei::expertinos::mrta_vc::agents::Computer(robot_msg)
 {
 	holonomic_ = robot_msg->holonomic;
 }
@@ -44,7 +52,7 @@ unifei::expertinos::mrta_vc::agents::Robot::Robot(const ::mrta_vc::Agent::ConstP
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Robot::Robot(::mrta_vc::Agent robot_msg) : Computer(robot_msg)
+unifei::expertinos::mrta_vc::agents::Robot::Robot(::mrta_vc::Agent robot_msg) : unifei::expertinos::mrta_vc::agents::Computer(robot_msg)
 {
 	holonomic_ = robot_msg.holonomic;		
 }
