@@ -11,8 +11,11 @@
 #ifndef ROBOT_H_
 #define ROBOT_H_
 
+#include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include "unifei/expertinos/mrta_vc/agents/Computer.h"
+
+#define ROBOT_BEACON_INTERVAL_DURATION 3.0
 
 namespace unifei 
 {
@@ -38,8 +41,10 @@ namespace unifei
 					double getVelY();
 					double getVelTheta();
 					geometry_msgs::Twist getVelocity();
+					ros::Time getLastBeaconTimestamp();
 					void setVelocity(double x = 0, double y = 0, double theta = 0);
 					void setVelocity(geometry_msgs::Twist twist_msg);
+					void setLastBeaconTimestamp(ros::Time last_beacon_timestamp = ros::Time::now());
 					::mrta_vc::Agent toMsg();
 					std::string toString();
 					void operator=(const Robot& Robot);
@@ -55,6 +60,7 @@ namespace unifei
 					double vel_x_;
 					double vel_y_;
 					double vel_theta_;
+					ros::Time last_beacon_timestamp_;
 
 					std::string getClassName();
 					

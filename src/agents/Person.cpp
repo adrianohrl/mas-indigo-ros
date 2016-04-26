@@ -169,4 +169,5 @@ void unifei::expertinos::mrta_vc::agents::Person::operator=(const unifei::expert
 {
 	unifei::expertinos::mrta_vc::agents::Agent::operator=(person);
 	name_ = person.name_;
+	hierarchy_level_ = person.hierarchy_level_;
 }

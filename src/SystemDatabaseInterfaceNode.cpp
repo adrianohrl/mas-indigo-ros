@@ -16,7 +16,7 @@
  */
 mrta_vc::SystemDatabaseInterfaceNode::SystemDatabaseInterfaceNode(ros::NodeHandle nh) : unifei::expertinos::mrta_vc::system::DatabaseInterface(), nh_(nh)
 {
-	validate_srv_ = nh_.advertiseService("validate_password", &mrta_vc::SystemDatabaseInterfaceNode::validatePasswordCallback, this);
+	validate_srv_ = nh_.advertiseService("/validate_password", &mrta_vc::SystemDatabaseInterfaceNode::validatePasswordCallback, this);
 }
 
 /**
@@ -24,6 +24,7 @@ mrta_vc::SystemDatabaseInterfaceNode::SystemDatabaseInterfaceNode(ros::NodeHandl
  */
 mrta_vc::SystemDatabaseInterfaceNode::~SystemDatabaseInterfaceNode()
 {
+	validate_srv_.shutdown();
 }
 
 /**
@@ -68,15 +69,15 @@ bool mrta_vc::SystemDatabaseInterfaceNode::validatePasswordCallback(mrta_vc::Val
 	{
 		response.message = "There is no voice commander registered with this login name!!!";
 	}
-	if (password != request.password)
-	{
-		response.message = "Invalid password!!!";
-	}
-	else 
+	else if (password == request.password)
 	{
 		response.voice_commander = unifei::expertinos::mrta_vc::system::DatabaseInterface::getVoiceCommander(request.login_name).toMsg();
 		response.message = "Valid password!!!";
 		response.valid = true;
+	}
+	else 
+	{
+		response.message = "Invalid password!!!";
 	}
 	return response.valid;
 }

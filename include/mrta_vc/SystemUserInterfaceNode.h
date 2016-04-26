@@ -12,9 +12,8 @@
 #define SYSTEM_USER_INTERFACE_NODE_H_
 
 #include <ros/ros.h>
+#include "mrta_vc/ValidatePassword.h"
 #include "unifei/expertinos/mrta_vc/agents/VoiceCommander.h"
-
-#define USER_BEACON_INTERVAL_DURATION 30.0
 
 namespace mrta_vc 
 {
@@ -23,7 +22,6 @@ namespace mrta_vc
 	{
 
 	public:
-
 		/** Construtors */
 		SystemUserInterfaceNode(ros::NodeHandle nh);
 		/** Destrutor */
@@ -33,14 +31,18 @@ namespace mrta_vc
 		void spin();
 
 	private:
-	
 		/** atributos privados relacionados ao nó */
 		ros::NodeHandle nh_;
 		ros::Timer beacon_timer_;
 		ros::Publisher beacon_pub_;
+		ros::ServiceClient validate_cli_;
 		
 		void beaconTimerCallback(const ros::TimerEvent& event);
+		void login(std::string login_name, std::string password);
+		void logout();
 		void setComputerUp();
+		
+		bool logged_;
 
 	};
 

@@ -13,6 +13,9 @@
 
 #include "unifei/expertinos/mrta_vc/tasks/Allocation.h"
 
+#define MAXIMUM_ROBOT_BEACON_ABSENCE_DURATION 3 * ROBOT_BEACON_INTERVAL_DURATION
+#define MAXIMUM_USER_BEACON_ABSENCE_DURATION 3 * USER_BEACON_INTERVAL_DURATION
+
 namespace unifei 
 {
 	namespace expertinos
@@ -40,6 +43,10 @@ namespace unifei
 					void removeTask(unifei::expertinos::mrta_vc::tasks::Task task);
 					void addRobot(unifei::expertinos::mrta_vc::agents::Robot robot);
 					void removeRobot(unifei::expertinos::mrta_vc::agents::Robot robot);
+					void addUser(unifei::expertinos::mrta_vc::agents::VoiceCommander user);
+					void removeUser(unifei::expertinos::mrta_vc::agents::VoiceCommander user);
+					void updateLoggedRobots();
+					void updateLoggedUsers();
 					//void allocate(unifei::expertinos::mrta_vc::tasks::Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots);
 
 				private:

@@ -11,8 +11,11 @@
 #ifndef VOICE_COMMANDER_H_
 #define VOICE_COMMANDER_H_
 
+#include <ros/ros.h>
 #include "unifei/expertinos/mrta_vc/agents/Person.h"
 #include "unifei/expertinos/mrta_vc/agents/Computer.h"
+
+#define USER_BEACON_INTERVAL_DURATION 2.0
 
 namespace unifei 
 {
@@ -36,7 +39,9 @@ namespace unifei
 
 					std::string getLoginName();
 					Computer getComputer();
+					ros::Time getLastBeaconTimestamp();
 					void setComputer(Computer computer);
+					void setLastBeaconTimestamp(ros::Time last_beacon_timestamp = ros::Time::now());
 					bool isValid(std::string password);
 					::mrta_vc::Agent toMsg();
 					std::string toString();
@@ -53,6 +58,7 @@ namespace unifei
 					std::string login_name_;
 					std::string password_;
 					Computer computer_;
+					ros::Time last_beacon_timestamp_;
 					
 					std::string getClassName();
 

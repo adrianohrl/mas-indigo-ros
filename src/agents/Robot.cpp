@@ -111,6 +111,14 @@ geometry_msgs::Twist unifei::expertinos::mrta_vc::agents::Robot::getVelocity()
 /**
  *
  */
+ros::Time unifei::expertinos::mrta_vc::agents::Robot::getLastBeaconTimestamp() 
+{
+	return last_beacon_timestamp_;
+}
+
+/**
+ *
+ */
 int unifei::expertinos::mrta_vc::agents::Robot::getType() 
 {
 	return ROBOT;
@@ -150,6 +158,17 @@ void unifei::expertinos::mrta_vc::agents::Robot::setVelocity(geometry_msgs::Twis
 	vel_x_ = twist_msg.linear.x;
 	vel_y_= twist_msg.linear.y;
 	vel_theta_ = twist_msg.angular.z;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::Robot::setLastBeaconTimestamp(ros::Time last_beacon_timestamp) 
+{
+	if (last_beacon_timestamp > last_beacon_timestamp_ && last_beacon_timestamp <= ros::Time::now()) 
+	{
+		last_beacon_timestamp_ = last_beacon_timestamp;
+	}
 }
 
 /**

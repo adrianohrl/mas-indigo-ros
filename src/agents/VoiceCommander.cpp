@@ -91,6 +91,14 @@ unifei::expertinos::mrta_vc::agents::Computer unifei::expertinos::mrta_vc::agent
 /**
  *
  */
+ros::Time unifei::expertinos::mrta_vc::agents::VoiceCommander::getLastBeaconTimestamp() 
+{
+	return last_beacon_timestamp_;
+}
+
+/**
+ *
+ */
 int unifei::expertinos::mrta_vc::agents::VoiceCommander::getType() 
 {
 	return VOICE_COMMANDER;
@@ -126,6 +134,18 @@ void unifei::expertinos::mrta_vc::agents::VoiceCommander::setPassword(std::strin
 void unifei::expertinos::mrta_vc::agents::VoiceCommander::setComputer(unifei::expertinos::mrta_vc::agents::Computer computer) 
 {
 	computer_ = computer;
+	unifei::expertinos::mrta_vc::agents::Agent::setLocation(computer.getLocation());
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::VoiceCommander::setLastBeaconTimestamp(ros::Time last_beacon_timestamp) 
+{
+	if (last_beacon_timestamp > last_beacon_timestamp_ && last_beacon_timestamp <= ros::Time::now()) 
+	{
+		last_beacon_timestamp_ = last_beacon_timestamp;
+	}
 }
 
 /**

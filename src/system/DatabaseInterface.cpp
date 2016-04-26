@@ -35,6 +35,27 @@ unifei::expertinos::mrta_vc::agents::VoiceCommander unifei::expertinos::mrta_vc:
 	int hierarchy_level = 0;
 	unifei::expertinos::mrta_vc::agents::Computer computer(0, "");
 	// realizar consultas no DB para preencher o objeto a partir do seu id e enviá-lo
+	if (id == 4) 
+	{
+		login_name = "adrianohrl";
+		name = "Adriano Henrique Rossette Leite";
+		hierarchy_level = 3;
+		computer = unifei::expertinos::mrta_vc::system::DatabaseInterface::getComputer("adrianohrl-pc");
+	} 
+	else if (id == 5) 
+	{
+		login_name = "christiano";
+		name = "Christiano Henrique Rezende";
+		hierarchy_level = 6;
+		computer = unifei::expertinos::mrta_vc::system::DatabaseInterface::getComputer("christiano-pc");
+	}
+	else if (id == 6) 
+	{
+		login_name = "luis";
+		name = "Luís Victor Pessiqueli Bonin";
+		hierarchy_level = 6;
+		computer = unifei::expertinos::mrta_vc::system::DatabaseInterface::getComputer("luis-pc");
+	}
 	return unifei::expertinos::mrta_vc::agents::VoiceCommander(id, name, unifei::expertinos::mrta_vc::agents::HierarchyLevels::toEnumerated(hierarchy_level), login_name, computer);
 }
 

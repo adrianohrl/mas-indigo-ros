@@ -17,7 +17,18 @@ mrta_vc::SystemUserInterfaceNode::SystemUserInterfaceNode(ros::NodeHandle nh) : 
 {
 	beacon_timer_ = nh_.createTimer(ros::Duration(USER_BEACON_INTERVAL_DURATION), &mrta_vc::SystemUserInterfaceNode::beaconTimerCallback, this);
 	beacon_pub_ = nh_.advertise<mrta_vc::Agent>("/user_beacon", 1);
+	validate_cli_ = nh_.serviceClient<mrta_vc::ValidatePassword>("/validate_password");
 	setComputerUp();
+	logged_ = false;
+	std::string ns = ros::this_node::getName();
+	if (nh_.hasParam(ns + std::string("/login_name")) && nh_.hasParam(ns + std::string("/password")))
+	{
+		std::string login_name;
+		std::string password;
+		nh_.param<std::string>(ns + std::string("/login_name"), login_name, "");
+		nh_.param<std::string>(ns + std::string("/password"), password, "");
+		login(login_name, password);
+	}
 }
 
 /**
@@ -25,7 +36,9 @@ mrta_vc::SystemUserInterfaceNode::SystemUserInterfaceNode(ros::NodeHandle nh) : 
  */
 mrta_vc::SystemUserInterfaceNode::~SystemUserInterfaceNode()
 {
+	logout();
 	beacon_pub_.shutdown();
+	validate_cli_.shutdown();
 }
 
 /**
@@ -47,7 +60,54 @@ void mrta_vc::SystemUserInterfaceNode::spin()
  */
 void mrta_vc::SystemUserInterfaceNode::beaconTimerCallback(const ros::TimerEvent& event) 
 {
-	beacon_pub_.publish(unifei::expertinos::mrta_vc::agents::VoiceCommander::toMsg());
+	if (logged_)
+	{
+		beacon_pub_.publish(unifei::expertinos::mrta_vc::agents::VoiceCommander::toMsg());	
+	}
+}
+
+/**
+ * 
+ */
+void mrta_vc::SystemUserInterfaceNode::login(std::string login_name, std::string password)
+{
+	logged_ = false;
+	mrta_vc::ValidatePassword srv;
+	srv.request.login_name = login_name;
+	srv.request.password = password;
+	if (validate_cli_.call(srv) && srv.response.valid) 
+	{
+		unifei::expertinos::mrta_vc::agents::VoiceCommander::operator=(srv.response.voice_commander);
+		unifei::expertinos::mrta_vc::agents::VoiceCommander::setComputer(unifei::expertinos::mrta_vc::agents::VoiceCommander::getComputer());
+		ROS_DEBUG("Login succeeded: %s", srv.response.message.c_str());
+		ROS_INFO("User is logged in!!!");
+		ROS_INFO("User Info:");
+		ROS_INFO("     id: %d", unifei::expertinos::mrta_vc::agents::VoiceCommander::getId());
+		ROS_INFO("     name: %s", unifei::expertinos::mrta_vc::agents::VoiceCommander::getName().c_str());
+		ROS_INFO("     hierarchy_level: %s", unifei::expertinos::mrta_vc::agents::HierarchyLevels::toString(unifei::expertinos::mrta_vc::agents::Person::getHierarchyLevel()).c_str());
+		ROS_INFO("     login_name: %s", unifei::expertinos::mrta_vc::agents::VoiceCommander::getLoginName().c_str());
+		ROS_INFO("     computer:");
+		ROS_INFO("          id: %d", unifei::expertinos::mrta_vc::agents::VoiceCommander::getComputer().getId());
+		ROS_INFO("          hostname: %s", unifei::expertinos::mrta_vc::agents::VoiceCommander::getComputer().getHostname().c_str());
+		ROS_INFO("          mobile: %s", unifei::expertinos::mrta_vc::agents::VoiceCommander::getComputer().isMobile() ? "true" : "false");
+		ROS_INFO("          location: (%f, %f, %f)", unifei::expertinos::mrta_vc::agents::VoiceCommander::getComputer().getLocation().getX(), unifei::expertinos::mrta_vc::agents::VoiceCommander::getComputer().getLocation().getY(), unifei::expertinos::mrta_vc::agents::VoiceCommander::getComputer().getLocation().getTheta());
+		ROS_INFO("     location: (%f, %f, %f)", unifei::expertinos::mrta_vc::agents::VoiceCommander::getLocation().getX(), unifei::expertinos::mrta_vc::agents::VoiceCommander::getLocation().getY(), unifei::expertinos::mrta_vc::agents::VoiceCommander::getLocation().getTheta());
+		beacon_pub_.publish(unifei::expertinos::mrta_vc::agents::VoiceCommander::toMsg());
+		logged_ = true;
+	}
+	else
+	{
+		ROS_ERROR("Login failure: %s", srv.response.message.c_str());
+	}
+}
+
+/**
+ * 
+ */
+void mrta_vc::SystemUserInterfaceNode::logout()
+{
+	ROS_DEBUG("%s has been logged out!!!", unifei::expertinos::mrta_vc::agents::VoiceCommander::getLoginName().c_str());
+	logged_ = false;
 }
 
 /**
@@ -89,7 +149,7 @@ void mrta_vc::SystemUserInterfaceNode::setComputerUp()
 	else 
 	{
 		ROS_INFO("This computer has been setted up!!!");
-		ROS_INFO("This Computer Info:");
+		ROS_INFO("Computer Info:");
 		ROS_INFO("     id: %d", unifei::expertinos::mrta_vc::agents::VoiceCommander::getComputer().getId());
 		ROS_INFO("     hostname: %s", unifei::expertinos::mrta_vc::agents::VoiceCommander::getComputer().getHostname().c_str());
 		ROS_INFO("     mobile: %s", unifei::expertinos::mrta_vc::agents::VoiceCommander::getComputer().isMobile() ? "true" : "false");

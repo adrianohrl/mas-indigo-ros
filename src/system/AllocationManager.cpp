@@ -138,6 +138,7 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::addRobot(unifei::ex
 	{
 		if(robot.equals(available_robots_.at(i)))
 		{
+			available_robots_.at(i).setLastBeaconTimestamp(robot.getLastBeaconTimestamp());
 			return;
 		}
 	}
@@ -145,6 +146,7 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::addRobot(unifei::ex
 	{
 		if(robot.equals(busy_robots_.at(i)))
 		{
+			busy_robots_.at(i).setLastBeaconTimestamp(robot.getLastBeaconTimestamp());
 			return;
 		}
 	}
@@ -171,5 +173,58 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::removeRobot(unifei:
 			busy_robots_.erase(busy_robots_.begin() + i);
 			return;
 		}
-	};
+	}
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::system::AllocationManager::addUser(unifei::expertinos::mrta_vc::agents::VoiceCommander user) 
+{
+	for (int i = 0; i < logged_users_.size(); i++)
+	{
+		if(user.equals(logged_users_.at(i)))
+		{
+			logged_users_.at(i).setLastBeaconTimestamp(user.getLastBeaconTimestamp());
+			return;
+		}
+	}
+	logged_users_.push_back(user);
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::system::AllocationManager::removeUser(unifei::expertinos::mrta_vc::agents::VoiceCommander user) 
+{
+	for (int i = 0; i < logged_users_.size(); i++)
+	{
+		if(user.equals(logged_users_.at(i)))
+		{
+			logged_users_.erase(logged_users_.begin() + i);
+			return;
+		}
+	}
+}
+
+/**
+ *	IMPLEMENTAR
+ */
+void unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedRobots() 
+{
+}
+
+/**
+ *	TESTAR
+ */
+void unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedUsers() 
+{
+	for (int i = 0; i < logged_users_.size(); i++)
+	{
+		if((ros::Time::now() - logged_users_.at(i).getLastBeaconTimestamp()).toSec() > MAXIMUM_USER_BEACON_ABSENCE_DURATION)
+		{
+			logged_users_.erase(logged_users_.begin() + i);
+			i--;
+		}
+	}
 }

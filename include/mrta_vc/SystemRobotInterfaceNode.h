@@ -14,8 +14,6 @@
 #include <ros/ros.h>
 #include "unifei/expertinos/mrta_vc/agents/Robot.h"
 
-#define ROBOT_BEACON_INTERVAL_DURATION 10.0
-
 namespace mrta_vc 
 {
 
