@@ -119,6 +119,15 @@ ros::Time unifei::expertinos::mrta_vc::agents::Robot::getLastBeaconTimestamp()
 /**
  *
  */
+bool unifei::expertinos::mrta_vc::agents::Robot::isLogged() 
+{
+	return (ros::Time::now() - last_beacon_timestamp_).toSec() <= MAXIMUM_ROBOT_BEACON_ABSENCE_DURATION;
+}
+
+
+/**
+ *
+ */
 int unifei::expertinos::mrta_vc::agents::Robot::getType() 
 {
 	return ROBOT;

@@ -56,6 +56,20 @@ unifei::expertinos::mrta_vc::agents::VoiceCommander unifei::expertinos::mrta_vc:
 		hierarchy_level = 6;
 		computer = unifei::expertinos::mrta_vc::system::DatabaseInterface::getComputer("luis-pc");
 	}
+	else if (id == 7) 
+	{
+		login_name = "heverton";
+		name = "Héverton Soares";
+		hierarchy_level = 5;
+		computer = unifei::expertinos::mrta_vc::system::DatabaseInterface::getComputer("heverton-pc");
+	}
+	else if (id == 9) 
+	{
+		login_name = "audeliano";
+		name = "Audeliano";
+		hierarchy_level = 2;
+		computer = unifei::expertinos::mrta_vc::system::DatabaseInterface::getComputer("audeliano-pc");
+	}
 	return unifei::expertinos::mrta_vc::agents::VoiceCommander(id, name, unifei::expertinos::mrta_vc::agents::HierarchyLevels::toEnumerated(hierarchy_level), login_name, computer);
 }
 
@@ -91,6 +105,20 @@ unifei::expertinos::mrta_vc::agents::VoiceCommander unifei::expertinos::mrta_vc:
 		hierarchy_level = 6;
 		computer = unifei::expertinos::mrta_vc::system::DatabaseInterface::getComputer("luis-pc");
 	}
+	else if (login_name == "heverton") 
+	{
+		id = 7;
+		name = "Héverton Soares";
+		hierarchy_level = 5;
+		computer = unifei::expertinos::mrta_vc::system::DatabaseInterface::getComputer("heverton-pc");
+	}
+	else if (login_name == "audeliano") 
+	{
+		id = 9;
+		name = "Audeliano Li";
+		hierarchy_level = 2;
+		computer = unifei::expertinos::mrta_vc::system::DatabaseInterface::getComputer("audeliano-pc");
+	}
 	return unifei::expertinos::mrta_vc::agents::VoiceCommander(id, name, unifei::expertinos::mrta_vc::agents::HierarchyLevels::toEnumerated(hierarchy_level), login_name, computer);
 }
 
@@ -123,7 +151,6 @@ unifei::expertinos::mrta_vc::agents::Computer unifei::expertinos::mrta_vc::syste
 	if (hostname == "adrianohrl-pc") 
 	{
 		id = 1;
-		mobile = false;
 		x = -1.0;
 		y = .5;
 		theta = -2.5;
@@ -139,6 +166,20 @@ unifei::expertinos::mrta_vc::agents::Computer unifei::expertinos::mrta_vc::syste
 		x = .6;
 		y = -6.4;
 		theta = -7.3;
+	}
+	else if (hostname == "heverton-pc") 
+	{
+		id = 8;
+		x = 1.68;
+		y = 6.45;
+		theta = -.3;
+	}
+	else if (hostname == "audeliano-pc") 
+	{
+		id = 10;
+		x = -1.68;
+		y = -6.45;
+		theta = -.3;
 	}
 	return unifei::expertinos::mrta_vc::agents::Computer(id, hostname, mobile, x, y, theta);
 }

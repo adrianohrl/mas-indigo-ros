@@ -59,6 +59,14 @@ bool mrta_vc::SystemDatabaseInterfaceNode::validatePasswordCallback(mrta_vc::Val
 	{
 		password = "teste12345";
 	}
+	else if (request.login_name == "heverton")
+	{
+		password = "teste123456";
+	}
+	else if (request.login_name == "audeliano")
+	{
+		password = "teste1234567";
+	}
 	else
 	{
 		password = "";

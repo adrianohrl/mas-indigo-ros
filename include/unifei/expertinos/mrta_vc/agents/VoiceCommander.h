@@ -15,7 +15,8 @@
 #include "unifei/expertinos/mrta_vc/agents/Person.h"
 #include "unifei/expertinos/mrta_vc/agents/Computer.h"
 
-#define USER_BEACON_INTERVAL_DURATION 2.0
+#define USER_BEACON_INTERVAL_DURATION 5.0
+#define MAXIMUM_USER_BEACON_ABSENCE_DURATION 3 * USER_BEACON_INTERVAL_DURATION
 
 namespace unifei 
 {
@@ -43,6 +44,7 @@ namespace unifei
 					void setComputer(Computer computer);
 					void setLastBeaconTimestamp(ros::Time last_beacon_timestamp = ros::Time::now());
 					bool isValid(std::string password);
+					bool isLogged();
 					::mrta_vc::Agent toMsg();
 					std::string toString();
 					void operator=(const VoiceCommander& VoiceCommander);

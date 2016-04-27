@@ -61,14 +61,6 @@ std::vector<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_v
 /**
  *
  */
-std::vector<unifei::expertinos::mrta_vc::agents::VoiceCommander> unifei::expertinos::mrta_vc::system::AllocationManager::getLoggedUsers() 
-{
-	return logged_users_;
-}
-
-/**
- *
- */
 std::vector<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta_vc::system::AllocationManager::getAvailableRobots() 
 {
 	return available_robots_;
@@ -102,7 +94,15 @@ std::vector<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta
 /**
  *
  */
-void unifei::expertinos::mrta_vc::system::AllocationManager::addTask(unifei::expertinos::mrta_vc::tasks::Task task) 
+std::list<unifei::expertinos::mrta_vc::agents::VoiceCommander> unifei::expertinos::mrta_vc::system::AllocationManager::getLoggedUsers() 
+{
+	return logged_users_;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::expertinos::mrta_vc::tasks::Task task) 
 {
 	for (int i = 0; i < unallocated_tasks_.size(); i++)
 	{
@@ -117,22 +117,7 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::addTask(unifei::exp
 /**
  *
  */
-void unifei::expertinos::mrta_vc::system::AllocationManager::removeTask(unifei::expertinos::mrta_vc::tasks::Task task) 
-{
-	for (int i = 0; i < unallocated_tasks_.size(); i++)
-	{
-		if(task.equals(unallocated_tasks_.at(i)))
-		{
-			unallocated_tasks_.erase(unallocated_tasks_.begin() + i);
-			return;
-		}
-	}
-}
-
-/**
- *
- */
-void unifei::expertinos::mrta_vc::system::AllocationManager::addRobot(unifei::expertinos::mrta_vc::agents::Robot robot) 
+void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::expertinos::mrta_vc::agents::Robot robot) 
 {
 	for (int i = 0; i < available_robots_.size(); i++)
 	{
@@ -156,7 +141,40 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::addRobot(unifei::ex
 /**
  *
  */
-void unifei::expertinos::mrta_vc::system::AllocationManager::removeRobot(unifei::expertinos::mrta_vc::agents::Robot robot) 
+void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::expertinos::mrta_vc::agents::VoiceCommander user) 
+{
+	std::list<unifei::expertinos::mrta_vc::agents::VoiceCommander>::iterator it = logged_users_.begin();
+	while (it != logged_users_.end())
+	{
+		if(user.equals(*it))
+		{
+			(*it).setLastBeaconTimestamp(user.getLastBeaconTimestamp());
+			return;
+		}
+		++it;
+	}
+	logged_users_.push_back(user);
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::system::AllocationManager::remove(unifei::expertinos::mrta_vc::tasks::Task task) 
+{
+	for (int i = 0; i < unallocated_tasks_.size(); i++)
+	{
+		if(task.equals(unallocated_tasks_.at(i)))
+		{
+			unallocated_tasks_.erase(unallocated_tasks_.begin() + i);
+			return;
+		}
+	}
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::system::AllocationManager::remove(unifei::expertinos::mrta_vc::agents::Robot robot) 
 {
 	for (int i = 0; i < available_robots_.size(); i++)
 	{
@@ -179,32 +197,9 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::removeRobot(unifei:
 /**
  *
  */
-void unifei::expertinos::mrta_vc::system::AllocationManager::addUser(unifei::expertinos::mrta_vc::agents::VoiceCommander user) 
+void unifei::expertinos::mrta_vc::system::AllocationManager::remove(unifei::expertinos::mrta_vc::agents::VoiceCommander user) 
 {
-	for (int i = 0; i < logged_users_.size(); i++)
-	{
-		if(user.equals(logged_users_.at(i)))
-		{
-			logged_users_.at(i).setLastBeaconTimestamp(user.getLastBeaconTimestamp());
-			return;
-		}
-	}
-	logged_users_.push_back(user);
-}
-
-/**
- *
- */
-void unifei::expertinos::mrta_vc::system::AllocationManager::removeUser(unifei::expertinos::mrta_vc::agents::VoiceCommander user) 
-{
-	for (int i = 0; i < logged_users_.size(); i++)
-	{
-		if(user.equals(logged_users_.at(i)))
-		{
-			logged_users_.erase(logged_users_.begin() + i);
-			return;
-		}
-	}
+	logged_users_.remove(user);
 }
 
 /**
@@ -215,16 +210,17 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedRobots(
 }
 
 /**
- *	TESTAR
+ *
  */
 void unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedUsers() 
 {
-	for (int i = 0; i < logged_users_.size(); i++)
-	{
-		if((ros::Time::now() - logged_users_.at(i).getLastBeaconTimestamp()).toSec() > MAXIMUM_USER_BEACON_ABSENCE_DURATION)
-		{
-			logged_users_.erase(logged_users_.begin() + i);
-			i--;
-		}
-	}
+	logged_users_.remove_if(isNotLogged);
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::system::AllocationManager::isNotLogged(unifei::expertinos::mrta_vc::agents::VoiceCommander user)
+{
+	return !user.isLogged();
 }

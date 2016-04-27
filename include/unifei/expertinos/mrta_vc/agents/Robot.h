@@ -16,6 +16,7 @@
 #include "unifei/expertinos/mrta_vc/agents/Computer.h"
 
 #define ROBOT_BEACON_INTERVAL_DURATION 3.0
+#define MAXIMUM_ROBOT_BEACON_ABSENCE_DURATION 5 * ROBOT_BEACON_INTERVAL_DURATION
 
 namespace unifei 
 {
@@ -45,6 +46,7 @@ namespace unifei
 					void setVelocity(double x = 0, double y = 0, double theta = 0);
 					void setVelocity(geometry_msgs::Twist twist_msg);
 					void setLastBeaconTimestamp(ros::Time last_beacon_timestamp = ros::Time::now());
+					bool isLogged();
 					::mrta_vc::Agent toMsg();
 					std::string toString();
 					void operator=(const Robot& Robot);

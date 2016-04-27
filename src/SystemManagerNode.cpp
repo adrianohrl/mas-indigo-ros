@@ -15,8 +15,8 @@
  */
 mrta_vc::SystemManagerNode::SystemManagerNode(ros::NodeHandle nh) : nh_(nh)
 {
-	logged_robots_update_timer_ = nh_.createTimer(ros::Duration(ROBOT_BEACON_INTERVAL_DURATION), &mrta_vc::SystemManagerNode::loggedRobotsUpdateTimerCallback, this);
-	logged_users_update_timer_ = nh_.createTimer(ros::Duration(USER_BEACON_INTERVAL_DURATION), &mrta_vc::SystemManagerNode::loggedUsersUpdateTimerCallback, this);
+	logged_robots_update_timer_ = nh_.createTimer(ros::Duration(.75 * ROBOT_BEACON_INTERVAL_DURATION), &mrta_vc::SystemManagerNode::loggedRobotsUpdateTimerCallback, this);
+	logged_users_update_timer_ = nh_.createTimer(ros::Duration(.75 * USER_BEACON_INTERVAL_DURATION), &mrta_vc::SystemManagerNode::loggedUsersUpdateTimerCallback, this);
 	robot_beacon_sub_ = nh_.subscribe("/robot_beacon", 100, &mrta_vc::SystemManagerNode::robotBeaconCallback, this);
 	user_beacon_sub_ = nh_.subscribe("/user_beacon", 100, &mrta_vc::SystemManagerNode::userBeaconCallback, this);
 }
@@ -51,7 +51,7 @@ void mrta_vc::SystemManagerNode::robotBeaconCallback(const mrta_vc::Agent::Const
 {
 	unifei::expertinos::mrta_vc::agents::Robot robot(robot_msg);
 	robot.setLastBeaconTimestamp();
-	unifei::expertinos::mrta_vc::system::AllocationManager::addRobot(robot);
+	unifei::expertinos::mrta_vc::system::AllocationManager::add(robot);
 }
 
 /**
@@ -61,7 +61,7 @@ void mrta_vc::SystemManagerNode::userBeaconCallback(const mrta_vc::Agent::ConstP
 {
 	unifei::expertinos::mrta_vc::agents::VoiceCommander user(user_msg);
 	user.setLastBeaconTimestamp();
-	unifei::expertinos::mrta_vc::system::AllocationManager::addUser(user);
+	unifei::expertinos::mrta_vc::system::AllocationManager::add(user);
 }
 
 /**
@@ -70,7 +70,7 @@ void mrta_vc::SystemManagerNode::userBeaconCallback(const mrta_vc::Agent::ConstP
 void mrta_vc::SystemManagerNode::loggedRobotsUpdateTimerCallback(const ros::TimerEvent& event) 
 {
 	unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedRobots();
-	ROS_INFO("[ROBOTS] Total number of logged robots: %d", (int) getLoggedRobots().size());
+	//ROS_INFO("[ROBOTS] Total number of logged robots: %d", (int) getLoggedRobots().size());
 }
 
 /**
@@ -79,5 +79,5 @@ void mrta_vc::SystemManagerNode::loggedRobotsUpdateTimerCallback(const ros::Time
 void mrta_vc::SystemManagerNode::loggedUsersUpdateTimerCallback(const ros::TimerEvent& event) 
 {
 	unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedUsers();
-	ROS_INFO("[USERS] Total number of logged users: %d", (int) getLoggedUsers().size());
+	//ROS_INFO("[USERS] Total number of logged users: %d", (int) getLoggedUsers().size());
 }

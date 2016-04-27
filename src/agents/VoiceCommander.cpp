@@ -99,6 +99,23 @@ ros::Time unifei::expertinos::mrta_vc::agents::VoiceCommander::getLastBeaconTime
 /**
  *
  */
+bool unifei::expertinos::mrta_vc::agents::VoiceCommander::isLogged() 
+{
+	return (ros::Time::now() - last_beacon_timestamp_).toSec() <= MAXIMUM_USER_BEACON_ABSENCE_DURATION;
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::agents::VoiceCommander::isValid(std::string password) 
+{
+	return password_ == password;
+}
+
+
+/**
+ *
+ */
 int unifei::expertinos::mrta_vc::agents::VoiceCommander::getType() 
 {
 	return VOICE_COMMANDER;
@@ -146,14 +163,6 @@ void unifei::expertinos::mrta_vc::agents::VoiceCommander::setLastBeaconTimestamp
 	{
 		last_beacon_timestamp_ = last_beacon_timestamp;
 	}
-}
-
-/**
- *
- */
-bool unifei::expertinos::mrta_vc::agents::VoiceCommander::isValid(std::string password) 
-{
-	return password_ == password;
 }
 
 /**
