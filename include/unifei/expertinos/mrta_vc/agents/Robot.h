@@ -11,9 +11,11 @@
 #ifndef ROBOT_H_
 #define ROBOT_H_
 
+#include <vector>
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include "unifei/expertinos/mrta_vc/agents/Computer.h"
+#include "unifei/expertinos/mrta_vc/tasks/Skill.h"
 
 #define ROBOT_BEACON_INTERVAL_DURATION 3.0
 #define MAXIMUM_ROBOT_BEACON_ABSENCE_DURATION 5 * ROBOT_BEACON_INTERVAL_DURATION
@@ -37,6 +39,7 @@ namespace unifei
 					Robot(::mrta_vc::Agent robot_msg);		
 					~Robot();
 
+          std::vector<unifei::expertinos::mrta_vc::tasks::Skill> getSkills();
 					bool isHolonomic();
 					double getVelX();
 					double getVelY();
@@ -47,6 +50,7 @@ namespace unifei
 					void setVelocity(geometry_msgs::Twist twist_msg);
 					void setLastBeaconTimestamp(ros::Time last_beacon_timestamp = ros::Time::now());
 					bool isLogged();
+          static bool isNotLoggedAnyMore(Robot robot);
 					::mrta_vc::Agent toMsg();
 					std::string toString();
 					void operator=(const Robot& Robot);
@@ -56,8 +60,12 @@ namespace unifei
 					
 					int getType();
 					void setHolonomic(bool holonomic);
+          void setSkills(std::vector<unifei::expertinos::mrta_vc::tasks::Skill> skills);
+          void addSkill(unifei::expertinos::mrta_vc::tasks::Skill skill);
+          void removeSkill(unifei::expertinos::mrta_vc::tasks::Skill skill);
 
 				private:
+          std::vector<unifei::expertinos::mrta_vc::tasks::Skill> skills_;
 					bool holonomic_;
 					double vel_x_;
 					double vel_y_;

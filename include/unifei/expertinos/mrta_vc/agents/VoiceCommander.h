@@ -45,6 +45,7 @@ namespace unifei
 					void setLastBeaconTimestamp(ros::Time last_beacon_timestamp = ros::Time::now());
 					bool isValid(std::string password);
 					bool isLogged();
+          static bool isNotLoggedAnyMore(VoiceCommander voice_commander);
 					::mrta_vc::Agent toMsg();
 					std::string toString();
 					void operator=(const VoiceCommander& VoiceCommander);

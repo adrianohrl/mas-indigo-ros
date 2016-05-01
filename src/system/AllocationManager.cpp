@@ -28,7 +28,7 @@ unifei::expertinos::mrta_vc::system::AllocationManager::~AllocationManager()
 /**
  *
  */
-std::vector<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_vc::system::AllocationManager::getUnallocatedTasks() 
+std::list<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_vc::system::AllocationManager::getUnallocatedTasks()
 {
 	return unallocated_tasks_;
 }
@@ -36,7 +36,7 @@ std::vector<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_v
 /**
  *
  */
-std::vector<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_vc::system::AllocationManager::getAllocatedTasks() 
+std::list<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_vc::system::AllocationManager::getAllocatedTasks()
 {
 	return allocated_tasks_;
 }
@@ -44,24 +44,24 @@ std::vector<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_v
 /**
  *
  */
-std::vector<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_vc::system::AllocationManager::getRequestedTasks() 
+std::list<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_vc::system::AllocationManager::getRequestedTasks()
 {
-	std::vector<unifei::expertinos::mrta_vc::tasks::Task> requested_tasks;
-	for (int i = 0; i < unallocated_tasks_.size(); i++)
+  std::list<unifei::expertinos::mrta_vc::tasks::Task> requested_tasks;
+  /*for (int i = 0; i < unallocated_tasks_.size(); i++)
 	{
 		requested_tasks.push_back(unallocated_tasks_.at(i));
 	}
 	for (int i = 0; i < allocated_tasks_.size(); i++)
 	{
 		requested_tasks.push_back(allocated_tasks_.at(i));
-	}
+  }*/
 	return requested_tasks;
 }
 
 /**
  *
  */
-std::vector<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta_vc::system::AllocationManager::getAvailableRobots() 
+std::list<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta_vc::system::AllocationManager::getAvailableRobots()
 {
 	return available_robots_;
 }
@@ -69,7 +69,7 @@ std::vector<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta
 /**
  *
  */
-std::vector<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta_vc::system::AllocationManager::getBusyRobots() 
+std::list<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta_vc::system::AllocationManager::getBusyRobots()
 {
 	return busy_robots_;
 }
@@ -77,17 +77,17 @@ std::vector<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta
 /**
  *
  */
-std::vector<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta_vc::system::AllocationManager::getLoggedRobots() 
+std::list<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta_vc::system::AllocationManager::getLoggedRobots()
 {
-	std::vector<unifei::expertinos::mrta_vc::agents::Robot> logged_robots;
-	for (int i = 0; i < available_robots_.size(); i++)
+  std::list<unifei::expertinos::mrta_vc::agents::Robot> logged_robots;
+  /*for (int i = 0; i < available_robots_.size(); i++)
 	{
 		logged_robots.push_back(available_robots_.at(i));
 	}
 	for (int i = 0; i < busy_robots_.size(); i++)
 	{
 		logged_robots.push_back(busy_robots_.at(i));
-	}
+  }*/
 	return logged_robots;
 }
 
@@ -104,13 +104,13 @@ std::list<unifei::expertinos::mrta_vc::agents::VoiceCommander> unifei::expertino
  */
 void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::expertinos::mrta_vc::tasks::Task task) 
 {
-	for (int i = 0; i < unallocated_tasks_.size(); i++)
+  /*for (int i = 0; i < unallocated_tasks_.size(); i++)
 	{
 		if(task.equals(unallocated_tasks_.at(i)))
 		{
 			return;
 		}
-	}
+  }*/
 	unallocated_tasks_.push_back(task);
 }
 
@@ -119,7 +119,7 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::experti
  */
 void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::expertinos::mrta_vc::agents::Robot robot) 
 {
-	for (int i = 0; i < available_robots_.size(); i++)
+  /*for (int i = 0; i < available_robots_.size(); i++)
 	{
 		if(robot.equals(available_robots_.at(i)))
 		{
@@ -134,7 +134,29 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::experti
 			busy_robots_.at(i).setLastBeaconTimestamp(robot.getLastBeaconTimestamp());
 			return;
 		}
-	}
+  }*/
+  std::list<unifei::expertinos::mrta_vc::agents::Robot>::iterator it = available_robots_.begin();
+  while (it != available_robots_.end())
+  {
+    if(robot.equals(*it))
+    {
+      (*it).setLastBeaconTimestamp(robot.getLastBeaconTimestamp());
+      (*it).setLocation(robot.getLocation());
+      return;
+    }
+    ++it;
+  }
+  it = busy_robots_.begin();
+  while (it != busy_robots_.end())
+  {
+    if(robot.equals(*it))
+    {
+      (*it).setLastBeaconTimestamp(robot.getLastBeaconTimestamp());
+      (*it).setLocation(robot.getLocation());
+      return;
+    }
+    ++it;
+  }
 	available_robots_.push_back(robot);
 }
 
@@ -149,6 +171,7 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::experti
 		if(user.equals(*it))
 		{
 			(*it).setLastBeaconTimestamp(user.getLastBeaconTimestamp());
+      (*it).setLocation(user.getLocation());
 			return;
 		}
 		++it;
@@ -161,14 +184,15 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::experti
  */
 void unifei::expertinos::mrta_vc::system::AllocationManager::remove(unifei::expertinos::mrta_vc::tasks::Task task) 
 {
-	for (int i = 0; i < unallocated_tasks_.size(); i++)
+  /*for (int i = 0; i < unallocated_tasks_.size(); i++)
 	{
 		if(task.equals(unallocated_tasks_.at(i)))
 		{
 			unallocated_tasks_.erase(unallocated_tasks_.begin() + i);
 			return;
 		}
-	}
+  }*/
+  unallocated_tasks_.remove(task);
 }
 
 /**
@@ -176,7 +200,7 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::remove(unifei::expe
  */
 void unifei::expertinos::mrta_vc::system::AllocationManager::remove(unifei::expertinos::mrta_vc::agents::Robot robot) 
 {
-	for (int i = 0; i < available_robots_.size(); i++)
+  /*for (int i = 0; i < available_robots_.size(); i++)
 	{
 		if(robot.equals(available_robots_.at(i)))
 		{
@@ -191,7 +215,9 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::remove(unifei::expe
 			busy_robots_.erase(busy_robots_.begin() + i);
 			return;
 		}
-	}
+  }*/
+  available_robots_.remove(robot);
+  busy_robots_.remove(robot);
 }
 
 /**
@@ -207,6 +233,8 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::remove(unifei::expe
  */
 void unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedRobots() 
 {
+  available_robots_.remove_if(unifei::expertinos::mrta_vc::agents::Robot::isNotLoggedAnyMore);
+  busy_robots_.remove_if(unifei::expertinos::mrta_vc::agents::Robot::isNotLoggedAnyMore);
 }
 
 /**
@@ -214,13 +242,5 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedRobots(
  */
 void unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedUsers() 
 {
-	logged_users_.remove_if(isNotLogged);
-}
-
-/**
- *
- */
-bool unifei::expertinos::mrta_vc::system::AllocationManager::isNotLogged(unifei::expertinos::mrta_vc::agents::VoiceCommander user)
-{
-	return !user.isLogged();
+  logged_users_.remove_if(unifei::expertinos::mrta_vc::agents::VoiceCommander::isNotLoggedAnyMore);
 }

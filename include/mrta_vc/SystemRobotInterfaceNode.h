@@ -36,8 +36,11 @@ namespace mrta_vc
 		ros::NodeHandle nh_;
 		ros::Timer beacon_timer_;
 		ros::Publisher beacon_pub_;
+
+    bool setted_up_;
 		
 		void beaconTimerCallback(const ros::TimerEvent& event);
+    void setUp();
 
 	};
 

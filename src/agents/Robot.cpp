@@ -67,9 +67,17 @@ unifei::expertinos::mrta_vc::agents::Robot::~Robot()
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::agents::Robot::isHolonomic() 
+std::vector<unifei::expertinos::mrta_vc::tasks::Skill> unifei::expertinos::mrta_vc::agents::Robot::getSkills()
 {
-	return holonomic_;
+  return skills_;
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::agents::Robot::isHolonomic()
+{
+  return holonomic_;
 }
 
 /**
@@ -119,9 +127,17 @@ ros::Time unifei::expertinos::mrta_vc::agents::Robot::getLastBeaconTimestamp()
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::agents::Robot::isLogged() 
+bool unifei::expertinos::mrta_vc::agents::Robot::isLogged()
 {
-	return (ros::Time::now() - last_beacon_timestamp_).toSec() <= MAXIMUM_ROBOT_BEACON_ABSENCE_DURATION;
+  return (ros::Time::now() - last_beacon_timestamp_).toSec() <= MAXIMUM_ROBOT_BEACON_ABSENCE_DURATION;
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::agents::Robot::isNotLoggedAnyMore(unifei::expertinos::mrta_vc::agents::Robot robot)
+{
+  return !robot.isLogged();
 }
 
 
@@ -144,9 +160,48 @@ std::string unifei::expertinos::mrta_vc::agents::Robot::getClassName()
 /**
  *
  */
+void unifei::expertinos::mrta_vc::agents::Robot::setSkills(std::vector<unifei::expertinos::mrta_vc::tasks::Skill> skills)
+{
+  skills_ = skills;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::Robot::addSkill(unifei::expertinos::mrta_vc::tasks::Skill skill)
+{
+  for (int i = 0; i < skills_.size(); i++)
+  {
+    if (skill.equals(skills_.at(i)))
+    {
+      skills_.at(i).setLevel(skill.getLevel());
+      return;
+    }
+  }
+  skills_.push_back(skill);
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::Robot::removeSkill(unifei::expertinos::mrta_vc::tasks::Skill skill)
+{
+  for (int i = 0; i < skills_.size(); i++)
+  {
+    if (skill.equals(skills_.at(i)))
+    {
+      skills_.erase(skills_.begin() + i);
+      return;
+    }
+  }
+}
+
+/**
+ *
+ */
 void unifei::expertinos::mrta_vc::agents::Robot::setHolonomic(bool holonomic)
 {
-	holonomic_ = holonomic;
+  holonomic_ = holonomic;
 }
 
 /**

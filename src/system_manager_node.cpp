@@ -10,13 +10,11 @@
 
 #include "mrta_vc/SystemManagerNode.h"
 
-using namespace unifei::expertinos::mrta_vc;
-
 int main(int argc, char** argv)
 {
 	ros::init(argc, argv, "system_manager_node");
 	ros::NodeHandle nh;
-	::mrta_vc::SystemManagerNode node(nh);
+  mrta_vc::SystemManagerNode node(nh);
 	node.spin();
 	return 0;
 }

@@ -115,27 +115,26 @@ void mrta_vc::SystemUserInterfaceNode::logout()
  */
 void mrta_vc::SystemUserInterfaceNode::setComputerUp()
 {
-	bool setted_up;
-	std::string ns = ros::this_node::getName();
-	ns.append("/computer"); 
 	ROS_DEBUG("********* Reading User Computer Parameters **********");
+  bool setted_up;
+  std::string ns = ros::this_node::getName();
+  ns.append("/computer");
 	
 	int user_computer_id = 0;
-	nh_.param<int>(ns + std::string("/id"), user_computer_id, 0);
+  /*nh_.param<int>(ns + std::string("/id"), user_computer_id, 0);
 	ROS_ERROR_COND(user_computer_id == 0, "Invalid user computer ID!!!");
-	setted_up = user_computer_id != 0;
+  setted_up = user_computer_id != 0;*/
 	
-	std::string user_computer_hostname = "";
+  std::string user_computer_hostname;
 	nh_.param<std::string>(ns + std::string("/hostname"), user_computer_hostname, "");
 	ROS_ERROR_COND(user_computer_hostname == "", "Invalid user computer hostname!!!");
-	setted_up = setted_up && user_computer_hostname != "";
+  setted_up = user_computer_hostname != "";
 	
 	bool user_computer_mobile;
 	nh_.param<bool>(ns + std::string("/mobile"), user_computer_mobile, false);
-	
+
+  ns.append("/location");
 	double user_computer_location_x, user_computer_location_y, user_computer_location_theta;
-	
-	ns.append("/location"); 
 	nh_.param<double>(ns + std::string("/x"), user_computer_location_x, 0);
 	nh_.param<double>(ns + std::string("/y"), user_computer_location_y, 0);
 	nh_.param<double>(ns + std::string("/theta"), user_computer_location_theta, 0);

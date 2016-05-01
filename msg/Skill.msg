@@ -1,3 +1,4 @@
+uint32 id
 mrta_vc/Resource resource
 uint8 level
 

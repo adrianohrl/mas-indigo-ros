@@ -36,13 +36,13 @@ namespace mrta_vc
 		ros::Timer beacon_timer_;
 		ros::Publisher beacon_pub_;
 		ros::ServiceClient validate_cli_;
+    bool logged_;
 		
 		void beaconTimerCallback(const ros::TimerEvent& event);
 		void login(std::string login_name, std::string password);
 		void logout();
 		void setComputerUp();
-		
-		bool logged_;
+
 
 	};
 

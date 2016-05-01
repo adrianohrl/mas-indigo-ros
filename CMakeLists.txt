@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(mrta_vc)
 
+set(ROS_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Debug)
+
 find_package(catkin REQUIRED COMPONENTS
 	geometry_msgs
 	message_generation
@@ -45,30 +48,53 @@ include_directories(
 
 add_executable(system_manager_node 
 	src/system_manager_node.cpp
+	include/mrta_vc/SystemManagerNode.h
 	src/SystemManagerNode.cpp
+	include/unifei/expertinos/mrta_vc/system/AllocationManager.h
 	src/system/AllocationManager.cpp
-	src/system/DatabaseInterface.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Allocation.h
 	src/tasks/Allocation.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Task.h
 	src/tasks/Task.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
 	src/tasks/TaskPriorities.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskStates.h
 	src/tasks/TaskStates.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
 	src/tasks/TaskSatisfactions.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Skill.h
 	src/tasks/Skill.cpp
+	include/unifei/expertinos/mrta_vc/tasks/SkillLevels.h
 	src/tasks/SkillLevels.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Resource.h
 	src/tasks/Resource.cpp
+	include/unifei/expertinos/mrta_vc/places/Location.h
 	src/places/Location.cpp
+	include/unifei/expertinos/mrta_vc/places/Place.h
 	src/places/Place.cpp
+	include/unifei/expertinos/mrta_vc/places/Campus.h
 	src/places/Campus.cpp
+	include/unifei/expertinos/mrta_vc/places/ExternalArea.h
 	src/places/ExternalArea.cpp
+	include/unifei/expertinos/mrta_vc/places/Building.h
 	src/places/Building.cpp
+	include/unifei/expertinos/mrta_vc/places/Floor.h
 	src/places/Floor.cpp
+	include/unifei/expertinos/mrta_vc/places/Office.h
 	src/places/Office.cpp
+	include/unifei/expertinos/mrta_vc/places/Desk.h
 	src/places/Desk.cpp
+	include/unifei/expertinos/mrta_vc/agents/Agent.h
 	src/agents/Agent.cpp
+	include/unifei/expertinos/mrta_vc/agents/Computer.h
 	src/agents/Computer.cpp
+	include/unifei/expertinos/mrta_vc/agents/Person.h
 	src/agents/Person.cpp
+	include/unifei/expertinos/mrta_vc/agents/HierarchyLevels.h
 	src/agents/HierarchyLevels.cpp
+	include/unifei/expertinos/mrta_vc/agents/Robot.h
 	src/agents/Robot.cpp
+	include/unifei/expertinos/mrta_vc/agents/VoiceCommander.h
 	src/agents/VoiceCommander.cpp
 	)
 
@@ -83,12 +109,19 @@ target_link_libraries(system_manager_node
 
 add_executable(system_user_interface_node 
 	src/system_user_interface_node.cpp
+	include/mrta_vc/SystemUserInterfaceNode.h
 	src/SystemUserInterfaceNode.cpp
+	include/unifei/expertinos/mrta_vc/agents/VoiceCommander.h
 	src/agents/VoiceCommander.cpp
+	include/unifei/expertinos/mrta_vc/agents/Computer.h
 	src/agents/Computer.cpp
+	include/unifei/expertinos/mrta_vc/agents/Person.h
 	src/agents/Person.cpp
+	include/unifei/expertinos/mrta_vc/agents/HierarchyLevels.h
 	src/agents/HierarchyLevels.cpp
+	include/unifei/expertinos/mrta_vc/agents/Agent.h
 	src/agents/Agent.cpp
+	include/unifei/expertinos/mrta_vc/places/Location.h
 	src/places/Location.cpp
 	)
 
@@ -103,10 +136,21 @@ target_link_libraries(system_user_interface_node
 
 add_executable(system_robot_interface_node 
 	src/system_robot_interface_node.cpp
+	include/mrta_vc/SystemRobotInterfaceNode.h
 	src/SystemRobotInterfaceNode.cpp
+	include/unifei/expertinos/mrta_vc/agents/Robot.h
 	src/agents/Robot.cpp
+	include/unifei/expertinos/mrta_vc/agents/Computer.h
 	src/agents/Computer.cpp
+	include/unifei/expertinos/mrta_vc/agents/Agent.h
 	src/agents/Agent.cpp
+        include/unifei/expertinos/mrta_vc/tasks/Skill.h
+        src/tasks/Skill.cpp
+        include/unifei/expertinos/mrta_vc/tasks/SkillLevels.h
+        src/tasks/SkillLevels.cpp
+        include/unifei/expertinos/mrta_vc/tasks/Resource.h
+        src/tasks/Resource.cpp
+	include/unifei/expertinos/mrta_vc/places/Location.h
 	src/places/Location.cpp
 	)
 
@@ -121,29 +165,53 @@ target_link_libraries(system_robot_interface_node
 
 add_executable(system_database_interface_node 
 	src/system_database_interface_node.cpp
+	include/mrta_vc/SystemDatabaseInterfaceNode.h
 	src/SystemDatabaseInterfaceNode.cpp
+	include/unifei/expertinos/mrta_vc/system/DatabaseInterface.h
 	src/system/DatabaseInterface.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Allocation.h
 	src/tasks/Allocation.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Task.h
 	src/tasks/Task.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
 	src/tasks/TaskPriorities.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskStates.h
 	src/tasks/TaskStates.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
 	src/tasks/TaskSatisfactions.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Skill.h
 	src/tasks/Skill.cpp
+	include/unifei/expertinos/mrta_vc/tasks/SkillLevels.h
 	src/tasks/SkillLevels.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Resource.h
 	src/tasks/Resource.cpp
+	include/unifei/expertinos/mrta_vc/places/Location.h
 	src/places/Location.cpp
+	include/unifei/expertinos/mrta_vc/places/Place.h
 	src/places/Place.cpp
+	include/unifei/expertinos/mrta_vc/places/Campus.h
 	src/places/Campus.cpp
+	include/unifei/expertinos/mrta_vc/places/ExternalArea.h
 	src/places/ExternalArea.cpp
+	include/unifei/expertinos/mrta_vc/places/Building.h
 	src/places/Building.cpp
+	include/unifei/expertinos/mrta_vc/places/Floor.h
 	src/places/Floor.cpp
+	include/unifei/expertinos/mrta_vc/places/Office.h
 	src/places/Office.cpp
+	include/unifei/expertinos/mrta_vc/places/Desk.h
 	src/places/Desk.cpp
+	include/unifei/expertinos/mrta_vc/agents/Agent.h
 	src/agents/Agent.cpp
+	include/unifei/expertinos/mrta_vc/agents/Computer.h
 	src/agents/Computer.cpp
+	include/unifei/expertinos/mrta_vc/agents/Person.h
 	src/agents/Person.cpp
+	include/unifei/expertinos/mrta_vc/agents/HierarchyLevels.h
 	src/agents/HierarchyLevels.cpp
+	include/unifei/expertinos/mrta_vc/agents/Robot.h
 	src/agents/Robot.cpp
+	include/unifei/expertinos/mrta_vc/agents/VoiceCommander.h
 	src/agents/VoiceCommander.cpp
 	)
 
@@ -158,6 +226,7 @@ target_link_libraries(system_database_interface_node
 
 add_executable(task_builder_node 
 	src/task_builder_node.cpp
+	include/mrta_vc/TaskBuilderNode.h
 	src/TaskBuilderNode.cpp
 	)
 
@@ -172,6 +241,7 @@ target_link_libraries(task_builder_node
 
 add_executable(speech_analyser_node 
 	src/speech_analyser_node.cpp
+	include/mrta_vc/SpeechAnalyserNode.h
 	src/SpeechAnalyserNode.cpp
 	)
 

@@ -107,6 +107,14 @@ bool unifei::expertinos::mrta_vc::agents::VoiceCommander::isLogged()
 /**
  *
  */
+bool unifei::expertinos::mrta_vc::agents::VoiceCommander::isNotLoggedAnyMore(VoiceCommander voice_commander)
+{
+  return !voice_commander.isLogged();
+}
+
+/**
+ *
+ */
 bool unifei::expertinos::mrta_vc::agents::VoiceCommander::isValid(std::string password) 
 {
 	return password_ == password;
