@@ -16,7 +16,7 @@
 mrta_vc::SystemUserInterfaceNode::SystemUserInterfaceNode(ros::NodeHandle nh) : unifei::expertinos::mrta_vc::agents::VoiceCommander(), nh_(nh)
 {
 	beacon_timer_ = nh_.createTimer(ros::Duration(USER_BEACON_INTERVAL_DURATION), &mrta_vc::SystemUserInterfaceNode::beaconTimerCallback, this);
-	beacon_pub_ = nh_.advertise<mrta_vc::Agent>("/user_beacon", 1);
+  beacon_pub_ = nh_.advertise<mrta_vc::Agent>("/users", 1);
 	validate_cli_ = nh_.serviceClient<mrta_vc::ValidatePassword>("/validate_password");
 	setComputerUp();
 	logged_ = false;
@@ -36,9 +36,10 @@ mrta_vc::SystemUserInterfaceNode::SystemUserInterfaceNode(ros::NodeHandle nh) : 
  */
 mrta_vc::SystemUserInterfaceNode::~SystemUserInterfaceNode()
 {
-	logout();
-	beacon_pub_.shutdown();
-	validate_cli_.shutdown();
+  logout();
+  beacon_timer_.stop();
+  beacon_pub_.shutdown();
+  validate_cli_.shutdown();
 }
 
 /**

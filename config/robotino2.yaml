@@ -2,6 +2,6 @@ hostname: 'robotino2'
 mobile: true
 holonomic: true
 location: {x: 20.0, y: 3.0, theta: deg(-90.0)}
-skill1: {resource: {name: 'velocity', description: 'robot velocity'}, level: 'moderate'} 
-skill2: {resource: {name: 'strength', description: 'robot strength'}, level: 'low'} 
-skill3: {resource: {name: 'flexible', description: 'robot has flexible movements'}, level: 'high'} 
+skill0: {resource: {name: 'velocity', description: 'robot velocity'}, level: 'moderate'} 
+skill1: {resource: {name: 'strength', description: 'robot strength'}, level: 'low'} 
+skill2: {resource: {name: 'flexible', description: 'robot has flexible movements'}, level: 'high'} 

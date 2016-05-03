@@ -14,10 +14,19 @@
 /**
  *
  */
+unifei::expertinos::mrta_vc::tasks::Skill::Skill(std::string resource_name, unifei::expertinos::mrta_vc::tasks::SkillLevelEnum level) : resource_(unifei::expertinos::mrta_vc::tasks::Resource(resource_name))
+{
+  id_ = 0;
+  level_ = level;
+}
+
+/**
+ *
+ */
 unifei::expertinos::mrta_vc::tasks::Skill::Skill(int id, unifei::expertinos::mrta_vc::tasks::Resource resource, unifei::expertinos::mrta_vc::tasks::SkillLevelEnum level) : resource_(resource)
-{	
+{
   id_ = id;
-	level_ = level;
+  level_ = level;
 }
 
 /**
@@ -104,13 +113,21 @@ void unifei::expertinos::mrta_vc::tasks::Skill::setLevel(unifei::expertinos::mrt
 /**
  *
  */
-::mrta_vc::Skill unifei::expertinos::mrta_vc::tasks::Skill::toMsg() 
+::mrta_vc::Skill unifei::expertinos::mrta_vc::tasks::Skill::toMsg()
 {
-	::mrta_vc::Skill skill_msg;
+  ::mrta_vc::Skill skill_msg;
   skill_msg.id = id_;
-	skill_msg.resource = resource_.toMsg();
-	skill_msg.level = unifei::expertinos::mrta_vc::tasks::SkillLevels::toCode(level_);
-	return skill_msg;
+  skill_msg.resource = resource_.toMsg();
+  skill_msg.level = unifei::expertinos::mrta_vc::tasks::SkillLevels::toCode(level_);
+  return skill_msg;
+}
+
+/**
+ *
+ */
+std::string unifei::expertinos::mrta_vc::tasks::Skill::toString()
+{
+  return "skill: {" + resource_.toString() + ", level: " + unifei::expertinos::mrta_vc::tasks::SkillLevels::toString(level_) + "}";
 }
 
 /**

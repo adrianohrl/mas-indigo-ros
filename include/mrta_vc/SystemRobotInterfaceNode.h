@@ -11,13 +11,14 @@
 #ifndef SYSTEM_ROBOT_INTERFACE_NODE_H_
 #define SYSTEM_ROBOT_INTERFACE_NODE_H_
 
+#include <sstream>
 #include <ros/ros.h>
 #include "unifei/expertinos/mrta_vc/agents/Robot.h"
 
 namespace mrta_vc 
 {
 
-	class SystemRobotInterfaceNode : unifei::expertinos::mrta_vc::agents::Robot
+  class SystemRobotInterfaceNode : public unifei::expertinos::mrta_vc::agents::Robot
 	{
 
 	public:

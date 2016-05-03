@@ -32,7 +32,7 @@ namespace unifei
 
 				public:
 					Task();
-					Task(int id, std::string name, std::string description, std::vector<Skill> desired_tasks, unifei::expertinos::mrta_vc::agents::VoiceCommander sender, unifei::expertinos::mrta_vc::agents::Person receiver, ros::Time deadline, TaskPriorityEnum priority = TaskPriorities::getDefault());
+          Task(int id, std::string name, std::string description, std::vector<Skill> desired_skills, unifei::expertinos::mrta_vc::agents::VoiceCommander sender, unifei::expertinos::mrta_vc::agents::Person receiver, ros::Time deadline, TaskPriorityEnum priority = TaskPriorities::getDefault());
 					Task(const ::mrta_vc::Task::ConstPtr& task_msg);
 					Task(::mrta_vc::Task task_msg);		
 					~Task();

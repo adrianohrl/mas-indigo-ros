@@ -25,6 +25,10 @@ add_message_files(
 	
 add_service_files(
 	FILES
+        GetComputer.srv
+        GetPerson.srv
+        GetRobot.srv
+        GetVoiceCommander.srv
 	ValidatePassword.srv
 )
 
@@ -228,6 +232,30 @@ add_executable(task_builder_node
 	src/task_builder_node.cpp
 	include/mrta_vc/TaskBuilderNode.h
 	src/TaskBuilderNode.cpp
+        include/unifei/expertinos/mrta_vc/tasks/Task.h
+        src/tasks/Task.cpp
+        include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
+        src/tasks/TaskPriorities.cpp
+        include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
+        src/tasks/TaskSatisfactions.cpp
+        include/unifei/expertinos/mrta_vc/tasks/Skill.h
+        src/tasks/Skill.cpp
+        include/unifei/expertinos/mrta_vc/tasks/SkillLevels.h
+        src/tasks/SkillLevels.cpp
+        include/unifei/expertinos/mrta_vc/tasks/Resource.h
+        src/tasks/Resource.cpp
+        include/unifei/expertinos/mrta_vc/places/Location.h
+        src/places/Location.cpp
+        include/unifei/expertinos/mrta_vc/agents/Agent.h
+        src/agents/Agent.cpp
+        include/unifei/expertinos/mrta_vc/agents/Person.h
+        src/agents/Person.cpp
+        include/unifei/expertinos/mrta_vc/agents/Computer.h
+        src/agents/Computer.cpp
+        include/unifei/expertinos/mrta_vc/agents/HierarchyLevels.h
+        src/agents/HierarchyLevels.cpp
+        include/unifei/expertinos/mrta_vc/agents/VoiceCommander.h
+        src/agents/VoiceCommander.cpp
 	)
 
 add_dependencies(task_builder_node 

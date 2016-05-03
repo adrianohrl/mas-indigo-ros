@@ -16,6 +16,10 @@
  */
 mrta_vc::SystemDatabaseInterfaceNode::SystemDatabaseInterfaceNode(ros::NodeHandle nh) : unifei::expertinos::mrta_vc::system::DatabaseInterface(), nh_(nh)
 {
+  get_computer_srv_ = nh_.advertiseService("/get_computer", &mrta_vc::SystemDatabaseInterfaceNode::getComputer, this);
+  get_person_srv_ = nh_.advertiseService("/get_person", &mrta_vc::SystemDatabaseInterfaceNode::getPerson, this);
+  get_robot_srv_ = nh_.advertiseService("/get_robot", &mrta_vc::SystemDatabaseInterfaceNode::getRobot, this);
+  get_user_srv_ = nh_.advertiseService("/get_user", &mrta_vc::SystemDatabaseInterfaceNode::getUser, this);
 	validate_srv_ = nh_.advertiseService("/validate_password", &mrta_vc::SystemDatabaseInterfaceNode::validatePasswordCallback, this);
 }
 
@@ -24,6 +28,10 @@ mrta_vc::SystemDatabaseInterfaceNode::SystemDatabaseInterfaceNode(ros::NodeHandl
  */
 mrta_vc::SystemDatabaseInterfaceNode::~SystemDatabaseInterfaceNode()
 {
+  get_computer_srv_.shutdown();
+  get_person_srv_.shutdown();
+  get_robot_srv_.shutdown();
+  get_user_srv_.shutdown();
 	validate_srv_.shutdown();
 }
 
@@ -39,6 +47,38 @@ void mrta_vc::SystemDatabaseInterfaceNode::spin()
 		ros::spinOnce();
 		loop_rate.sleep();
 	}
+}
+
+/**
+ *
+ */
+bool mrta_vc::SystemDatabaseInterfaceNode::getComputer(mrta_vc::GetComputer::Request& request, mrta_vc::GetComputer::Response& response)
+{
+  return false;
+}
+
+/**
+ *
+ */
+bool mrta_vc::SystemDatabaseInterfaceNode::getPerson(mrta_vc::GetPerson::Request& request, mrta_vc::GetPerson::Response& response)
+{
+  return false;
+}
+
+/**
+ *
+ */
+bool mrta_vc::SystemDatabaseInterfaceNode::getRobot(mrta_vc::GetRobot::Request& request, mrta_vc::GetRobot::Response& response)
+{
+  return false;
+}
+
+/**
+ *
+ */
+bool mrta_vc::SystemDatabaseInterfaceNode::getUser(mrta_vc::GetVoiceCommander::Request& request, mrta_vc::GetVoiceCommander::Response& response)
+{
+  return false;
 }
 
 /**

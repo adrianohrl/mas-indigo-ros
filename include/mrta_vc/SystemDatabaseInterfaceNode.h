@@ -14,12 +14,16 @@
 
 #include <ros/ros.h>
 #include "mrta_vc/ValidatePassword.h"
+#include "mrta_vc/GetComputer.h"
+#include "mrta_vc/GetPerson.h"
+#include "mrta_vc/GetRobot.h"
+#include "mrta_vc/GetVoiceCommander.h"
 #include "unifei/expertinos/mrta_vc/system/DatabaseInterface.h"
 
 namespace mrta_vc 
 {
 
-	class SystemDatabaseInterfaceNode : unifei::expertinos::mrta_vc::system::DatabaseInterface
+  class SystemDatabaseInterfaceNode : public unifei::expertinos::mrta_vc::system::DatabaseInterface
 	{
 
 	public:
@@ -35,10 +39,18 @@ namespace mrta_vc
 	private:
 	
 		/** atributos privados relacionados ao nó */
-		ros::NodeHandle nh_;
-		ros::ServiceServer validate_srv_;
-		
-		bool validatePasswordCallback(mrta_vc::ValidatePassword::Request& request, mrta_vc::ValidatePassword::Response& response);
+    ros::NodeHandle nh_;
+    ros::ServiceServer get_computer_srv_;
+    ros::ServiceServer get_person_srv_;
+    ros::ServiceServer get_robot_srv_;
+    ros::ServiceServer get_user_srv_;
+    ros::ServiceServer validate_srv_;
+
+    bool getComputer(mrta_vc::GetComputer::Request& request, mrta_vc::GetComputer::Response& response);
+    bool getPerson(mrta_vc::GetPerson::Request& request, mrta_vc::GetPerson::Response& response);
+    bool getRobot(mrta_vc::GetRobot::Request& request, mrta_vc::GetRobot::Response& response);
+    bool getUser(mrta_vc::GetVoiceCommander::Request& request, mrta_vc::GetVoiceCommander::Response& response);
+    bool validatePasswordCallback(mrta_vc::ValidatePassword::Request& request, mrta_vc::ValidatePassword::Response& response);
 
 	};
 

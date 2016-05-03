@@ -18,7 +18,7 @@
 namespace mrta_vc 
 {
 
-	class SystemUserInterfaceNode : unifei::expertinos::mrta_vc::agents::VoiceCommander
+  class SystemUserInterfaceNode : public unifei::expertinos::mrta_vc::agents::VoiceCommander
 	{
 
 	public:

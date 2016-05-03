@@ -26,8 +26,9 @@ namespace unifei
 				class Resource 
 				{
 
-				public:
-					Resource(int id, std::string name, std::string description);
+        public:
+          Resource(std::string name);
+          Resource(int id, std::string name, std::string description);
 					Resource(const ::mrta_vc::Resource::ConstPtr& resource_msg);
 					Resource(::mrta_vc::Resource resource_msg);		
 					~Resource();
@@ -37,6 +38,7 @@ namespace unifei
 					std::string getDescription();
 					void setDescription(std::string description);
 					::mrta_vc::Resource toMsg();
+          std::string toString();
 					bool equals(Resource resource);
 					bool operator==(const Resource& resource);
 					bool operator!=(const Resource& resource);

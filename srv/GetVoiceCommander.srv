@@ -1,0 +1,11 @@
+string name
+
+---
+
+bool valid					# true if input name is a registered voice commander, otherwise it is false
+string message
+mrta_vc/Agent voice_commander		# when voice commander is valid
+bool logged					# true if this voice commander is logged, otherwise it is false
+
+
+
