@@ -14,8 +14,11 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::Resource::Resource(std::string name) : unifei::expertinos::mrta_vc::tasks::Resource::Resource(0, name, "")
+unifei::expertinos::mrta_vc::tasks::Resource::Resource(std::string name)
 {
+  id_ = 0;
+  name_ = name;
+  description_ = "";
 }
 
 /**

@@ -54,7 +54,16 @@ void mrta_vc::SystemDatabaseInterfaceNode::spin()
  */
 bool mrta_vc::SystemDatabaseInterfaceNode::getComputer(mrta_vc::GetComputer::Request& request, mrta_vc::GetComputer::Response& response)
 {
-  return false;
+  if (!unifei::expertinos::mrta_vc::system::DatabaseInterface::isComputerRegistered(request.hostname))
+  {
+    response.valid = false;
+    response.message = "There is no computer hostnamed as " + request.hostname + " registered in database!!!";
+    return false;
+  }
+  response.computer = unifei::expertinos::mrta_vc::system::DatabaseInterface::getComputer(request.hostname).toMsg();
+  response.message = request.hostname + " is registered!!!";
+  response.valid = true;
+  return true;
 }
 
 /**
@@ -62,7 +71,16 @@ bool mrta_vc::SystemDatabaseInterfaceNode::getComputer(mrta_vc::GetComputer::Req
  */
 bool mrta_vc::SystemDatabaseInterfaceNode::getPerson(mrta_vc::GetPerson::Request& request, mrta_vc::GetPerson::Response& response)
 {
-  return false;
+  if (!unifei::expertinos::mrta_vc::system::DatabaseInterface::isPersonRegistered(request.name))
+  {
+    response.valid = false;
+    response.message = "There is no person named as " + request.name + " registered in database!!!";
+    return false;
+  }
+  response.person = unifei::expertinos::mrta_vc::system::DatabaseInterface::getPerson(request.name).toMsg();
+  response.message = request.name + " is registered!!!";
+  response.valid = true;
+  return true;
 }
 
 /**
@@ -70,15 +88,33 @@ bool mrta_vc::SystemDatabaseInterfaceNode::getPerson(mrta_vc::GetPerson::Request
  */
 bool mrta_vc::SystemDatabaseInterfaceNode::getRobot(mrta_vc::GetRobot::Request& request, mrta_vc::GetRobot::Response& response)
 {
-  return false;
+  if (!unifei::expertinos::mrta_vc::system::DatabaseInterface::isRobotRegistered(request.hostname))
+  {
+    response.valid = false;
+    response.message = "There is no robot hostnamed as " + request.hostname + " registered in database!!!";
+    return false;
+  }
+  response.robot = unifei::expertinos::mrta_vc::system::DatabaseInterface::getRobot(request.hostname).toMsg();
+  response.message = request.hostname + " is registered!!!";
+  response.valid = true;
+  return true;
 }
 
 /**
  *
  */
-bool mrta_vc::SystemDatabaseInterfaceNode::getUser(mrta_vc::GetVoiceCommander::Request& request, mrta_vc::GetVoiceCommander::Response& response)
+bool mrta_vc::SystemDatabaseInterfaceNode::getUser(mrta_vc::GetUser::Request& request, mrta_vc::GetUser::Response& response)
 {
-  return false;
+  if (!unifei::expertinos::mrta_vc::system::DatabaseInterface::isUserRegistered(request.name))
+  {
+    response.valid = false;
+    response.message = "There is no person named as " + request.name + " registered in database!!!";
+    return false;
+  }
+  response.user = unifei::expertinos::mrta_vc::system::DatabaseInterface::getUser(request.name).toMsg();
+  response.message = request.name + " is registered!!!";
+  response.valid = true;
+  return true;
 }
 
 /**
@@ -119,7 +155,7 @@ bool mrta_vc::SystemDatabaseInterfaceNode::validatePasswordCallback(mrta_vc::Val
 	}
 	else if (password == request.password)
 	{
-		response.voice_commander = unifei::expertinos::mrta_vc::system::DatabaseInterface::getVoiceCommander(request.login_name).toMsg();
+    response.user = unifei::expertinos::mrta_vc::system::DatabaseInterface::getUser(request.login_name).toMsg();
 		response.message = "Valid password!!!";
 		response.valid = true;
 	}

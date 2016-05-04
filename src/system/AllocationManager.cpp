@@ -94,7 +94,7 @@ std::list<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta_v
 /**
  *
  */
-std::list<unifei::expertinos::mrta_vc::agents::VoiceCommander> unifei::expertinos::mrta_vc::system::AllocationManager::getLoggedUsers() 
+std::list<unifei::expertinos::mrta_vc::agents::User> unifei::expertinos::mrta_vc::system::AllocationManager::getLoggedUsers()
 {
 	return logged_users_;
 }
@@ -163,9 +163,9 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::experti
 /**
  *
  */
-void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::expertinos::mrta_vc::agents::VoiceCommander user) 
+void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::expertinos::mrta_vc::agents::User user)
 {
-	std::list<unifei::expertinos::mrta_vc::agents::VoiceCommander>::iterator it = logged_users_.begin();
+  std::list<unifei::expertinos::mrta_vc::agents::User>::iterator it = logged_users_.begin();
 	while (it != logged_users_.end())
 	{
 		if(user.equals(*it))
@@ -223,9 +223,9 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::remove(unifei::expe
 /**
  *
  */
-void unifei::expertinos::mrta_vc::system::AllocationManager::remove(unifei::expertinos::mrta_vc::agents::VoiceCommander user) 
+void unifei::expertinos::mrta_vc::system::AllocationManager::remove(unifei::expertinos::mrta_vc::agents::User user)
 {
-	logged_users_.remove(user);
+  logged_users_.remove(user);
 }
 
 /**
@@ -242,5 +242,5 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedRobots(
  */
 void unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedUsers() 
 {
-  logged_users_.remove_if(unifei::expertinos::mrta_vc::agents::VoiceCommander::isNotLoggedAnyMore);
+  logged_users_.remove_if(unifei::expertinos::mrta_vc::agents::User::isNotLoggedAnyMore);
 }

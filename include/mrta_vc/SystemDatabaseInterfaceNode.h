@@ -17,7 +17,7 @@
 #include "mrta_vc/GetComputer.h"
 #include "mrta_vc/GetPerson.h"
 #include "mrta_vc/GetRobot.h"
-#include "mrta_vc/GetVoiceCommander.h"
+#include "mrta_vc/GetUser.h"
 #include "unifei/expertinos/mrta_vc/system/DatabaseInterface.h"
 
 namespace mrta_vc 
@@ -49,7 +49,7 @@ namespace mrta_vc
     bool getComputer(mrta_vc::GetComputer::Request& request, mrta_vc::GetComputer::Response& response);
     bool getPerson(mrta_vc::GetPerson::Request& request, mrta_vc::GetPerson::Response& response);
     bool getRobot(mrta_vc::GetRobot::Request& request, mrta_vc::GetRobot::Response& response);
-    bool getUser(mrta_vc::GetVoiceCommander::Request& request, mrta_vc::GetVoiceCommander::Response& response);
+    bool getUser(mrta_vc::GetUser::Request& request, mrta_vc::GetUser::Response& response);
     bool validatePasswordCallback(mrta_vc::ValidatePassword::Request& request, mrta_vc::ValidatePassword::Response& response);
 
 	};

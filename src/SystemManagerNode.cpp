@@ -73,7 +73,7 @@ void mrta_vc::SystemManagerNode::tasksCallback(const mrta_vc::Task::ConstPtr& ta
  */
 void mrta_vc::SystemManagerNode::usersCallback(const mrta_vc::Agent::ConstPtr& user_msg)
 {
-  unifei::expertinos::mrta_vc::agents::VoiceCommander user(user_msg);
+  unifei::expertinos::mrta_vc::agents::User user(user_msg);
   user.setLastBeaconTimestamp();
   unifei::expertinos::mrta_vc::system::AllocationManager::add(user);
 }

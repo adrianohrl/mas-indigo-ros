@@ -53,7 +53,7 @@ namespace unifei
           static bool isNotLoggedAnyMore(Robot robot);
 					::mrta_vc::Agent toMsg();
 					std::string toString();
-					void operator=(const Robot& Robot);
+					void operator=(const Robot& robot);
 					
 				protected:
 					Robot();

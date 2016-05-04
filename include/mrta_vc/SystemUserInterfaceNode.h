@@ -13,12 +13,12 @@
 
 #include <ros/ros.h>
 #include "mrta_vc/ValidatePassword.h"
-#include "unifei/expertinos/mrta_vc/agents/VoiceCommander.h"
+#include "unifei/expertinos/mrta_vc/agents/User.h"
 
 namespace mrta_vc 
 {
 
-  class SystemUserInterfaceNode : public unifei::expertinos::mrta_vc::agents::VoiceCommander
+  class SystemUserInterfaceNode : public unifei::expertinos::mrta_vc::agents::User
 	{
 
 	public:

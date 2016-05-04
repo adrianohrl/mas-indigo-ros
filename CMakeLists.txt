@@ -28,7 +28,7 @@ add_service_files(
         GetComputer.srv
         GetPerson.srv
         GetRobot.srv
-        GetVoiceCommander.srv
+        GetUser.srv
 	ValidatePassword.srv
 )
 
@@ -98,8 +98,8 @@ add_executable(system_manager_node
 	src/agents/HierarchyLevels.cpp
 	include/unifei/expertinos/mrta_vc/agents/Robot.h
 	src/agents/Robot.cpp
-	include/unifei/expertinos/mrta_vc/agents/VoiceCommander.h
-	src/agents/VoiceCommander.cpp
+	include/unifei/expertinos/mrta_vc/agents/User.h
+	src/agents/User.cpp
 	)
 
 add_dependencies(system_manager_node 
@@ -115,8 +115,8 @@ add_executable(system_user_interface_node
 	src/system_user_interface_node.cpp
 	include/mrta_vc/SystemUserInterfaceNode.h
 	src/SystemUserInterfaceNode.cpp
-	include/unifei/expertinos/mrta_vc/agents/VoiceCommander.h
-	src/agents/VoiceCommander.cpp
+	include/unifei/expertinos/mrta_vc/agents/User.h
+	src/agents/User.cpp
 	include/unifei/expertinos/mrta_vc/agents/Computer.h
 	src/agents/Computer.cpp
 	include/unifei/expertinos/mrta_vc/agents/Person.h
@@ -215,8 +215,8 @@ add_executable(system_database_interface_node
 	src/agents/HierarchyLevels.cpp
 	include/unifei/expertinos/mrta_vc/agents/Robot.h
 	src/agents/Robot.cpp
-	include/unifei/expertinos/mrta_vc/agents/VoiceCommander.h
-	src/agents/VoiceCommander.cpp
+	include/unifei/expertinos/mrta_vc/agents/User.h
+	src/agents/User.cpp
 	)
 
 add_dependencies(system_database_interface_node 
@@ -254,8 +254,8 @@ add_executable(task_builder_node
         src/agents/Computer.cpp
         include/unifei/expertinos/mrta_vc/agents/HierarchyLevels.h
         src/agents/HierarchyLevels.cpp
-        include/unifei/expertinos/mrta_vc/agents/VoiceCommander.h
-        src/agents/VoiceCommander.cpp
+        include/unifei/expertinos/mrta_vc/agents/User.h
+        src/agents/User.cpp
 	)
 
 add_dependencies(task_builder_node 

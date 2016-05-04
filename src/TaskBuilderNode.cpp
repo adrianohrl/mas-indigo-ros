@@ -19,7 +19,7 @@ mrta_vc::TaskBuilderNode::TaskBuilderNode(ros::NodeHandle nh) : nh_(nh)
   task_pub_ = nh_.advertise<mrta_vc::Task>("/tasks", 2);
   abort_srv_ = nh_.advertiseService("abort", &mrta_vc::TaskBuilderNode::abort, this);
   get_person_cli_ = nh_.serviceClient<mrta_vc::GetPerson>("/get_person");
-  get_user_cli_ = nh_.serviceClient<mrta_vc::GetVoiceCommander>("/get_user");
+  get_user_cli_ = nh_.serviceClient<mrta_vc::GetUser>("/get_user");
 }
 
 /**
@@ -47,14 +47,14 @@ void mrta_vc::TaskBuilderNode::spin()
   task_desired_skills.push_back(unifei::expertinos::mrta_vc::tasks::Skill("velocity", unifei::expertinos::mrta_vc::tasks::levels::HIGH));
   task_desired_skills.push_back(unifei::expertinos::mrta_vc::tasks::Skill("strength", unifei::expertinos::mrta_vc::tasks::levels::HIGH));
   task_desired_skills.push_back(unifei::expertinos::mrta_vc::tasks::Skill("flexible", unifei::expertinos::mrta_vc::tasks::levels::LOW));
-  mrta_vc::GetVoiceCommander user_srv;
+  mrta_vc::GetUser user_srv;
   user_srv.request.name = "Adriano Henrique Rossette Leite";
   if (!get_user_cli_.call(user_srv))
   {
     ROS_ERROR("There is no user register as %s!!!", user_srv.request.name.c_str());
     ROS_ERROR("%s", user_srv.response.message.c_str());
   }
-  unifei::expertinos::mrta_vc::agents::VoiceCommander task_sender(user_srv.response.voice_commander);
+  unifei::expertinos::mrta_vc::agents::User task_sender(user_srv.response.user);
   mrta_vc::GetPerson person_srv;
   user_srv.request.name = "Christiano Henrique Rezende";
   if (!get_person_cli_.call(person_srv))

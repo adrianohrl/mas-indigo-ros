@@ -25,7 +25,7 @@ unifei::expertinos::mrta_vc::tasks::Task::Task() : sender_(::mrta_vc::Agent()), 
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::Task::Task(int id, std::string name, std::string description, std::vector<unifei::expertinos::mrta_vc::tasks::Skill> desired_skills, unifei::expertinos::mrta_vc::agents::VoiceCommander sender, unifei::expertinos::mrta_vc::agents::Person receiver, ros::Time deadline, unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum priority) : desired_skills_(desired_skills), sender_(sender), receiver_(receiver)
+unifei::expertinos::mrta_vc::tasks::Task::Task(int id, std::string name, std::string description, std::vector<unifei::expertinos::mrta_vc::tasks::Skill> desired_skills, unifei::expertinos::mrta_vc::agents::User sender, unifei::expertinos::mrta_vc::agents::Person receiver, ros::Time deadline, unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum priority) : desired_skills_(desired_skills), sender_(sender), receiver_(receiver)
 {
 	id_ = id;
 	name_ = name;
@@ -108,7 +108,7 @@ std::vector<unifei::expertinos::mrta_vc::tasks::Skill> unifei::expertinos::mrta_
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::VoiceCommander unifei::expertinos::mrta_vc::tasks::Task::getSender() 
+unifei::expertinos::mrta_vc::agents::User unifei::expertinos::mrta_vc::tasks::Task::getSender()
 {
 	return sender_;
 }
@@ -194,7 +194,7 @@ void unifei::expertinos::mrta_vc::tasks::Task::removeSkill(unifei::expertinos::m
 /**
  *
  */
-void unifei::expertinos::mrta_vc::tasks::Task::setSender(unifei::expertinos::mrta_vc::agents::VoiceCommander sender) 
+void unifei::expertinos::mrta_vc::tasks::Task::setSender(unifei::expertinos::mrta_vc::agents::User sender)
 {
 	sender_ = sender;
 }

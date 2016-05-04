@@ -16,9 +16,9 @@
 #include <std_srvs/Empty.h>
 #include "mrta_vc/Task.h"
 #include "mrta_vc/GetPerson.h"
-#include "mrta_vc/GetVoiceCommander.h"
+#include "mrta_vc/GetUser.h"
 #include "unifei/expertinos/mrta_vc/tasks/Task.h"
-#include "unifei/expertinos/mrta_vc/agents/VoiceCommander.h"
+#include "unifei/expertinos/mrta_vc/agents/User.h"
 
 namespace mrta_vc 
 {

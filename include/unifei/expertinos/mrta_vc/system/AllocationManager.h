@@ -36,14 +36,14 @@ namespace unifei
           std::list<unifei::expertinos::mrta_vc::agents::Robot> getAvailableRobots();
           std::list<unifei::expertinos::mrta_vc::agents::Robot> getBusyRobots();
           std::list<unifei::expertinos::mrta_vc::agents::Robot> getLoggedRobots();
-					std::list<unifei::expertinos::mrta_vc::agents::VoiceCommander> getLoggedUsers();
+          std::list<unifei::expertinos::mrta_vc::agents::User> getLoggedUsers();
 					void add(unifei::expertinos::mrta_vc::tasks::Task task);
 					void add(unifei::expertinos::mrta_vc::agents::Robot robot);
-					void add(unifei::expertinos::mrta_vc::agents::VoiceCommander user);
-					void remove(unifei::expertinos::mrta_vc::tasks::Task task);
+          void add(unifei::expertinos::mrta_vc::agents::User user);
+          void remove(unifei::expertinos::mrta_vc::tasks::Task task);
 					void remove(unifei::expertinos::mrta_vc::agents::Robot robot);
-					void remove(unifei::expertinos::mrta_vc::agents::VoiceCommander user);
-					void updateLoggedRobots();
+          void remove(unifei::expertinos::mrta_vc::agents::User user);
+          void updateLoggedRobots();
 					void updateLoggedUsers();
 					//void allocate(unifei::expertinos::mrta_vc::tasks::Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots);
 
@@ -53,7 +53,7 @@ namespace unifei
           std::list<unifei::expertinos::mrta_vc::tasks::Allocation> allocations_;
           std::list<unifei::expertinos::mrta_vc::agents::Robot> available_robots_;
           std::list<unifei::expertinos::mrta_vc::agents::Robot> busy_robots_;
-					std::list<unifei::expertinos::mrta_vc::agents::VoiceCommander> logged_users_;
+          std::list<unifei::expertinos::mrta_vc::agents::User> logged_users_;
 					
 					//int grade(unifei::expertinos::mrta_vc::agents::Robot robot);
 

@@ -21,7 +21,7 @@
 #define PERSON 1
 #define COMPUTER 2
 #define ROBOT 3
-#define VOICE_COMMANDER 4
+#define USER 4
 
 namespace unifei 
 {
