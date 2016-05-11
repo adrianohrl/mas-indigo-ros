@@ -1,0 +1,7 @@
+hostname: 'robotino3'
+mobile: true
+holonomic: true
+location: {x: 15.0, y: 15.0, theta: deg(45.0)}
+skill0: {resource: {name: 'velocity', description: 'robot velocity'}, level: 'moderate'} 
+skill1: {resource: {name: 'strength', description: 'robot strength'}, level: 'low'} 
+skill2: {resource: {name: 'flexible', description: 'robot has flexible movements'}, level: 'high'} 

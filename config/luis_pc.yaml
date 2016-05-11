@@ -1,0 +1,6 @@
+name: 'Luís Victor Pessiqueli Bonin'
+hierarchy_level: 6
+login_name: 'luis'
+password: 'teste12345'
+location: {x: 0.9, y: -0.1, theta: deg(-90.0)}
+computer: {hostname: 'luis_pc', mobile: true, location: {x: 0.9, y: -0.1, theta: deg(-90.0)}}

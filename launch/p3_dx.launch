@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 <launch>
-	<arg name="_name" default="p3_dx" />
+	<arg name="_name" default="p3_dx"/>
+	<arg name="_robot_yaml" default="$(find mrta_vc)/config/p3_dx.yaml"/>
 	<include file="$(find mrta_vc)/launch/robot.launch">
-		<arg name="name" value="$(arg _name)" />
+		<arg name="_name" value="$(arg _name)"/>
+		<arg name="_robot_yaml" value="$(arg _robot_yaml)"/>
 	</include>
-	<arg name="_port" default="/dev/ttyS0"/>
+	<!--<arg name="_port" default="/dev/ttyS0"/>
 	<group ns="$(arg _name)">
 		<node name="RosAria" pkg="rosaria" type="RosAria" output="screen">
 			<param name="_port" value="$(arg _port)"/>
 		</node>
-	</group>
+	</group>-->
 </launch>

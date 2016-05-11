@@ -13,7 +13,14 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, bool holonomic, bool mobile, double x, double y, double theta) : Computer(id, hostname, mobile, x, y, theta)
+unifei::expertinos::mrta_vc::agents::Robot::Robot() : unifei::expertinos::mrta_vc::agents::Computer()
+{
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, bool holonomic, bool mobile, double x, double y, double theta) : unifei::expertinos::mrta_vc::agents::Computer(id, hostname, mobile, x, y, theta)
 {
 	holonomic_ = holonomic;
 }
@@ -21,7 +28,7 @@ unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, 
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, bool holonomic, bool mobile, geometry_msgs::Pose pose_msg) : Computer(id, hostname, mobile, pose_msg)
+unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, bool holonomic, bool mobile, geometry_msgs::Pose pose_msg) : unifei::expertinos::mrta_vc::agents::Computer(id, hostname, mobile, pose_msg)
 {
 	holonomic_ = holonomic;	
 }
@@ -29,7 +36,15 @@ unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, 
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Robot::Robot(const ::mrta_vc::Agent::ConstPtr& robot_msg) : Computer(robot_msg)
+unifei::expertinos::mrta_vc::agents::Robot::Robot(int id, std::string hostname, bool holonomic, bool mobile, unifei::expertinos::mrta_vc::places::Location location) : unifei::expertinos::mrta_vc::agents::Computer(id, hostname, mobile, location)
+{
+	holonomic_ = holonomic;	
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::agents::Robot::Robot(const ::mrta_vc::Agent::ConstPtr& robot_msg) : unifei::expertinos::mrta_vc::agents::Computer(robot_msg)
 {
 	holonomic_ = robot_msg->holonomic;
 }
@@ -37,7 +52,7 @@ unifei::expertinos::mrta_vc::agents::Robot::Robot(const ::mrta_vc::Agent::ConstP
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::Robot::Robot(::mrta_vc::Agent robot_msg) : Computer(robot_msg)
+unifei::expertinos::mrta_vc::agents::Robot::Robot(::mrta_vc::Agent robot_msg) : unifei::expertinos::mrta_vc::agents::Computer(robot_msg)
 {
 	holonomic_ = robot_msg.holonomic;		
 }
@@ -52,9 +67,17 @@ unifei::expertinos::mrta_vc::agents::Robot::~Robot()
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::agents::Robot::isHolonomic() 
+std::vector<unifei::expertinos::mrta_vc::tasks::Skill> unifei::expertinos::mrta_vc::agents::Robot::getSkills()
 {
-	return holonomic_;
+  return skills_;
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::agents::Robot::isHolonomic()
+{
+  return holonomic_;
 }
 
 /**
@@ -96,9 +119,89 @@ geometry_msgs::Twist unifei::expertinos::mrta_vc::agents::Robot::getVelocity()
 /**
  *
  */
+ros::Time unifei::expertinos::mrta_vc::agents::Robot::getLastBeaconTimestamp() 
+{
+	return last_beacon_timestamp_;
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::agents::Robot::isLogged()
+{
+  return (ros::Time::now() - last_beacon_timestamp_).toSec() <= MAXIMUM_ROBOT_BEACON_ABSENCE_DURATION;
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::agents::Robot::isNotLoggedAnyMore(unifei::expertinos::mrta_vc::agents::Robot robot)
+{
+  return !robot.isLogged();
+}
+
+
+/**
+ *
+ */
 int unifei::expertinos::mrta_vc::agents::Robot::getType() 
 {
 	return ROBOT;
+}
+
+/**
+ *
+ */
+std::string unifei::expertinos::mrta_vc::agents::Robot::getClassName() 
+{
+	return "ROBOT";
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::Robot::setSkills(std::vector<unifei::expertinos::mrta_vc::tasks::Skill> skills)
+{
+  skills_ = skills;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::Robot::addSkill(unifei::expertinos::mrta_vc::tasks::Skill skill)
+{
+  for (int i = 0; i < skills_.size(); i++)
+  {
+    if (skill.equals(skills_.at(i)))
+    {
+      skills_.at(i).setLevel(skill.getLevel());
+      return;
+    }
+  }
+  skills_.push_back(skill);
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::Robot::removeSkill(unifei::expertinos::mrta_vc::tasks::Skill skill)
+{
+  for (int i = 0; i < skills_.size(); i++)
+  {
+    if (skill.equals(skills_.at(i)))
+    {
+      skills_.erase(skills_.begin() + i);
+      return;
+    }
+  }
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::agents::Robot::setHolonomic(bool holonomic)
+{
+  holonomic_ = holonomic;
 }
 
 /**
@@ -124,14 +227,35 @@ void unifei::expertinos::mrta_vc::agents::Robot::setVelocity(geometry_msgs::Twis
 /**
  *
  */
+void unifei::expertinos::mrta_vc::agents::Robot::setLastBeaconTimestamp(ros::Time last_beacon_timestamp) 
+{
+	if (last_beacon_timestamp > last_beacon_timestamp_ && last_beacon_timestamp <= ros::Time::now()) 
+	{
+		last_beacon_timestamp_ = last_beacon_timestamp;
+	}
+}
+
+/**
+ *
+ */
 ::mrta_vc::Agent unifei::expertinos::mrta_vc::agents::Robot::toMsg() 
 {
-	::mrta_vc::Agent robot_msg = Computer::toMsg();
+	::mrta_vc::Agent robot_msg = unifei::expertinos::mrta_vc::agents::Computer::toMsg();
 	robot_msg.holonomic = holonomic_;
 	robot_msg.velocity.linear.x = vel_x_;
 	robot_msg.velocity.linear.y = vel_y_;
 	robot_msg.velocity.angular.z = vel_theta_;
 	return robot_msg;
+}
+
+/**
+ *
+ */
+std::string unifei::expertinos::mrta_vc::agents::Robot::toString() 
+{
+	std::stringstream aux;
+	aux << unifei::expertinos::mrta_vc::agents::Computer::toString() << " - velocity: (" << vel_x_ << ", " << vel_y_ << ", " << vel_theta_ << ")";
+	return aux.str();
 }
 
 /**

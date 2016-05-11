@@ -14,11 +14,21 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::Resource::Resource(int id, std::string name, std::string description) 
+unifei::expertinos::mrta_vc::tasks::Resource::Resource(std::string name)
 {
-	id_ = id;
-	name_ = name;
-	description_ = description;	
+  id_ = 0;
+  name_ = name;
+  description_ = "";
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::tasks::Resource::Resource(int id, std::string name, std::string description)
+{
+  id_ = id;
+  name_ = name;
+  description_ = description;
 }
 
 /**
@@ -83,13 +93,21 @@ void unifei::expertinos::mrta_vc::tasks::Resource::setDescription(std::string de
 /**
  *
  */
-::mrta_vc::Resource unifei::expertinos::mrta_vc::tasks::Resource::toMsg() 
+::mrta_vc::Resource unifei::expertinos::mrta_vc::tasks::Resource::toMsg()
 {
-	::mrta_vc::Resource resource_msg;
-	resource_msg.id = id_;
-	resource_msg.name = name_;
-	resource_msg.description = description_;
-	return resource_msg;
+  ::mrta_vc::Resource resource_msg;
+  resource_msg.id = id_;
+  resource_msg.name = name_;
+  resource_msg.description = description_;
+  return resource_msg;
+}
+
+/**
+ *
+ */
+std::string unifei::expertinos::mrta_vc::tasks::Resource::toString()
+{
+  return "resource: {name: " + name_ + ", description: " + description_ + "}";
 }
 
 /**

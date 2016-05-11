@@ -13,21 +13,21 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Building::Building(int id, std::string name, Campus campus, geometry_msgs::Polygon boundary, double x, double y, double theta) : Place(id, name, boundary, x, y, theta), campus_(campus)
+unifei::expertinos::mrta_vc::places::Building::Building(int id, std::string name, unifei::expertinos::mrta_vc::places::Campus campus, geometry_msgs::Polygon boundary, double x, double y, double theta) : unifei::expertinos::mrta_vc::places::Place(id, name, boundary, x, y, theta), campus_(campus)
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Building::Building(int id, std::string name, Campus campus, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg) : Place(id, name, boundary, pose_msg), campus_(campus)
+unifei::expertinos::mrta_vc::places::Building::Building(int id, std::string name, unifei::expertinos::mrta_vc::places::Campus campus, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg) : unifei::expertinos::mrta_vc::places::Place(id, name, boundary, pose_msg), campus_(campus)
 {
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Building::Building(const ::mrta_vc::Place::ConstPtr& building_msg) : Place(building_msg), campus_(::mrta_vc::Place()) //campus_(building_msg->parent) 
+unifei::expertinos::mrta_vc::places::Building::Building(const ::mrta_vc::Place::ConstPtr& building_msg) : unifei::expertinos::mrta_vc::places::Place(building_msg), campus_(::mrta_vc::Place()) //campus_(building_msg->parent) 
 {
 	// verificar se tem o campus 
 }
@@ -35,7 +35,7 @@ unifei::expertinos::mrta_vc::places::Building::Building(const ::mrta_vc::Place::
 /**
  *
  */
-unifei::expertinos::mrta_vc::places::Building::Building(::mrta_vc::Place building_msg) : Place(building_msg), campus_(::mrta_vc::Place()) //campus_(building_msg.parent) 
+unifei::expertinos::mrta_vc::places::Building::Building(::mrta_vc::Place building_msg) : unifei::expertinos::mrta_vc::places::Place(building_msg), campus_(::mrta_vc::Place()) //campus_(building_msg.parent) 
 {
 	// verificar se tem o campus
 }

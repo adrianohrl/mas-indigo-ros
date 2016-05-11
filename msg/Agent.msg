@@ -1,6 +1,7 @@
 uint8 type
 uint32 id
 string name				# When agent's type is Computer or Robot, this correspond to its hostname.
+uint8 hierarchy_level
 string login_name			# Only Voice Commanders use this parameter.
 mrta_vc/Location location
 #mrta_vc/Agent computer		# All Voice Commanders must be logged in a computer.
@@ -15,4 +16,14 @@ geometry_msgs/Twist velocity	# Only robots have velocity.
 #  2 -> COMPUTER
 #  3 -> ROBOT
 #  4 -> VOICE_COMMANDER
+
+# Hierarchy Levels:
+#  0 -> VISITOR
+#  1 -> INTERN
+#  2 -> EMPLOYEE
+#  3 -> SUPERVISOR
+#  4 -> MIDDLE_MANAGER
+#  5 -> SENIOR_MANAGER
+#  6 -> CEO
+
 

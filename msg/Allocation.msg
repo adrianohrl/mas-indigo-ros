@@ -1,4 +1,3 @@
-time allocation
 mrta_vc/Task task
 mrta_vc/Agent[] robots
 time allocation_timestamp

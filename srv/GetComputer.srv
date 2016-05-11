@@ -1,0 +1,10 @@
+string hostname
+
+---
+
+bool valid					# true if input hostname is a registered computer (not a robot), otherwise it is false
+string message
+mrta_vc/Agent computer			# when computer is valid
+
+
+

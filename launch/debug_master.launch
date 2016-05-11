@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+	<env name="ROSCONSOLE_CONFIG_FILE" value="$(find mrta_vc)/config/rosconsole.conf" />
+	<group ns="master">
+		<node name="system_manager_node" pkg="mrta_vc" type="system_manager_node" output="screen">
+		</node>
+		<node name="system_database_interface_node" pkg="mrta_vc" type="system_database_interface_node" output="screen">
+		</node>
+	</group>
+</launch>

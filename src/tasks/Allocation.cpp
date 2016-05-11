@@ -14,7 +14,7 @@
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots, TaskStateEnum state, TaskSatisfactionEnum satisfaction) : task_(task), robots_(robots)
+unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(unifei::expertinos::mrta_vc::tasks::Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots, unifei::expertinos::mrta_vc::tasks::TaskStateEnum state, unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum satisfaction) : task_(task), robots_(robots)
 {
 	state_ = state;
 	satisfaction_ = satisfaction;
@@ -23,7 +23,7 @@ unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(Task task, std::vecto
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots, TaskStateEnum state, TaskSatisfactionEnum satisfaction, ros::Time allocation_timestamp, ros::Time start_timestamp, ros::Time end_timestamp) : task_(task), robots_(robots)
+unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(unifei::expertinos::mrta_vc::tasks::Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots, unifei::expertinos::mrta_vc::tasks::TaskStateEnum state, unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum satisfaction, ros::Time allocation_timestamp, ros::Time start_timestamp, ros::Time end_timestamp) : task_(task), robots_(robots)
 {
 	state_ = state;
 	satisfaction_ = satisfaction;
@@ -180,9 +180,12 @@ bool unifei::expertinos::mrta_vc::tasks::Allocation::wasCancelled()
 /**
  *
  */
-void unifei::expertinos::mrta_vc::tasks::Allocation::addRobot(unifei::expertinos::mrta_vc::agents::Robot robot) {
-	for (int i = 0; i < robots_.size(); i++){
-		if(robot.equals(robots_.at(i))){
+void unifei::expertinos::mrta_vc::tasks::Allocation::addRobot(unifei::expertinos::mrta_vc::agents::Robot robot) 
+{
+	for (int i = 0; i < robots_.size(); i++)
+	{
+		if(robot.equals(robots_.at(i)))
+		{
 			return;
 		}
 	}	
@@ -192,9 +195,12 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::addRobot(unifei::expertinos
 /**
  *
  */
-void unifei::expertinos::mrta_vc::tasks::Allocation::removeRobot(unifei::expertinos::mrta_vc::agents::Robot robot) {
-	for (int i = 0; i < robots_.size(); i++){
-		if(robot.equals(robots_.at(i))){
+void unifei::expertinos::mrta_vc::tasks::Allocation::removeRobot(unifei::expertinos::mrta_vc::agents::Robot robot) 
+{
+	for (int i = 0; i < robots_.size(); i++)
+	{
+		if(robot.equals(robots_.at(i)))
+		{
 			robots_.erase(robots_.begin() + i);
 			return;
 		}
@@ -257,7 +263,8 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::setEndTimestamp(ros::Time e
 {
 	::mrta_vc::Allocation allocation_msg;
 	allocation_msg.task = task_.toMsg();
-	for(int i = 0; i < robots_.size(); i++) {
+	for(int i = 0; i < robots_.size(); i++) 
+	{
 		allocation_msg.robots.push_back(robots_.at(i).toMsg());
 	}
 	allocation_msg.state = unifei::expertinos::mrta_vc::tasks::TaskStates::toCode(state_);

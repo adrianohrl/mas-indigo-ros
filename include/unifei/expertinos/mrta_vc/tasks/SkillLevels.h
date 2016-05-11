@@ -39,12 +39,15 @@ namespace unifei
 				class SkillLevels
 				{
 
-				public:
-					static SkillLevelEnum toEnumerated(int code);
+        public:
+          static SkillLevelEnum toEnumerated(int code);
+          static SkillLevelEnum toEnumerated(std::string name);
 					static int toCode(SkillLevelEnum enumerated);
 					static std::string toString(SkillLevelEnum enumerated);
 					static SkillLevelEnum getDefault();
 					static std::vector<SkillLevelEnum> getAll();
+					static int compare(SkillLevelEnum level1, SkillLevelEnum level2);
+					static bool isSufficient(SkillLevelEnum level, SkillLevelEnum desired_level);
 
 				};
 			}

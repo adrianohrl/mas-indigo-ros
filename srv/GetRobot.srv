@@ -1,0 +1,11 @@
+string hostname
+
+---
+
+bool valid					# true if input hostname is a registered robot, otherwise it is false
+string message
+mrta_vc/Agent robot				# when robot is valid
+bool logged					# true if this robot is logged, otherwise it is false
+
+
+
