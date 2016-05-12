@@ -13,6 +13,7 @@
 #define SPEECH_ANALYSER_NODE_H_
 
 #include <ros/ros.h>
+#include "std_msgs/String.h"
 
 namespace mrta_vc 
 {
