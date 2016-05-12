@@ -56,7 +56,7 @@ void mrta_vc::TaskBuilderNode::spin()
   }
   unifei::expertinos::mrta_vc::agents::User task_sender(user_srv.response.user);
   mrta_vc::GetPerson person_srv;
-  user_srv.request.name = "Christiano Henrique Rezende";
+  person_srv.request.name = "Christiano Henrique Rezende";
   if (!get_person_cli_.call(person_srv))
   {
     ROS_ERROR("There is no person register as %s!!!", person_srv.request.name.c_str());

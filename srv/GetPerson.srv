@@ -2,9 +2,9 @@ string name
 
 ---
 
-bool valid					# true if input name is a registered person or voice commander, otherwise it is false
+bool valid					# true if input name is a registered person or user, otherwise it is false
 string message
-mrta_vc/Agent person		# when voice commander is valid
+mrta_vc/Agent person		# when person is valid
 
 
 

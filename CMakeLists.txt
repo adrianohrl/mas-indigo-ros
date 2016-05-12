@@ -28,6 +28,7 @@ add_service_files(
         GetComputer.srv
         GetPerson.srv
         GetRobot.srv
+        GetTask.srv
         GetUser.srv
 	ValidatePassword.srv
 )
@@ -256,6 +257,16 @@ add_executable(task_builder_node
         src/agents/HierarchyLevels.cpp
         include/unifei/expertinos/mrta_vc/agents/User.h
         src/agents/User.cpp
+        include/mrta_vc/state_machine/MachineController.h
+        src/state_machine/MachineController.cpp
+        include/mrta_vc/state_machine/AbstractState.h
+        src/state_machine/AbstractState.cpp
+        include/mrta_vc/state_machine/PersonVerificationState.h
+        src/state_machine/PersonVerificationState.cpp
+        include/mrta_vc/state_machine/S8ReceiverVerificationState.h
+        src/state_machine/S8ReceiverVerificationState.cpp
+        include/mrta_vc/state_machine/TaskVerificationState.h
+        src/state_machine/TaskVerificationState.cpp
 	)
 
 add_dependencies(task_builder_node 

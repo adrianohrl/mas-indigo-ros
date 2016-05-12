@@ -1,0 +1,153 @@
+Language model created by QuickLM on Wed Apr 13 16:10:47 EDT 2016
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 32 sentences and 34 words
+
+\data\
+ngram 1=34
+ngram 2=64
+ngram 3=32
+
+\1-grams:
+-0.7782 </s> -0.3010
+-0.7782 <s> -0.2218
+-2.2833 EIGHT -0.2218
+-2.2833 EIGHTEEN -0.2218
+-2.2833 EIGHTY -0.2218
+-2.2833 ELEVEN -0.2218
+-2.2833 FIFTEEN -0.2218
+-2.2833 FIFTY -0.2218
+-2.2833 FIVE -0.2218
+-2.2833 FORTY -0.2218
+-2.2833 FOUR -0.2218
+-2.2833 FOURTEEN -0.2218
+-2.2833 HOUR -0.2218
+-2.2833 HOURS -0.2218
+-2.2833 HUNDRED -0.2218
+-2.2833 MINUTE -0.2218
+-2.2833 MINUTES -0.2218
+-2.2833 NINE -0.2218
+-2.2833 NINETEEN -0.2218
+-2.2833 NINETY -0.2218
+-2.2833 ONE -0.2218
+-2.2833 SEVEN -0.2218
+-2.2833 SEVENTEEN -0.2218
+-2.2833 SEVENTY -0.2218
+-2.2833 SIX -0.2218
+-2.2833 SIXTEEN -0.2218
+-2.2833 SIXTY -0.2218
+-2.2833 TEN -0.2218
+-2.2833 THIRTEEN -0.2218
+-2.2833 THIRTY -0.2218
+-2.2833 TREE -0.2218
+-2.2833 TWELVE -0.2218
+-2.2833 TWENTY -0.2218
+-2.2833 TWO -0.2218
+
+\2-grams:
+-1.8062 <s> EIGHT 0.0000
+-1.8062 <s> EIGHTEEN 0.0000
+-1.8062 <s> EIGHTY 0.0000
+-1.8062 <s> ELEVEN 0.0000
+-1.8062 <s> FIFTEEN 0.0000
+-1.8062 <s> FIFTY 0.0000
+-1.8062 <s> FIVE 0.0000
+-1.8062 <s> FORTY 0.0000
+-1.8062 <s> FOUR 0.0000
+-1.8062 <s> FOURTEEN 0.0000
+-1.8062 <s> HOUR 0.0000
+-1.8062 <s> HOURS 0.0000
+-1.8062 <s> HUNDRED 0.0000
+-1.8062 <s> MINUTE 0.0000
+-1.8062 <s> MINUTES 0.0000
+-1.8062 <s> NINE 0.0000
+-1.8062 <s> NINETEEN 0.0000
+-1.8062 <s> NINETY 0.0000
+-1.8062 <s> ONE 0.0000
+-1.8062 <s> SEVEN 0.0000
+-1.8062 <s> SEVENTEEN 0.0000
+-1.8062 <s> SEVENTY 0.0000
+-1.8062 <s> SIX 0.0000
+-1.8062 <s> SIXTEEN 0.0000
+-1.8062 <s> SIXTY 0.0000
+-1.8062 <s> TEN 0.0000
+-1.8062 <s> THIRTEEN 0.0000
+-1.8062 <s> THIRTY 0.0000
+-1.8062 <s> TREE 0.0000
+-1.8062 <s> TWELVE 0.0000
+-1.8062 <s> TWENTY 0.0000
+-1.8062 <s> TWO 0.0000
+-0.3010 EIGHT </s> -0.3010
+-0.3010 EIGHTEEN </s> -0.3010
+-0.3010 EIGHTY </s> -0.3010
+-0.3010 ELEVEN </s> -0.3010
+-0.3010 FIFTEEN </s> -0.3010
+-0.3010 FIFTY </s> -0.3010
+-0.3010 FIVE </s> -0.3010
+-0.3010 FORTY </s> -0.3010
+-0.3010 FOUR </s> -0.3010
+-0.3010 FOURTEEN </s> -0.3010
+-0.3010 HOUR </s> -0.3010
+-0.3010 HOURS </s> -0.3010
+-0.3010 HUNDRED </s> -0.3010
+-0.3010 MINUTE </s> -0.3010
+-0.3010 MINUTES </s> -0.3010
+-0.3010 NINE </s> -0.3010
+-0.3010 NINETEEN </s> -0.3010
+-0.3010 NINETY </s> -0.3010
+-0.3010 ONE </s> -0.3010
+-0.3010 SEVEN </s> -0.3010
+-0.3010 SEVENTEEN </s> -0.3010
+-0.3010 SEVENTY </s> -0.3010
+-0.3010 SIX </s> -0.3010
+-0.3010 SIXTEEN </s> -0.3010
+-0.3010 SIXTY </s> -0.3010
+-0.3010 TEN </s> -0.3010
+-0.3010 THIRTEEN </s> -0.3010
+-0.3010 THIRTY </s> -0.3010
+-0.3010 TREE </s> -0.3010
+-0.3010 TWELVE </s> -0.3010
+-0.3010 TWENTY </s> -0.3010
+-0.3010 TWO </s> -0.3010
+
+\3-grams:
+-0.3010 <s> EIGHT </s>
+-0.3010 <s> EIGHTEEN </s>
+-0.3010 <s> EIGHTY </s>
+-0.3010 <s> ELEVEN </s>
+-0.3010 <s> FIFTEEN </s>
+-0.3010 <s> FIFTY </s>
+-0.3010 <s> FIVE </s>
+-0.3010 <s> FORTY </s>
+-0.3010 <s> FOUR </s>
+-0.3010 <s> FOURTEEN </s>
+-0.3010 <s> HOUR </s>
+-0.3010 <s> HOURS </s>
+-0.3010 <s> HUNDRED </s>
+-0.3010 <s> MINUTE </s>
+-0.3010 <s> MINUTES </s>
+-0.3010 <s> NINE </s>
+-0.3010 <s> NINETEEN </s>
+-0.3010 <s> NINETY </s>
+-0.3010 <s> ONE </s>
+-0.3010 <s> SEVEN </s>
+-0.3010 <s> SEVENTEEN </s>
+-0.3010 <s> SEVENTY </s>
+-0.3010 <s> SIX </s>
+-0.3010 <s> SIXTEEN </s>
+-0.3010 <s> SIXTY </s>
+-0.3010 <s> TEN </s>
+-0.3010 <s> THIRTEEN </s>
+-0.3010 <s> THIRTY </s>
+-0.3010 <s> TREE </s>
+-0.3010 <s> TWELVE </s>
+-0.3010 <s> TWENTY </s>
+-0.3010 <s> TWO </s>
+
+\end\
