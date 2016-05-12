@@ -31,15 +31,18 @@ namespace unifei
           bool isComputerRegistered(std::string hostname);
           bool isPersonRegistered(std::string name);
           bool isRobotRegistered(std::string hostname);
+          bool isTaskRegistered(std::string name);
           bool isUserRegistered(std::string name);
           std::string getUserLoginName(std::string name);
           unifei::expertinos::mrta_vc::agents::Computer getComputer(int id);
           unifei::expertinos::mrta_vc::agents::Person getPerson(int id);
           unifei::expertinos::mrta_vc::agents::Robot getRobot(int id);
+          unifei::expertinos::mrta_vc::tasks::Task getTask(int id);
           unifei::expertinos::mrta_vc::agents::User getUser(int id);
           unifei::expertinos::mrta_vc::agents::Computer getComputer(std::string hostname);
           unifei::expertinos::mrta_vc::agents::Person getPerson(std::string name);
           unifei::expertinos::mrta_vc::agents::Robot getRobot(std::string hostname);
+          unifei::expertinos::mrta_vc::tasks::Task getTask(std::string name);
           unifei::expertinos::mrta_vc::agents::User getUser(std::string login_name);
 
 				};

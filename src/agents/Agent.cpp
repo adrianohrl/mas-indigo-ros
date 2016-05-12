@@ -101,7 +101,7 @@ int unifei::expertinos::mrta_vc::agents::Agent::getType()
  */
 std::string unifei::expertinos::mrta_vc::agents::Agent::getClassName() 
 {
-	return "AGENT";
+  return "agent";
 }
 
 /**
@@ -153,7 +153,7 @@ void unifei::expertinos::mrta_vc::agents::Agent::setLocation(unifei::expertinos:
 std::string unifei::expertinos::mrta_vc::agents::Agent::toString() 
 {
 	std::stringstream aux;
-	aux << "[" << getClassName() << "] id: " << id_;
+  aux << getClassName() << ": {id: " << id_;
 	return aux.str();
 }
 
@@ -178,7 +178,7 @@ bool unifei::expertinos::mrta_vc::agents::Agent::operator==(const unifei::expert
  */
 bool unifei::expertinos::mrta_vc::agents::Agent::operator!=(const unifei::expertinos::mrta_vc::agents::Agent& agent) 
 {
-	return id_ != agent.id_;
+  return !(operator==(agent));
 }
 
 /**

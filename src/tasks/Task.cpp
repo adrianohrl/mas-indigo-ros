@@ -25,19 +25,31 @@ unifei::expertinos::mrta_vc::tasks::Task::Task() : sender_(::mrta_vc::Agent()), 
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::Task::Task(int id, std::string name, std::string description, std::vector<unifei::expertinos::mrta_vc::tasks::Skill> desired_skills, unifei::expertinos::mrta_vc::agents::User sender, unifei::expertinos::mrta_vc::agents::Person receiver, ros::Time deadline, unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum priority) : desired_skills_(desired_skills), sender_(sender), receiver_(receiver)
+unifei::expertinos::mrta_vc::tasks::Task::Task(int id, std::string name, std::string description, std::vector<unifei::expertinos::mrta_vc::tasks::Skill> desired_skills, unifei::expertinos::mrta_vc::agents::User user, unifei::expertinos::mrta_vc::agents::Person sender, unifei::expertinos::mrta_vc::agents::Person receiver, ros::Time deadline, unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum priority) : desired_skills_(desired_skills), user_(user), sender_(sender), receiver_(receiver)
 {
-	id_ = id;
-	name_ = name;
-	description_ = description;	
-	priority_ = priority;
-	deadline_ = deadline;
+  id_ = id;
+  name_ = name;
+  description_ = description;
+  priority_ = priority;
+  deadline_ = deadline;
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::Task::Task(const ::mrta_vc::Task::ConstPtr& task_msg) : sender_(task_msg->sender), receiver_(task_msg->receiver)
+unifei::expertinos::mrta_vc::tasks::Task::Task(int id, std::string name, std::string description, std::vector<unifei::expertinos::mrta_vc::tasks::Skill> desired_skills, unifei::expertinos::mrta_vc::agents::User user, unifei::expertinos::mrta_vc::agents::Person sender, unifei::expertinos::mrta_vc::agents::Person receiver, ros::Duration duration, unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum priority) : desired_skills_(desired_skills), user_(user), sender_(sender), receiver_(receiver)
+{
+  id_ = id;
+  name_ = name;
+  description_ = description;
+  priority_ = priority;
+  deadline_ = ros::Time::now() + duration;
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::tasks::Task::Task(const ::mrta_vc::Task::ConstPtr& task_msg) : user_(task_msg->user), sender_(task_msg->sender), receiver_(task_msg->receiver)
 {
 	id_ = task_msg->id;	
 	name_ = task_msg->name;
@@ -53,7 +65,7 @@ unifei::expertinos::mrta_vc::tasks::Task::Task(const ::mrta_vc::Task::ConstPtr& 
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::Task::Task(::mrta_vc::Task task_msg) : sender_(task_msg.sender), receiver_(task_msg.receiver)
+unifei::expertinos::mrta_vc::tasks::Task::Task(::mrta_vc::Task task_msg) : user_(task_msg.user), sender_(task_msg.sender), receiver_(task_msg.receiver)
 {
 	id_ = task_msg.id;	
 	name_ = task_msg.name;
@@ -108,9 +120,17 @@ std::vector<unifei::expertinos::mrta_vc::tasks::Skill> unifei::expertinos::mrta_
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::User unifei::expertinos::mrta_vc::tasks::Task::getSender()
+unifei::expertinos::mrta_vc::agents::User unifei::expertinos::mrta_vc::tasks::Task::getUser()
 {
-	return sender_;
+  return user_;
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::agents::Person unifei::expertinos::mrta_vc::tasks::Task::getSender()
+{
+  return sender_;
 }
 
 /**
@@ -194,9 +214,17 @@ void unifei::expertinos::mrta_vc::tasks::Task::removeSkill(unifei::expertinos::m
 /**
  *
  */
-void unifei::expertinos::mrta_vc::tasks::Task::setSender(unifei::expertinos::mrta_vc::agents::User sender)
+void unifei::expertinos::mrta_vc::tasks::Task::setUser(unifei::expertinos::mrta_vc::agents::User user)
 {
-	sender_ = sender;
+  user_ = user;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::tasks::Task::setSender(unifei::expertinos::mrta_vc::agents::Person sender)
+{
+  sender_ = sender;
 }
 
 /**
@@ -218,9 +246,17 @@ void unifei::expertinos::mrta_vc::tasks::Task::setPriority(unifei::expertinos::m
 /**
  *
  */
-void unifei::expertinos::mrta_vc::tasks::Task::setDeadline(ros::Time deadline) 
+void unifei::expertinos::mrta_vc::tasks::Task::setDeadline(ros::Time deadline)
 {
-	deadline_ = deadline;
+  deadline_ = deadline;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::tasks::Task::setDeadline(ros::Duration duration)
+{
+  deadline_ = ros::Time::now() + duration;
 }
 
 /**
@@ -240,10 +276,11 @@ bool unifei::expertinos::mrta_vc::tasks::Task::isExpired()
 	task_msg.id = id_;
 	task_msg.name = name_;
 	task_msg.description = description_;
-	for(int i = 0; i < desired_skills_.size(); i++) 
+  for (int i = 0; i < desired_skills_.size(); i++)
 	{
 		task_msg.desired_skills.push_back(desired_skills_.at(i).toMsg());
 	}
+  task_msg.user = user_.toMsg();
 	task_msg.sender = sender_.toMsg();
 	task_msg.receiver = receiver_.toMsg();
 	task_msg.priority = unifei::expertinos::mrta_vc::tasks::TaskPriorities::toCode(priority_);
@@ -251,12 +288,46 @@ bool unifei::expertinos::mrta_vc::tasks::Task::isExpired()
 	return task_msg;
 }
 
+
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Task::equals(unifei::expertinos::mrta_vc::tasks::Task task) 
+std::string unifei::expertinos::mrta_vc::tasks::Task::toString()
 {
-	return name_ == task.name_;
+  std::stringstream desired_skills_ss;
+  for (int i = 0; i < desired_skills_.size(); i++)
+  {
+    if (i != 0)
+    {
+      desired_skills_ss << ", ";
+    }
+    desired_skills_ss << i << " " << desired_skills_.at(i).toString();
+  }
+  std::stringstream deadline_ss;
+  double seconds = ceil((deadline_ - ros::Time::now()).toSec());
+  double hours = floor(seconds / 3600);
+  double minutes = floor(seconds / 60) - 60 * hours;
+  seconds = floor(seconds - 60 * minutes - 3600 * hours);
+  deadline_ss << hours << "h" << minutes << "min" << seconds << "s";
+  return "task: {name: " + name_ + ", description: " + description_ + ", skills: {" + desired_skills_ss.str() + "}, user: " + user_.toString() + ", sender: " + sender_.toString() + ", receiver: " + receiver_.toString() + ", priority: " + unifei::expertinos::mrta_vc::tasks::TaskPriorities::toString(priority_) + ", deadline: " + deadline_ss.str() + "}";
+}
+
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::tasks::Task::equals(unifei::expertinos::mrta_vc::tasks::Task task)
+{
+  return name_ == task.name_;
+}
+
+
+/**
+ *
+ */
+int unifei::expertinos::mrta_vc::tasks::Task::compareTo(unifei::expertinos::mrta_vc::tasks::Task task)
+{
+  return unifei::expertinos::mrta_vc::tasks::TaskPriorities::compare(priority_, task.priority_);
 }
 
 /**
@@ -284,6 +355,7 @@ void unifei::expertinos::mrta_vc::tasks::Task::operator=(const unifei::expertino
 	name_ = task.name_;
 	description_ = task.description_;
 	desired_skills_ = task.desired_skills_;
+  user_ = task.user_;
 	sender_ = task.sender_;
 	receiver_ = task.receiver_;
 	priority_ = task.priority_;

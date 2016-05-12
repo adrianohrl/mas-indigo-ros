@@ -45,6 +45,7 @@ namespace unifei
 					static std::string toString(TaskPriorityEnum enumerated);
 					static TaskPriorityEnum getDefault();
 					static std::vector<TaskPriorityEnum> getAll();
+          static int compare(TaskPriorityEnum priority1, TaskPriorityEnum priority2);
 
 				};
 			}

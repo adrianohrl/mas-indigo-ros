@@ -11,8 +11,8 @@
 #ifndef ALLOCATION_MANAGER_H_
 #define ALLOCATION_MANAGER_H_
 
-#include "unifei/expertinos/mrta_vc/tasks/Allocation.h"
 #include <list>
+#include "unifei/expertinos/mrta_vc/tasks/Allocation.h"
 
 namespace unifei 
 {
@@ -21,7 +21,7 @@ namespace unifei
 		namespace mrta_vc
 		{
 			namespace system
-			{
+      {
 				class AllocationManager 
         {
 
@@ -29,9 +29,9 @@ namespace unifei
 					AllocationManager();	
 					~AllocationManager();
 					
-          std::list<unifei::expertinos::mrta_vc::tasks::Task> getUnallocatedTasks();
-          std::list<unifei::expertinos::mrta_vc::tasks::Task> getAllocatedTasks();
-          std::list<unifei::expertinos::mrta_vc::tasks::Task> getRequestedTasks();
+          unifei::expertinos::mrta_vc::tasks::TaskPriorityQueue getUnallocatedTasks();
+          unifei::expertinos::mrta_vc::tasks::TaskPriorityQueue getAllocatedTasks();
+          unifei::expertinos::mrta_vc::tasks::TaskPriorityQueue getRequestedTasks();
           std::list<unifei::expertinos::mrta_vc::tasks::Allocation> getAllocations();
           std::list<unifei::expertinos::mrta_vc::agents::Robot> getAvailableRobots();
           std::list<unifei::expertinos::mrta_vc::agents::Robot> getBusyRobots();
@@ -48,8 +48,8 @@ namespace unifei
 					//void allocate(unifei::expertinos::mrta_vc::tasks::Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots);
 
 				private:
-          std::list<unifei::expertinos::mrta_vc::tasks::Task> unallocated_tasks_;
-          std::list<unifei::expertinos::mrta_vc::tasks::Task> allocated_tasks_;
+          unifei::expertinos::mrta_vc::tasks::TaskPriorityQueue unallocated_tasks_;
+          unifei::expertinos::mrta_vc::tasks::TaskPriorityQueue allocated_tasks_;
           std::list<unifei::expertinos::mrta_vc::tasks::Allocation> allocations_;
           std::list<unifei::expertinos::mrta_vc::agents::Robot> available_robots_;
           std::list<unifei::expertinos::mrta_vc::agents::Robot> busy_robots_;

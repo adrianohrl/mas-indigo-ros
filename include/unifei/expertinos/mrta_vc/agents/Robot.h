@@ -32,6 +32,7 @@ namespace unifei
 				{
 
 				public:
+          Robot();
 					Robot(int id, std::string hostname, bool holonomic, bool mobile = true, double x = 0, double y = 0, double theta = 0);
 					Robot(int id, std::string hostname, bool holonomic, bool mobile, geometry_msgs::Pose pose_msg);
 					Robot(int id, std::string hostname, bool holonomic, bool mobile, unifei::expertinos::mrta_vc::places::Location location);
@@ -46,23 +47,21 @@ namespace unifei
 					double getVelTheta();
 					geometry_msgs::Twist getVelocity();
 					ros::Time getLastBeaconTimestamp();
+          void setSkills(std::vector<unifei::expertinos::mrta_vc::tasks::Skill> skills);
 					void setVelocity(double x = 0, double y = 0, double theta = 0);
 					void setVelocity(geometry_msgs::Twist twist_msg);
 					void setLastBeaconTimestamp(ros::Time last_beacon_timestamp = ros::Time::now());
 					bool isLogged();
           static bool isNotLoggedAnyMore(Robot robot);
-					::mrta_vc::Agent toMsg();
-					std::string toString();
-					void operator=(const Robot& robot);
+          virtual ::mrta_vc::Agent toMsg();
+          virtual std::string toString();
+          virtual void operator=(const Robot& robot);
 					
-				protected:
-					Robot();
-					
-					int getType();
-					void setHolonomic(bool holonomic);
-          void setSkills(std::vector<unifei::expertinos::mrta_vc::tasks::Skill> skills);
+        protected:
+          virtual int getType();
           void addSkill(unifei::expertinos::mrta_vc::tasks::Skill skill);
           void removeSkill(unifei::expertinos::mrta_vc::tasks::Skill skill);
+          void setHolonomic(bool holonomic);
 
 				private:
           std::vector<unifei::expertinos::mrta_vc::tasks::Skill> skills_;
@@ -72,7 +71,7 @@ namespace unifei
 					double vel_theta_;
 					ros::Time last_beacon_timestamp_;
 
-					std::string getClassName();
+          virtual std::string getClassName();
 					
 				};
 			}

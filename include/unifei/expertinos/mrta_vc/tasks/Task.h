@@ -13,6 +13,7 @@
 #define TASK_H_
 
 #include <ros/ros.h>
+#include <queue>
 #include <vector>
 #include "mrta_vc/Task.h"
 #include "unifei/expertinos/mrta_vc/agents/User.h"
@@ -26,13 +27,14 @@ namespace unifei
 		namespace mrta_vc
 		{
 			namespace tasks
-			{
+      {
 				class Task 
 				{
 
 				public:
-					Task();
-          Task(int id, std::string name, std::string description, std::vector<Skill> desired_skills, unifei::expertinos::mrta_vc::agents::User sender, unifei::expertinos::mrta_vc::agents::Person receiver, ros::Time deadline, TaskPriorityEnum priority = TaskPriorities::getDefault());
+          Task();
+          Task(int id, std::string name, std::string description, std::vector<Skill> desired_skills, unifei::expertinos::mrta_vc::agents::User user, unifei::expertinos::mrta_vc::agents::Person sender, unifei::expertinos::mrta_vc::agents::Person receiver, ros::Time deadline, TaskPriorityEnum priority = TaskPriorities::getDefault());
+          Task(int id, std::string name, std::string description, std::vector<Skill> desired_skills, unifei::expertinos::mrta_vc::agents::User user, unifei::expertinos::mrta_vc::agents::Person sender, unifei::expertinos::mrta_vc::agents::Person receiver, ros::Duration duration, TaskPriorityEnum priority = TaskPriorities::getDefault());
 					Task(const ::mrta_vc::Task::ConstPtr& task_msg);
 					Task(::mrta_vc::Task task_msg);		
 					~Task();
@@ -41,7 +43,8 @@ namespace unifei
 					std::string getName();
 					std::string getDescription();
 					std::vector<Skill> getDesiredSkills();
-          unifei::expertinos::mrta_vc::agents::User getSender();
+          unifei::expertinos::mrta_vc::agents::User getUser();
+          unifei::expertinos::mrta_vc::agents::Person getSender();
 					unifei::expertinos::mrta_vc::agents::Person getReceiver();
 					TaskPriorityEnum getPriority();
 					ros::Time getDeadline();
@@ -50,12 +53,15 @@ namespace unifei
 					void setDescription(std::string description);
 					void addSkill(Skill skill);
 					void removeSkill(Skill skill);
-          void setSender(unifei::expertinos::mrta_vc::agents::User sender);
+          void setUser(unifei::expertinos::mrta_vc::agents::User user);
+          void setSender(unifei::expertinos::mrta_vc::agents::Person sender);
 					void setReceiver(unifei::expertinos::mrta_vc::agents::Person receiver);
-					void setPriority(TaskPriorityEnum priority);
-					void setDeadline(ros::Time deadline);
+          void setPriority(TaskPriorityEnum priority);
+          void setDeadline(ros::Time deadline);
+          void setDeadline(ros::Duration duration);
 					bool isExpired();
 					::mrta_vc::Task toMsg();
+          std::string toString();
 					bool equals(Task task);
 					int compareTo(Task task);
 					bool operator==(const Task& task);
@@ -67,12 +73,23 @@ namespace unifei
 					std::string name_;
 					std::string description_;
 					std::vector<Skill> desired_skills_;
-					unifei::expertinos::mrta_vc::agents::User sender_;		
+          unifei::expertinos::mrta_vc::agents::User user_;
+          unifei::expertinos::mrta_vc::agents::Person sender_;
 					unifei::expertinos::mrta_vc::agents::Person receiver_;
 					TaskPriorityEnum priority_;
 					ros::Time deadline_;
 					
 				};
+
+        struct TaskComparator
+        {
+          bool operator()(Task task1, Task task2)
+          {
+            return task1.compareTo(task2) > 0;
+          }
+        };
+
+        typedef std::priority_queue<Task, std::vector<Task>, TaskComparator> TaskPriorityQueue;
 			}
 		}
 	}

@@ -47,25 +47,25 @@ namespace unifei
 					void setLocation(double x = 0, double y = 0, double theta = 0);
 					void setLocation(geometry_msgs::Pose pose_msg);
 					void setLocation(unifei::expertinos::mrta_vc::places::Location location);
-					::mrta_vc::Agent toMsg();
-					std::string toString();
-					bool equals(Agent agent);
-					bool operator==(const Agent& agent);
-					bool operator!=(const Agent& agent);
-					void operator=(const Agent& agent);
+          virtual ::mrta_vc::Agent toMsg();
+          virtual std::string toString();
+          virtual bool equals(Agent agent);
+          virtual bool operator==(const Agent& agent);
+          bool operator!=(const Agent& agent);
+          virtual void operator=(const Agent& agent);
 
 				protected:
 					Agent();
 				
-					int getType();
+          virtual int getType();
 					void setId(int id);
 
 				private:
 					int id_;
 					unifei::expertinos::mrta_vc::places::Location location_;
 					
-					bool isValidType(int type);
-					std::string getClassName();
+          virtual bool isValidType(int type);
+          virtual std::string getClassName();
 
 				};
 			}

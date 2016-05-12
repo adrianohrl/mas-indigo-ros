@@ -98,7 +98,7 @@ int unifei::expertinos::mrta_vc::agents::Person::getType()
  */
 std::string unifei::expertinos::mrta_vc::agents::Person::getClassName() 
 {
-	return "PERSON";
+  return "person";
 }
 
 /**
@@ -133,9 +133,7 @@ void unifei::expertinos::mrta_vc::agents::Person::setHierarchyLevel(unifei::expe
  */
 std::string unifei::expertinos::mrta_vc::agents::Person::toString() 
 {
-	std::stringstream aux;
-	aux << unifei::expertinos::mrta_vc::agents::Agent::toString() << " - name: " << name_ << " - hierarchy level: " << unifei::expertinos::mrta_vc::agents::HierarchyLevels::toString(hierarchy_level_);
-	return aux.str();
+  return unifei::expertinos::mrta_vc::agents::Agent::toString() + ", name: " + name_ + ", hierarchy level: " + unifei::expertinos::mrta_vc::agents::HierarchyLevels::toString(hierarchy_level_) + "}";
 }
 
 /**
@@ -152,14 +150,6 @@ bool unifei::expertinos::mrta_vc::agents::Person::equals(unifei::expertinos::mrt
 bool unifei::expertinos::mrta_vc::agents::Person::operator==(const unifei::expertinos::mrta_vc::agents::Person& person)
 {
 	return name_ == person.name_;
-}
-
-/**
- *
- */
-bool unifei::expertinos::mrta_vc::agents::Person::operator!=(const unifei::expertinos::mrta_vc::agents::Person& person) 
-{
-	return name_ != person.name_;
 }
 
 /**

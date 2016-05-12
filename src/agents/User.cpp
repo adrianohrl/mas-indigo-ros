@@ -134,7 +134,7 @@ int unifei::expertinos::mrta_vc::agents::User::getType()
  */
 std::string unifei::expertinos::mrta_vc::agents::User::getClassName() 
 {
-	return "USER";
+  return "user";
 }
 
 /**
@@ -189,7 +189,8 @@ void unifei::expertinos::mrta_vc::agents::User::setLastBeaconTimestamp(ros::Time
  */
 std::string unifei::expertinos::mrta_vc::agents::User::toString() 
 {
-	return unifei::expertinos::mrta_vc::agents::Person::toString() + " - login: " + login_name_ + " - computer: " + computer_.getHostname();
+  std::string aux = unifei::expertinos::mrta_vc::agents::Person::toString();
+  return aux.substr(0, aux.length() - 1) + ", login: " + login_name_ + ", " + computer_.toString() + "}";
 }
 
 /**

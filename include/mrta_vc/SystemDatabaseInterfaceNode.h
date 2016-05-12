@@ -17,6 +17,7 @@
 #include "mrta_vc/GetComputer.h"
 #include "mrta_vc/GetPerson.h"
 #include "mrta_vc/GetRobot.h"
+#include "mrta_vc/GetTask.h"
 #include "mrta_vc/GetUser.h"
 #include "unifei/expertinos/mrta_vc/system/DatabaseInterface.h"
 
@@ -43,12 +44,14 @@ namespace mrta_vc
     ros::ServiceServer get_computer_srv_;
     ros::ServiceServer get_person_srv_;
     ros::ServiceServer get_robot_srv_;
+    ros::ServiceServer get_task_srv_;
     ros::ServiceServer get_user_srv_;
     ros::ServiceServer validate_srv_;
 
     bool getComputer(mrta_vc::GetComputer::Request& request, mrta_vc::GetComputer::Response& response);
     bool getPerson(mrta_vc::GetPerson::Request& request, mrta_vc::GetPerson::Response& response);
     bool getRobot(mrta_vc::GetRobot::Request& request, mrta_vc::GetRobot::Response& response);
+    bool getTask(mrta_vc::GetTask::Request& request, mrta_vc::GetTask::Response& response);
     bool getUser(mrta_vc::GetUser::Request& request, mrta_vc::GetUser::Response& response);
     bool validatePasswordCallback(mrta_vc::ValidatePassword::Request& request, mrta_vc::ValidatePassword::Response& response);
 
