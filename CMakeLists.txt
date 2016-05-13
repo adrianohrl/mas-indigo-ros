@@ -261,12 +261,26 @@ add_executable(task_builder_node
         src/state_machine/MachineController.cpp
         include/mrta_vc/state_machine/AbstractState.h
         src/state_machine/AbstractState.cpp
-        include/mrta_vc/state_machine/PersonVerificationState.h
-        src/state_machine/PersonVerificationState.cpp
-        include/mrta_vc/state_machine/S8ReceiverVerificationState.h
-        src/state_machine/S8ReceiverVerificationState.cpp
         include/mrta_vc/state_machine/TaskVerificationState.h
         src/state_machine/TaskVerificationState.cpp
+        include/mrta_vc/state_machine/PersonVerificationState.h
+        src/state_machine/PersonVerificationState.cpp
+        include/mrta_vc/state_machine/SenderVerificationState.h
+        src/state_machine/SenderVerificationState.cpp
+        include/mrta_vc/state_machine/S0InitialState.h
+        src/state_machine/S0InitialState.cpp
+        include/mrta_vc/state_machine/S1TaskVerificationState.h
+        src/state_machine/S1TaskVerificationState.cpp
+        include/mrta_vc/state_machine/S2TaskVerificationState.h
+        src/state_machine/S2TaskVerificationState.cpp
+        include/mrta_vc/state_machine/S3TaskVerificationState.h
+        src/state_machine/S3TaskVerificationState.cpp
+        include/mrta_vc/state_machine/S4SenderVerificationState.h
+        src/state_machine/S4SenderVerificationState.cpp
+        include/mrta_vc/state_machine/S5SenderVerificationState.h
+        src/state_machine/S5SenderVerificationState.cpp
+        include/mrta_vc/state_machine/S6ReceiverVerificationState.h
+        src/state_machine/S6ReceiverVerificationState.cpp
 	)
 
 add_dependencies(task_builder_node 

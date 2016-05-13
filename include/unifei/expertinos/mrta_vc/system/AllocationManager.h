@@ -30,8 +30,8 @@ namespace unifei
 					~AllocationManager();
 					
           unifei::expertinos::mrta_vc::tasks::TaskPriorityQueue getUnallocatedTasks();
-          unifei::expertinos::mrta_vc::tasks::TaskPriorityQueue getAllocatedTasks();
-          unifei::expertinos::mrta_vc::tasks::TaskPriorityQueue getRequestedTasks();
+          std::list<unifei::expertinos::mrta_vc::tasks::Task> getAllocatedTasks();
+          std::list<unifei::expertinos::mrta_vc::tasks::Task> getRequestedTasks();
           std::list<unifei::expertinos::mrta_vc::tasks::Allocation> getAllocations();
           std::list<unifei::expertinos::mrta_vc::agents::Robot> getAvailableRobots();
           std::list<unifei::expertinos::mrta_vc::agents::Robot> getBusyRobots();
@@ -49,7 +49,7 @@ namespace unifei
 
 				private:
           unifei::expertinos::mrta_vc::tasks::TaskPriorityQueue unallocated_tasks_;
-          unifei::expertinos::mrta_vc::tasks::TaskPriorityQueue allocated_tasks_;
+          std::list<unifei::expertinos::mrta_vc::tasks::Task> allocated_tasks_;
           std::list<unifei::expertinos::mrta_vc::tasks::Allocation> allocations_;
           std::list<unifei::expertinos::mrta_vc::agents::Robot> available_robots_;
           std::list<unifei::expertinos::mrta_vc::agents::Robot> busy_robots_;

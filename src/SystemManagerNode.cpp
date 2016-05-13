@@ -94,7 +94,7 @@ void mrta_vc::SystemManagerNode::robotsTimerCallback(const ros::TimerEvent& even
  */
 void mrta_vc::SystemManagerNode::tasksTimerCallback(const ros::TimerEvent& event)
 {
-  //ROS_WARN("IMPLEMENTAR mrta_vc::SystemManagerNode::tasksTimerCallback!!!");
+  // IMPLEMENTAR
 }
 
 /**
