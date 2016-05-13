@@ -43,3 +43,7 @@ Thumbs.db
 ###########
 *.bag
 *.pyc
+
+# QtCreator #
+#############
+CMakeLists.txt.*

@@ -65,7 +65,10 @@ void mrta_vc::SystemManagerNode::robotsCallback(const mrta_vc::Agent::ConstPtr& 
  */
 void mrta_vc::SystemManagerNode::tasksCallback(const mrta_vc::Task::ConstPtr& task_msg)
 {
-  ROS_WARN("IMPLEMENTAR mrta_vc::SystemManagerNode::tasksCallback!!!");
+  unifei::expertinos::mrta_vc::tasks::Task task(task_msg);
+  ROS_INFO("%s", task.toString().c_str());
+  ROS_WARN("now: ", ros::Time::now().toSec(), task.getDeadline().toSec());
+  unifei::expertinos::mrta_vc::system::AllocationManager::add(task);
 }
 
 /**
@@ -91,7 +94,7 @@ void mrta_vc::SystemManagerNode::robotsTimerCallback(const ros::TimerEvent& even
  */
 void mrta_vc::SystemManagerNode::tasksTimerCallback(const ros::TimerEvent& event)
 {
-  ROS_WARN("IMPLEMENTAR mrta_vc::SystemManagerNode::tasksTimerCallback!!!");
+  // IMPLEMENTAR
 }
 
 /**

@@ -28,9 +28,9 @@ unifei::expertinos::mrta_vc::system::AllocationManager::~AllocationManager()
 /**
  *
  */
-std::list<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_vc::system::AllocationManager::getUnallocatedTasks()
+unifei::expertinos::mrta_vc::tasks::TaskPriorityQueue unifei::expertinos::mrta_vc::system::AllocationManager::getUnallocatedTasks()
 {
-	return unallocated_tasks_;
+  return unallocated_tasks_;
 }
 
 /**
@@ -46,7 +46,7 @@ std::list<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_vc:
  */
 std::list<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_vc::system::AllocationManager::getRequestedTasks()
 {
-  std::list<unifei::expertinos::mrta_vc::tasks::Task> requested_tasks;
+  //std::list<unifei::expertinos::mrta_vc::tasks::Task> requested_tasks;
   /*for (int i = 0; i < unallocated_tasks_.size(); i++)
 	{
 		requested_tasks.push_back(unallocated_tasks_.at(i));
@@ -55,7 +55,7 @@ std::list<unifei::expertinos::mrta_vc::tasks::Task> unifei::expertinos::mrta_vc:
 	{
 		requested_tasks.push_back(allocated_tasks_.at(i));
   }*/
-	return requested_tasks;
+  return allocated_tasks_;
 }
 
 /**
@@ -111,7 +111,7 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::experti
 			return;
 		}
   }*/
-	unallocated_tasks_.push_back(task);
+  unallocated_tasks_.push(task);
 }
 
 /**
@@ -192,7 +192,8 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::remove(unifei::expe
 			return;
 		}
   }*/
-  unallocated_tasks_.remove(task);
+  //unallocated_tasks_.pop(task);
+  unallocated_tasks_.push(task);
 }
 
 /**

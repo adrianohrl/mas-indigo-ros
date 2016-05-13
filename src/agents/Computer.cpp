@@ -98,7 +98,7 @@ int unifei::expertinos::mrta_vc::agents::Computer::getType()
  */
 std::string unifei::expertinos::mrta_vc::agents::Computer::getClassName() 
 {
-	return "COMPUTER";
+  return "computer";
 }
 
 /**
@@ -133,9 +133,7 @@ void unifei::expertinos::mrta_vc::agents::Computer::setMobile(bool mobile)
  */
 std::string unifei::expertinos::mrta_vc::agents::Computer::toString() 
 {
-	std::stringstream aux;
-	aux << unifei::expertinos::mrta_vc::agents::Agent::toString() << " - hostname: " << hostname_;
-	return aux.str();
+  return unifei::expertinos::mrta_vc::agents::Agent::toString() + ", hostname: " + hostname_ + "}";
 }
 
 /**

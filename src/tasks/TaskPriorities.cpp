@@ -101,10 +101,20 @@ unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum unifei::experti
  */
 std::vector<unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum> unifei::expertinos::mrta_vc::tasks::TaskPriorities::getAll()
 {
-	std::vector<unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum> enumerateds;
-	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::priorities::LOW);
-	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::priorities::NORMAL);
-	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::priorities::IMPORTANT);
-	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::priorities::CRITICAL);
-	return enumerateds;
+  std::vector<unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum> enumerateds;
+  enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::priorities::LOW);
+  enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::priorities::NORMAL);
+  enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::priorities::IMPORTANT);
+  enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::priorities::CRITICAL);
+  return enumerateds;
+}
+
+/**
+ *
+ */
+int unifei::expertinos::mrta_vc::tasks::TaskPriorities::compare(unifei::expertinos::mrta_vc::tasks::TaskPriorityEnum priority1, unifei::expertinos::mrta_vc::tasks::TaskPriorityEnum priority2)
+{
+  int code1 = toCode(priority1);
+  int code2 = toCode(priority2);
+  return code1 - code2;
 }

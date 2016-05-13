@@ -154,7 +154,7 @@ int unifei::expertinos::mrta_vc::agents::Robot::getType()
  */
 std::string unifei::expertinos::mrta_vc::agents::Robot::getClassName() 
 {
-	return "ROBOT";
+  return "robot";
 }
 
 /**
@@ -253,9 +253,10 @@ void unifei::expertinos::mrta_vc::agents::Robot::setLastBeaconTimestamp(ros::Tim
  */
 std::string unifei::expertinos::mrta_vc::agents::Robot::toString() 
 {
-	std::stringstream aux;
-	aux << unifei::expertinos::mrta_vc::agents::Computer::toString() << " - velocity: (" << vel_x_ << ", " << vel_y_ << ", " << vel_theta_ << ")";
-	return aux.str();
+  std::string aux_str = unifei::expertinos::mrta_vc::agents::Computer::toString();
+  std::stringstream aux_ss;
+  aux_ss << vel_x_ << ", " << vel_y_ << ", " << vel_theta_;
+  return aux_str.substr(0, aux_str.length() - 1) + ", velocity: (" + aux_ss.str() + ")}";
 }
 
 /**

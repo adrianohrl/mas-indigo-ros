@@ -25,6 +25,7 @@ namespace unifei
 				{
 
 				public:
+          Computer();
 					Computer(int id, std::string hostname, bool mobile = false, double x = 0.0, double y = 0.0, double theta = 0.0);
 					Computer(int id, std::string hostname, bool mobile, geometry_msgs::Pose pose_msg);
 					Computer(int id, std::string hostname, bool mobile, unifei::expertinos::mrta_vc::places::Location location);
@@ -34,17 +35,14 @@ namespace unifei
 
 					std::string getHostname();
 					bool isMobile();
-					::mrta_vc::Agent toMsg();
-					std::string toString();
-					bool equals(Computer computer);
-					bool operator==(const Computer& computer);
-					bool operator!=(const Computer& computer);
-					void operator=(const Computer& computer);
+          virtual ::mrta_vc::Agent toMsg();
+          virtual std::string toString();
+          virtual bool equals(Computer computer);
+          virtual bool operator==(const Computer& computer);
+          virtual void operator=(const Computer& computer);
 					
-				protected:
-					Computer();
-				
-					int getType();
+        protected:
+          virtual int getType();
 					void setHostname(std::string hostname);
 					void setMobile(bool mobile);
 
@@ -52,7 +50,7 @@ namespace unifei
 					std::string hostname_;
 					bool mobile_;
 					
-					std::string getClassName();
+          virtual std::string getClassName();
 
 				};
 			}

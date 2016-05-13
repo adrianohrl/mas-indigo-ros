@@ -54,7 +54,8 @@ void mrta_vc::TaskBuilderNode::spin()
     ROS_ERROR("There is no user register as %s!!!", user_srv.request.name.c_str());
     ROS_ERROR("%s", user_srv.response.message.c_str());
   }
-  unifei::expertinos::mrta_vc::agents::User task_sender(user_srv.response.user);
+  unifei::expertinos::mrta_vc::agents::User task_user(user_srv.response.user);
+  unifei::expertinos::mrta_vc::agents::Person task_sender(user_srv.response.user);
   mrta_vc::GetPerson person_srv;
   person_srv.request.name = "Christiano Henrique Rezende";
   if (!get_person_cli_.call(person_srv))
@@ -65,7 +66,7 @@ void mrta_vc::TaskBuilderNode::spin()
   unifei::expertinos::mrta_vc::agents::Person task_receiver(person_srv.response.person);
   unifei::expertinos::mrta_vc::tasks::TaskPriorityEnum task_priority = unifei::expertinos::mrta_vc::tasks::priorities::IMPORTANT;
   ros::Time task_deadline = ros::Time::now() + ros::Duration(120);
-  task_ = unifei::expertinos::mrta_vc::tasks::Task(task_id, task_name, task_description, task_desired_skills, task_sender, task_receiver, task_deadline, task_priority);
+  task_ = unifei::expertinos::mrta_vc::tasks::Task(task_id, task_name, task_description, task_desired_skills, task_user, task_sender, task_receiver, task_deadline, task_priority);
   //ROS_INFO("%s", task_.toString().c_str());
   task_pub_.publish(task_.toMsg());
 	while (nh_.ok()) 

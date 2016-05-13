@@ -2,6 +2,7 @@ uint32 id
 string name
 string description
 mrta_vc/Skill[] desired_skills
+mrta_vc/Agent user
 mrta_vc/Agent sender
 mrta_vc/Agent receiver
 uint8 priority
