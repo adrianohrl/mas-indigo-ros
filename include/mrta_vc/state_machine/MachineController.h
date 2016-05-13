@@ -16,12 +16,20 @@
 #include <ros/ros.h> 
 #include "unifei/expertinos/mrta_vc/tasks/Task.h"
 //#include "mrta_vc/state_machine/AbstractState.h"
-//#include "mrta_vc/state_machine/S8ReceiverVerificationState.h"
+#include "mrta_vc/state_machine/S0InitialState.h"
+#include "mrta_vc/state_machine/S1TaskVerificationState.h"
+#include "mrta_vc/state_machine/S2TaskVerificationState.h"
+#include "mrta_vc/state_machine/S3TaskVerificationState.h"
+#include "mrta_vc/state_machine/S4SenderVerificationState.h"
+#include "mrta_vc/state_machine/S5SenderVerificationState.h"
+#include "mrta_vc/state_machine/S6ReceiverVerificationState.h"
 
 namespace mrta_vc
 {
 	namespace state_machine
-	{
+  {
+    class AbstractState;
+
 		class MachineController 
 		{
 
@@ -30,17 +38,29 @@ namespace mrta_vc
  			~MachineController();
 
  			ros::NodeHandle getNodeHandle();
-            unifei::expertinos::mrta_vc::tasks::Task getTask();
-            //S8ReceiverVerificationState getS8();
-
-            //void setNext(AbstractState state);
+      unifei::expertinos::mrta_vc::tasks::Task getTask();
+      S0InitialState getS0();
+      S1TaskVerificationState getS1();
+      S2TaskVerificationState getS2();
+      S3TaskVerificationState getS3();
+      S4SenderVerificationState getS4();
+      S5SenderVerificationState getS5();
+      S6ReceiverVerificationState getS6();
+      void setTask(unifei::expertinos::mrta_vc::tasks::Task task);
+      void setNext(AbstractState state);
+      void reset();
 
  		private:
  			ros::NodeHandle nh_;
-            unifei::expertinos::mrta_vc::tasks::Task task_;
-            //AbstractState current_;
-            //S8ReceiverVerificationState s8_;
-
+      unifei::expertinos::mrta_vc::tasks::Task task_;
+      AbstractState* current_;
+      S0InitialState s0_;
+      S1TaskVerificationState s1_;
+      S2TaskVerificationState s2_;
+      S3TaskVerificationState s3_;
+      S4SenderVerificationState s4_;
+      S5SenderVerificationState s5_;
+      S6ReceiverVerificationState s6_;
 
 		};
 	}

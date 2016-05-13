@@ -12,12 +12,16 @@
 #ifndef ABSTRACT_STATE_H_
 #define ABSTRACT_STATE_H_
 
-#include "mrta_vc/state_machine/MachineController.h"
+#include <string>
+#include <ros/ros.h>
+//#include "mrta_vc/state_machine/MachineController.h"
 
 namespace mrta_vc
 {
 	namespace state_machine
 	{
+    class MachineController;
+
 		class AbstractState 
 		{
 
@@ -25,28 +29,24 @@ namespace mrta_vc
  			~AbstractState();
 
  			std::string getQuestion();
- 			std::string getMessage();
- 			std::string getAnswer();
-
+      std::string getMessage();
  			void setQuestion(std::string question);
- 			void setMessage(std::string message);
- 			void setAnswer(std::string answer);
-
- 			virtual void process(std::string answer);
- 			virtual void next(); 			
- 			virtual bool isValid();
+      void setMessage(std::string message);
+      virtual void process(std::string answer);
 
  		protected:
-            AbstractState(MachineController controller, std::string question = "");
-			MachineController getController(); 			
- 			ros::NodeHandle getNodeHandle();
+      AbstractState(MachineController* controller, std::string question = "");
+
+      ros::NodeHandle getNodeHandle();
+      MachineController* getController();
 
  		private:
- 			MachineController controller_;
+      MachineController* controller_;
 
  			std::string question_;
- 			std::string message_;
- 			std::string answer_;
+      std::string message_;
+
+      virtual void next();
 		};
 	}
 }		

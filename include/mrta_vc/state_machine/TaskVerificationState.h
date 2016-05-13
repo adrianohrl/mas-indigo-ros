@@ -26,18 +26,16 @@ namespace mrta_vc
 		public:
  			~TaskVerificationState();
 
- 			virtual void process(std::string answer);
- 			virtual void next();
-            virtual bool isValid();
+      virtual void process(std::string answer);
 
  		protected:
-            TaskVerificationState(MachineController controller, std::string question = "What?");
-            unifei::expertinos::mrta_vc::tasks::Task getTask();
+      TaskVerificationState(MachineController* controller, std::string question = "What?");
 
  		private:
- 			ros::ServiceClient get_task_cli_;
- 			unifei::expertinos::mrta_vc::tasks::Task task_;
-            bool valid_;
+      ros::ServiceClient get_task_cli_;
+
+      virtual void next();
+
  		};
 	}
 }		

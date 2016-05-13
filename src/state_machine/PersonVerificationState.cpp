@@ -10,15 +10,16 @@
  */
 
 #include "mrta_vc/state_machine/PersonVerificationState.h"
+#include "mrta_vc/state_machine/MachineController.h"
 
 /**
  * Constructor
  */
-mrta_vc::state_machine::PersonVerificationState::PersonVerificationState(mrta_vc::state_machine::MachineController controller, std::string question) : mrta_vc::state_machine::AbstractState(controller, question)
+mrta_vc::state_machine::PersonVerificationState::PersonVerificationState(mrta_vc::state_machine::MachineController* controller, std::string question) : mrta_vc::state_machine::AbstractState(controller, question)
 {
 	ros::NodeHandle nh = mrta_vc::state_machine::AbstractState::getNodeHandle();
 	get_person_cli_ = nh.serviceClient<mrta_vc::GetPerson>("/get_person");
-    valid_ = false;
+  valid_ = false;
 }
 
 /**
@@ -41,17 +42,17 @@ unifei::expertinos::mrta_vc::agents::Person mrta_vc::state_machine::PersonVerifi
  */
 void mrta_vc::state_machine::PersonVerificationState::process(std::string answer)
 { 
-    valid_ = false;
+  valid_ = false;
 	mrta_vc::GetPerson person_srv;
-    person_srv.request.name = answer;
+  person_srv.request.name = answer;
 	if (!get_person_cli_.call(person_srv))
 	{
-        ROS_ERROR("There is no person registered as %s!!!", person_srv.request.name.c_str());
+    ROS_ERROR("There is no person registered as %s!!!", person_srv.request.name.c_str());
 		ROS_ERROR("%s", person_srv.response.message.c_str());
 		return;
 	}
-    person_ = unifei::expertinos::mrta_vc::agents::Person(person_srv.response.person);
-    valid_ = person_srv.response.valid;
+  person_ = unifei::expertinos::mrta_vc::agents::Person(person_srv.response.person);
+  valid_ = person_srv.response.valid;
 }
 
 /**
@@ -59,12 +60,12 @@ void mrta_vc::state_machine::PersonVerificationState::process(std::string answer
  */
 bool mrta_vc::state_machine::PersonVerificationState::isValid()
 {
-    return valid_;
+  return valid_;
 }
 
 /**
-* 
-*/
+ *
+ */
 void mrta_vc::state_machine::PersonVerificationState::next()
 {
 }
