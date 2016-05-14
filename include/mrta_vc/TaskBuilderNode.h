@@ -14,9 +14,10 @@
 
 #include <ros/ros.h>
 #include <std_srvs/Empty.h>
-#include "mrta_vc/Task.h"
+#include <std_msgs/String.h>
 #include "mrta_vc/GetPerson.h"
 #include "mrta_vc/GetUser.h"
+#include "mrta_vc/state_machine/MachineController.h"
 #include "unifei/expertinos/mrta_vc/tasks/Task.h"
 #include "unifei/expertinos/mrta_vc/agents/User.h"
 
@@ -40,12 +41,17 @@ namespace mrta_vc
 	
 		/** atributos privados relacionados ao nó */
 		ros::NodeHandle nh_;
-    ros::Publisher task_pub_;
+		ros::Publisher question_pub_;
+		ros::Publisher message_pub_;
+		ros::Subscriber answer_sub_;
+		ros::Publisher task_pub_;
     ros::ServiceServer abort_srv_;
     ros::ServiceClient get_person_cli_;
     ros::ServiceClient get_user_cli_;
-    unifei::expertinos::mrta_vc::tasks::Task task_;
 
+		state_machine::MachineController sm_controller_;
+
+		void answersCallback(const std_msgs::String::ConstPtr& answer_msg);
     bool abort(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response);
 
 	};

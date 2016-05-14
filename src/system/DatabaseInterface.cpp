@@ -54,7 +54,7 @@ bool unifei::expertinos::mrta_vc::system::DatabaseInterface::isRobotRegistered(s
  */
 bool unifei::expertinos::mrta_vc::system::DatabaseInterface::isTaskRegistered(std::string name)
 {
-  return name == "bring water" || name == "take water" || name == "send water" ||
+	return name == "bring water" || name == "take water" || name == "send water" ||
       name == "bring document" || name == "take document" || name == "send document" ||
       name == "bring meal" || name == "take meal" || name == "send meal" ||
       name == "bring coffee" || name == "take coffee" || name == "send coffee" ||

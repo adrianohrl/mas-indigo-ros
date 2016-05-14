@@ -15,7 +15,6 @@
 #include <string>
 #include <ros/ros.h> 
 #include "unifei/expertinos/mrta_vc/tasks/Task.h"
-//#include "mrta_vc/state_machine/AbstractState.h"
 #include "mrta_vc/state_machine/S0InitialState.h"
 #include "mrta_vc/state_machine/S1TaskVerificationState.h"
 #include "mrta_vc/state_machine/S2TaskVerificationState.h"
@@ -23,6 +22,9 @@
 #include "mrta_vc/state_machine/S4SenderVerificationState.h"
 #include "mrta_vc/state_machine/S5SenderVerificationState.h"
 #include "mrta_vc/state_machine/S6ReceiverVerificationState.h"
+#include "mrta_vc/state_machine/S7PriorityVerificationState.h"
+#include "mrta_vc/state_machine/S8DeadlineVerificationState.h"
+#include "mrta_vc/state_machine/S9FinalState.h"
 
 namespace mrta_vc
 {
@@ -37,7 +39,11 @@ namespace mrta_vc
 			MachineController(ros::NodeHandle nh);	
  			~MachineController();
 
- 			ros::NodeHandle getNodeHandle();
+			ros::NodeHandle getNodeHandle();
+			std::string getQuestion();
+			std::string getMessage();
+			bool hasChangedState();
+			bool isFinalState();
       unifei::expertinos::mrta_vc::tasks::Task getTask();
       S0InitialState getS0();
       S1TaskVerificationState getS1();
@@ -46,8 +52,12 @@ namespace mrta_vc
       S4SenderVerificationState getS4();
       S5SenderVerificationState getS5();
       S6ReceiverVerificationState getS6();
+			S7PriorityVerificationState getS7();
+			S8DeadlineVerificationState getS8();
+			S9FinalState getS9();
       void setTask(unifei::expertinos::mrta_vc::tasks::Task task);
-      void setNext(AbstractState state);
+			void setNext(AbstractState state);
+			void process(std::string answer);
       void reset();
 
  		private:
@@ -61,6 +71,10 @@ namespace mrta_vc
       S4SenderVerificationState s4_;
       S5SenderVerificationState s5_;
       S6ReceiverVerificationState s6_;
+			S7PriorityVerificationState s7_;
+			S8DeadlineVerificationState s8_;
+			S9FinalState s9_;
+			bool changed_state_;
 
 		};
 	}
