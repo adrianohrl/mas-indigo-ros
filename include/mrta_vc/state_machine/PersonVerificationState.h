@@ -29,19 +29,18 @@ namespace mrta_vc
  			virtual void process(std::string answer);
 
  		protected:
-      PersonVerificationState(MachineController* controller, std::string question = "From whom?");
+      		PersonVerificationState(MachineController* controller, std::string question = "From whom?");
 
-      bool isValid();
- 			unifei::expertinos::mrta_vc::agents::Person getPerson();	
+      		bool isValid();
+ 				unifei::expertinos::mrta_vc::agents::Person getPerson();	
 
- 		private:
- 			ros::ServiceClient get_person_cli_;
+		private:
+			ros::ServiceClient get_person_cli_;
  			
  			unifei::expertinos::mrta_vc::agents::Person person_;
-      bool valid_;
+     		bool valid_;
 
-      virtual void next();
-
+          virtual void next(std::string answer);
  		};
 	}
 }		

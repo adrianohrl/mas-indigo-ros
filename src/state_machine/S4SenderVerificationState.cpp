@@ -31,7 +31,7 @@ mrta_vc::state_machine::S4SenderVerificationState::~S4SenderVerificationState()
 /**
  *
  */
-void mrta_vc::state_machine::S4SenderVerificationState::next()
+void mrta_vc::state_machine::S4SenderVerificationState::next(std::string answer)
 {
     mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
     //controller->setNext(controller->getS7());

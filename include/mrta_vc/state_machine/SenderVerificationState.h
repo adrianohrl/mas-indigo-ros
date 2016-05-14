@@ -30,7 +30,7 @@ namespace mrta_vc
       SenderVerificationState(MachineController* controller);
 
     private:
-      virtual void next();
+      virtual void next(std::string answer);
 
  		};
 	}

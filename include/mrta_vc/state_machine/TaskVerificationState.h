@@ -34,7 +34,7 @@ namespace mrta_vc
  		private:
       ros::ServiceClient get_task_cli_;
 
-      virtual void next();
+      virtual void next(std::string answer);
 
  		};
 	}
