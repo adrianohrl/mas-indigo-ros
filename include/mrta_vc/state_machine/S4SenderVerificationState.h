@@ -28,7 +28,7 @@ namespace mrta_vc
 			~S4SenderVerificationState();
 
     private:
-      virtual void next();
+      virtual void next(std::string answer);
 
  		};
 	}

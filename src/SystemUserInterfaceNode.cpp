@@ -17,6 +17,7 @@ mrta_vc::SystemUserInterfaceNode::SystemUserInterfaceNode(ros::NodeHandle nh) : 
 {
 	beacon_timer_ = nh_.createTimer(ros::Duration(USER_BEACON_INTERVAL_DURATION), &mrta_vc::SystemUserInterfaceNode::beaconTimerCallback, this);
   beacon_pub_ = nh_.advertise<mrta_vc::Agent>("/users", 1);
+	message_sub_ = nh_.subscribe("messages", 1, &mrta_vc::SystemUserInterfaceNode::messagesCallback, this);
 	validate_cli_ = nh_.serviceClient<mrta_vc::ValidatePassword>("/validate_password");
 	setComputerUp();
 	logged_ = false;
@@ -68,7 +69,15 @@ void mrta_vc::SystemUserInterfaceNode::beaconTimerCallback(const ros::TimerEvent
 }
 
 /**
- * 
+ *
+ */
+void mrta_vc::SystemUserInterfaceNode::messagesCallback(const std_msgs::String::ConstPtr& message_msg)
+{
+	ROS_INFO("[MESSAGE]: %s", message_msg->data.c_str());
+}
+
+/**
+ *
  */
 void mrta_vc::SystemUserInterfaceNode::login(std::string login_name, std::string password)
 {
