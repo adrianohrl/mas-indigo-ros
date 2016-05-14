@@ -37,14 +37,14 @@ void mrta_vc::state_machine::S6ReceiverVerificationState::process(std::string an
     if (mrta_vc::state_machine::PersonVerificationState::isValid())
     {
       mrta_vc::state_machine::AbstractState::getController()->getTask().setReceiver(mrta_vc::state_machine::PersonVerificationState::getPerson());
-      next();
+      next(answer);
     }
 }
 
 /**
  *
  */
-void mrta_vc::state_machine::S6ReceiverVerificationState::next()
+void mrta_vc::state_machine::S6ReceiverVerificationState::next(std::string answer)
 {
     mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
     //controller->setNext(controller->getS7());

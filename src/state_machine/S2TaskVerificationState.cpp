@@ -31,7 +31,15 @@ mrta_vc::state_machine::S2TaskVerificationState::~S2TaskVerificationState()
 /**
  *
  */
-void mrta_vc::state_machine::S2TaskVerificationState::next()
+void mrta_vc::state_machine::S2TaskVerificationState::process(std::string answer)
+{
+  mrta_vc::state_machine::TaskVerificationState::process("send " + answer);
+}
+
+/**
+ *
+ */
+void mrta_vc::state_machine::S2TaskVerificationState::next(std::string answer)
 {
     mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
     controller->setNext(controller->getS6());

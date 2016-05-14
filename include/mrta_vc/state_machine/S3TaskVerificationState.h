@@ -27,8 +27,10 @@ namespace mrta_vc
 			S3TaskVerificationState(MachineController* controller);
 			~S3TaskVerificationState();
 
+      virtual void process(std::string answer);
+
     private:
-      virtual void next();
+      virtual void next(std::string answer);
 
  		};
 	}

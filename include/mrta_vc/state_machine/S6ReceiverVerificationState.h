@@ -30,7 +30,7 @@ namespace mrta_vc
  			virtual void process(std::string answer);
 
     private:
-      virtual void next();
+      virtual void next(std::string answer);
 
  		};
 	}

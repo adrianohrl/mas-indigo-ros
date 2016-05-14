@@ -26,6 +26,7 @@ mrta_vc::state_machine::TaskVerificationState::TaskVerificationState(mrta_vc::st
  */
 mrta_vc::state_machine::TaskVerificationState::~TaskVerificationState()
 {
+  get_task_cli_.shutdown();
 }
 
 /**
@@ -42,12 +43,12 @@ void mrta_vc::state_machine::TaskVerificationState::process(std::string answer)
     return;
   }
   mrta_vc::state_machine::AbstractState::getController()->setTask(unifei::expertinos::mrta_vc::tasks::Task(task_srv.response.task));
-  next();
+  next(answer);
 }
 
 /**
 *
 */
-void mrta_vc::state_machine::TaskVerificationState::next()
+void mrta_vc::state_machine::TaskVerificationState::next(std::string answer)
 {
 }

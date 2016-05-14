@@ -27,6 +27,7 @@ mrta_vc::state_machine::PersonVerificationState::PersonVerificationState(mrta_vc
  */
 mrta_vc::state_machine::PersonVerificationState::~PersonVerificationState()
 {
+	get_person_cli_.shutdown();
 }
 
 /**
@@ -66,6 +67,6 @@ bool mrta_vc::state_machine::PersonVerificationState::isValid()
 /**
  *
  */
-void mrta_vc::state_machine::PersonVerificationState::next()
+void mrta_vc::state_machine::PersonVerificationState::next(std::string answer)
 {
 }

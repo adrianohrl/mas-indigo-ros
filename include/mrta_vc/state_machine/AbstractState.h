@@ -29,12 +29,13 @@ namespace mrta_vc
 
  			std::string getQuestion();
       std::string getMessage();
+      bool isFinalState();
  			void setQuestion(std::string question);
       void setMessage(std::string message);
       virtual void process(std::string answer);
 
  		protected:
-      AbstractState(MachineController* controller, std::string question = "");
+      AbstractState(MachineController* controller, std::string question = "", bool final_state = false);
 
       ros::NodeHandle getNodeHandle();
       MachineController* getController();
@@ -44,8 +45,9 @@ namespace mrta_vc
 
  			std::string question_;
       std::string message_;
+      bool final_state_;
 
-      virtual void next();
+      virtual void next(std::string answer);
 		};
 	}
 }		
