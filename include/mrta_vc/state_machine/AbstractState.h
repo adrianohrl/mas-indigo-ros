@@ -14,7 +14,6 @@
 
 #include <string>
 #include <ros/ros.h>
-//#include "mrta_vc/state_machine/MachineController.h"
 
 namespace mrta_vc
 {

@@ -12,6 +12,7 @@
 #ifndef SPEECH_ANALYSER_NODE_H_
 #define SPEECH_ANALYSER_NODE_H_
 
+#include <stdlib.h>     /* srand, rand */
 #include <ros/ros.h>
 #include "std_msgs/String.h"
 
@@ -33,6 +34,10 @@ namespace mrta_vc
 	private:
 		/** atributos privados relacionados ao nó */
 		ros::NodeHandle nh_;
+    ros::Subscriber questions_sub_;
+    ros::Publisher answers_pub_;
+
+    void questionsCallback(const std_msgs::String::ConstPtr& question_msg);
 
 	};
 

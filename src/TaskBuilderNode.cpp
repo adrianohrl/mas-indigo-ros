@@ -14,8 +14,11 @@
 /**
  * Constructor
  */
-mrta_vc::TaskBuilderNode::TaskBuilderNode(ros::NodeHandle nh) : nh_(nh)
+mrta_vc::TaskBuilderNode::TaskBuilderNode(ros::NodeHandle nh) : nh_(nh), sm_controller_(nh)
 {
+	question_pub_ = nh_.advertise<std_msgs::String>("questions", 1);
+	message_pub_ = nh_.advertise<std_msgs::String>("messages", 1);
+	answer_sub_ = nh_.subscribe("answers", 1, &mrta_vc::TaskBuilderNode::answersCallback, this);
   task_pub_ = nh_.advertise<mrta_vc::Task>("/tasks", 2);
   abort_srv_ = nh_.advertiseService("abort", &mrta_vc::TaskBuilderNode::abort, this);
   get_person_cli_ = nh_.serviceClient<mrta_vc::GetPerson>("/get_person");
@@ -27,6 +30,9 @@ mrta_vc::TaskBuilderNode::TaskBuilderNode(ros::NodeHandle nh) : nh_(nh)
  */
 mrta_vc::TaskBuilderNode::~TaskBuilderNode()
 {
+	question_pub_.shutdown();
+	message_pub_.shutdown();
+	answer_sub_.shutdown();
   task_pub_.shutdown();
   abort_srv_.shutdown();
   get_person_cli_.shutdown();
@@ -40,7 +46,7 @@ void mrta_vc::TaskBuilderNode::spin()
 {
 	ROS_INFO("Task Builder Node is up and running!!!");
 	ros::Rate loop_rate(10.0);
-  int task_id = 0;
+	/*int task_id = 0;
   std::string task_name = "Trazer um Documento";
   std::string task_description = "Ir até a mesa do Chistiano, pegar o RG dele e trazer de volta para mim.";
   std::vector<unifei::expertinos::mrta_vc::tasks::Skill> task_desired_skills;
@@ -68,7 +74,7 @@ void mrta_vc::TaskBuilderNode::spin()
   ros::Time task_deadline = ros::Time::now() + ros::Duration(120);
   task_ = unifei::expertinos::mrta_vc::tasks::Task(task_id, task_name, task_description, task_desired_skills, task_user, task_sender, task_receiver, task_deadline, task_priority);
   //ROS_INFO("%s", task_.toString().c_str());
-  task_pub_.publish(task_.toMsg());
+	task_pub_.publish(task_.toMsg());*/
 	while (nh_.ok()) 
 	{
 		ros::spinOnce();
@@ -81,5 +87,30 @@ void mrta_vc::TaskBuilderNode::spin()
  */
 bool mrta_vc::TaskBuilderNode::abort(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response)
 {
-  return false;
+	sm_controller_.reset();
+	std_msgs::String question_msg;
+	question_msg.data = sm_controller_.getQuestion();
+	question_pub_.publish(question_msg);
+	return false;
+}
+
+/**
+ *
+ */
+void mrta_vc::TaskBuilderNode::answersCallback(const std_msgs::String::ConstPtr& answer_msg)
+{
+	sm_controller_.process(answer_msg->data);
+	if (sm_controller_.hasChangedState())
+	{
+		if (sm_controller_.isFinalState())
+		{
+			task_pub_.publish(sm_controller_.getTask().toMsg());
+		}
+		std_msgs::String question_msg;
+		question_msg.data = sm_controller_.getQuestion();
+		question_pub_.publish(question_msg);
+		std_msgs::String message_msg;
+		message_msg.data = sm_controller_.getMessage();
+		message_pub_.publish(message_msg);
+	}
 }
