@@ -39,6 +39,46 @@ unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum unifei::experti
 /**
  *
  */
+unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum unifei::expertinos::mrta_vc::tasks::TaskPriorities::toEnumerated(std::string name)
+{
+  unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum enumerated;
+  if (name == "LOW" || name == "Low" || name == "low")
+  {
+    enumerated = unifei::expertinos::mrta_vc::tasks::priorities::LOW;
+  }
+  else if (name == "NORMAL" || name == "Normal" || name == "normal")
+  {
+    enumerated = unifei::expertinos::mrta_vc::tasks::priorities::NORMAL;
+  }
+  else if (name == "IMPORTANT" || name == "Important" || name == "important")
+  {
+    enumerated = unifei::expertinos::mrta_vc::tasks::priorities::IMPORTANT;
+  }
+  else if (name == "CRITICAL" || name == "Critical" || name == "critical")
+  {
+    enumerated = unifei::expertinos::mrta_vc::tasks::priorities::CRITICAL;
+  }
+  else
+  {
+    enumerated = getDefault();
+  }
+  return enumerated;
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::tasks::TaskPriorities::isValid(std::string name)
+{
+  return name == "LOW"       || name == "Low"       || name == "low"      ||
+         name == "NORMAL"    || name == "Normal"    || name == "normal"   ||
+         name == "IMPORTANT" || name == "Important" || name == "important"||
+         name == "CRITICAL"  || name == "Critical"  || name == "critical";
+}
+
+/**
+ *
+ */
 int unifei::expertinos::mrta_vc::tasks::TaskPriorities::toCode(unifei::expertinos::mrta_vc::tasks::priorities::TaskPriorityEnum enumerated)
 {
 	int code;

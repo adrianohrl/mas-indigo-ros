@@ -41,6 +41,8 @@ namespace unifei
 
 				public:
 					static TaskPriorityEnum toEnumerated(int code);
+          static TaskPriorityEnum toEnumerated(std::string name);
+          static bool isValid(std::string name);
 					static int toCode(TaskPriorityEnum enumerated);
 					static std::string toString(TaskPriorityEnum enumerated);
 					static TaskPriorityEnum getDefault();

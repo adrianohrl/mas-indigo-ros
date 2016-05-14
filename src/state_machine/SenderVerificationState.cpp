@@ -35,13 +35,13 @@ void mrta_vc::state_machine::SenderVerificationState::process(std::string answer
   if (mrta_vc::state_machine::PersonVerificationState::isValid())
   {
     mrta_vc::state_machine::AbstractState::getController()->getTask().setSender(mrta_vc::state_machine::PersonVerificationState::getPerson());
-    next();
+    next(answer);
   }
 }
 
 /**
  *
  */
-void mrta_vc::state_machine::SenderVerificationState::next()
+void mrta_vc::state_machine::SenderVerificationState::next(std::string answer)
 {
 }

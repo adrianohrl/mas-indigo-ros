@@ -15,7 +15,7 @@
 /**
  * Constructor
  */
-mrta_vc::state_machine::MachineController::MachineController(ros::NodeHandle nh) : nh_(nh), s0_(this), s1_(this), s2_(this), s3_(this), s4_(this), s5_(this), s6_(this), s7_(this), s8_(this), s9_(this)
+mrta_vc::state_machine::MachineController::MachineController(ros::NodeHandle nh) : nh_(nh), s0_(this), s1_(this), s2_(this), s3_(this), s4_(this), s5_(this), s6_(this), s7_(this), s8_(this)//, s9_(this)
 {
   current_ = &s0_;
 	changed_state_ = false;
@@ -152,10 +152,10 @@ mrta_vc::state_machine::S8DeadlineVerificationState mrta_vc::state_machine::Mach
 /**
  *
  */
-mrta_vc::state_machine::S9FinalState mrta_vc::state_machine::MachineController::getS9()
+/*mrta_vc::state_machine::S9FinalState mrta_vc::state_machine::MachineController::getS9()
 {
 	return s9_;
-}
+}*/
 
 /**
  *

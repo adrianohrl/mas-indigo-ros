@@ -31,7 +31,15 @@ mrta_vc::state_machine::S3TaskVerificationState::~S3TaskVerificationState()
 /**
  *
  */
-void mrta_vc::state_machine::S3TaskVerificationState::next()
+void mrta_vc::state_machine::S3TaskVerificationState::process(std::string answer)
+{
+  mrta_vc::state_machine::TaskVerificationState::process("take " + answer);
+}
+
+/**
+ *
+ */
+void mrta_vc::state_machine::S3TaskVerificationState::next(std::string answer)
 {
     mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
     controller->setNext(controller->getS5());

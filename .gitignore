@@ -46,4 +46,5 @@ Thumbs.db
 
 # QtCreator #
 #############
+CMakeLists.txt.user
 CMakeLists.txt.*
