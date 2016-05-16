@@ -285,6 +285,8 @@ add_executable(task_builder_node
         src/state_machine/S7PriorityVerificationState.cpp
         include/mrta_vc/state_machine/S8DeadlineVerificationState.h
         src/state_machine/S8DeadlineVerificationState.cpp
+        include/mrta_vc/state_machine/S9FinalState.h
+        src/state_machine/S9FinalState.cpp
 	)
 
 add_dependencies(task_builder_node 

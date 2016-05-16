@@ -47,5 +47,5 @@ void mrta_vc::state_machine::S6ReceiverVerificationState::process(std::string an
 void mrta_vc::state_machine::S6ReceiverVerificationState::next(std::string answer)
 {
     mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
-    //controller->setNext(controller->getS7());
+    controller->setNext(controller->getS7());
 }
