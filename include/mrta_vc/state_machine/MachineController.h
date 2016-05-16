@@ -24,7 +24,7 @@
 #include "mrta_vc/state_machine/S6ReceiverVerificationState.h"
 #include "mrta_vc/state_machine/S7PriorityVerificationState.h"
 #include "mrta_vc/state_machine/S8DeadlineVerificationState.h"
-//#include "mrta_vc/state_machine/S9FinalState.h"
+#include "mrta_vc/state_machine/S9FinalState.h"
 
 namespace mrta_vc
 {
@@ -54,7 +54,7 @@ namespace mrta_vc
       S6ReceiverVerificationState getS6();
 			S7PriorityVerificationState getS7();
 			S8DeadlineVerificationState getS8();
-      //S9FinalState getS9();
+      S9FinalState getS9();
       void setTask(unifei::expertinos::mrta_vc::tasks::Task task);
 			void setNext(AbstractState state);
 			void process(std::string answer);
@@ -73,7 +73,7 @@ namespace mrta_vc
       S6ReceiverVerificationState s6_;
 			S7PriorityVerificationState s7_;
 			S8DeadlineVerificationState s8_;
-      //S9FinalState s9_;
+      S9FinalState s9_;
 			bool changed_state_;
 
 		};
