@@ -41,6 +41,7 @@ namespace mrta_vc
 	
 		/** atributos privados relacionados ao nó */
 		ros::NodeHandle nh_;
+		ros::Timer questions_timer_;
 		ros::Publisher question_pub_;
 		ros::Publisher message_pub_;
 		ros::Subscriber answer_sub_;
@@ -53,6 +54,7 @@ namespace mrta_vc
 
 		void answersCallback(const std_msgs::String::ConstPtr& answer_msg);
     bool abort(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response);
+		void questionsTimerCallback(const ros::TimerEvent& event);
 
 	};
 

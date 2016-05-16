@@ -327,7 +327,7 @@ bool unifei::expertinos::mrta_vc::tasks::Task::equals(unifei::expertinos::mrta_v
  */
 int unifei::expertinos::mrta_vc::tasks::Task::compareTo(unifei::expertinos::mrta_vc::tasks::Task task)
 {
-  return unifei::expertinos::mrta_vc::tasks::TaskPriorities::compare(priority_, task.priority_);
+  return unifei::expertinos::mrta_vc::tasks::TaskPriorities::compare(priority_, task.priority_) + 2 * unifei::expertinos::mrta_vc::agents::HierarchyLevels::compare(user_.getHierarchyLevel(),task.getUser().getHierarchyLevel()) + unifei::expertinos::mrta_vc::agents::HierarchyLevels::compare(sender_.getHierarchyLevel(),task.getSender().getHierarchyLevel()) + unifei::expertinos::mrta_vc::agents::HierarchyLevels::compare(receiver_.getHierarchyLevel(),task.getReceiver().getHierarchyLevel());
 }
 
 /**
