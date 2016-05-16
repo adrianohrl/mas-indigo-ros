@@ -17,23 +17,21 @@
 
 namespace mrta_vc
 {
-      namespace state_machine
-      {
-            class S9FinalState : public AbstractState
-            {
+	namespace state_machine
+	{
+		class S9FinalState : public AbstractState
+		{
 
-            public:
-                  S9FinalState(MachineController* controller);
-                  ~S9FinalState();
+		public:
+			S9FinalState(MachineController* controller);
+			~S9FinalState();
 
-                  virtual void process(std::string answer);
+			virtual void process(std::string answer);
 
-                  std::string task_info_message;
-
-            private:
-                  virtual void next(std::string answer);
-            };
-      }
-}           
+		private:
+			virtual void next(std::string answer);
+		};
+	}
+}
                               
 #endif /* S9_FINAL_STATE_H_ */

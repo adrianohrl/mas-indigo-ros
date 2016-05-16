@@ -67,7 +67,7 @@ void mrta_vc::SystemManagerNode::tasksCallback(const mrta_vc::Task::ConstPtr& ta
 {
   unifei::expertinos::mrta_vc::tasks::Task task(task_msg);
   ROS_INFO("%s", task.toString().c_str());
-  ROS_WARN("now: ", ros::Time::now().toSec(), task.getDeadline().toSec());
+	ROS_WARN("now: %f s (%f s)", ros::Time::now().toSec(), task.getDeadline().toSec());
   unifei::expertinos::mrta_vc::system::AllocationManager::add(task);
 }
 

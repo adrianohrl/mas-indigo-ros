@@ -16,6 +16,7 @@
  */
 mrta_vc::TaskBuilderNode::TaskBuilderNode(ros::NodeHandle nh) : nh_(nh), sm_controller_(nh)
 {
+	questions_timer_ = nh_.createTimer(ros::Duration(2), &mrta_vc::TaskBuilderNode::questionsTimerCallback, this);
 	question_pub_ = nh_.advertise<std_msgs::String>("questions", 1);
 	message_pub_ = nh_.advertise<std_msgs::String>("messages", 1);
 	answer_sub_ = nh_.subscribe("answers", 1, &mrta_vc::TaskBuilderNode::answersCallback, this);
@@ -30,6 +31,7 @@ mrta_vc::TaskBuilderNode::TaskBuilderNode(ros::NodeHandle nh) : nh_(nh), sm_cont
  */
 mrta_vc::TaskBuilderNode::~TaskBuilderNode()
 {
+	questions_timer_.stop();
 	question_pub_.shutdown();
 	message_pub_.shutdown();
 	answer_sub_.shutdown();
@@ -113,4 +115,15 @@ void mrta_vc::TaskBuilderNode::answersCallback(const std_msgs::String::ConstPtr&
 		message_msg.data = sm_controller_.getMessage();
 		message_pub_.publish(message_msg);
 	}
+}
+
+/**
+ *
+ */
+void mrta_vc::TaskBuilderNode::questionsTimerCallback(const ros::TimerEvent& event)
+{
+	std_msgs::String question_msg;
+	question_msg.data = sm_controller_.getQuestion();
+	ROS_INFO("[TASK_BUILDER_QUESTION] %s", question_msg.data.c_str());
+	question_pub_.publish(question_msg);
 }
