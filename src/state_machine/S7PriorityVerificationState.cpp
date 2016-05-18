@@ -33,7 +33,6 @@ mrta_vc::state_machine::S7PriorityVerificationState::~S7PriorityVerificationStat
  */
 void mrta_vc::state_machine::S7PriorityVerificationState::process(std::string answer)
 {
-  mrta_vc::state_machine::S7PriorityVerificationState::process(answer);
   if (unifei::expertinos::mrta_vc::tasks::TaskPriorities::isValid(answer))
   {
     mrta_vc::state_machine::AbstractState::getController()->getTask().setPriority(unifei::expertinos::mrta_vc::tasks::TaskPriorities::toEnumerated(answer));

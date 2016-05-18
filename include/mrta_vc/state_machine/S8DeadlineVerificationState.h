@@ -14,6 +14,7 @@
 
 #include "mrta_vc/state_machine/AbstractState.h"
 #include "unifei/expertinos/mrta_vc/tasks/TaskPriorities.h"
+#include "unifei/expertinos/mrta_vc/utilities/StringManipulator.h"
 
 #define DEFAULT_DURATION 3600
 

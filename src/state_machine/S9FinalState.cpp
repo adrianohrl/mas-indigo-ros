@@ -27,20 +27,3 @@ mrta_vc::state_machine::S9FinalState::S9FinalState(mrta_vc::state_machine::Machi
 mrta_vc::state_machine::S9FinalState::~S9FinalState()
 {
 }
-
-/**
- *
- */
-void mrta_vc::state_machine::S9FinalState::process(std::string answer = "")
-{
-  next(answer);
-}
-
-/**
- *
- */
-void mrta_vc::state_machine::S9FinalState::next(std::string answer = "")
-{
-  mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
-  controller->setNext(controller->getS0());
-}
