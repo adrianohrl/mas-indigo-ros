@@ -289,6 +289,8 @@ add_executable(task_builder_node
         src/state_machine/S9FinalState.cpp
         include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
         src/utilities/StringManipulator.cpp
+        include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
+        src/utilities/TimeManipulator.cpp
 	)
 
 add_dependencies(task_builder_node 
