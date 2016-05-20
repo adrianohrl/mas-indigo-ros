@@ -28,18 +28,12 @@ namespace mrta_vc
 	{
 
 	public:
-
-		/** Construtors */
 		SystemDatabaseInterfaceNode(ros::NodeHandle nh);
-		/** Destrutor */
-		~SystemDatabaseInterfaceNode();
+		virtual ~SystemDatabaseInterfaceNode();
 
-		/** métodos publicos relacionados ao gerenciamento do nó */
 		void spin();
 
 	private:
-	
-		/** atributos privados relacionados ao nó */
     ros::NodeHandle nh_;
     ros::ServiceServer get_computer_srv_;
     ros::ServiceServer get_person_srv_;

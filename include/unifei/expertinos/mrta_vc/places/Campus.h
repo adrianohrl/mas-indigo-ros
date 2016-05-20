@@ -30,7 +30,7 @@ namespace unifei
 					Campus(int id, std::string name, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg);
 					Campus(const ::mrta_vc::Place::ConstPtr& place_msg);
 					Campus(::mrta_vc::Place campus_msg);
-					~Campus();
+					virtual ~Campus();
 					
 				protected:
 					int getType();

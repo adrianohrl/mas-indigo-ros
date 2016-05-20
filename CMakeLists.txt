@@ -25,11 +25,12 @@ add_message_files(
 	
 add_service_files(
 	FILES
-        GetComputer.srv
-        GetPerson.srv
-        GetRobot.srv
-        GetTask.srv
-        GetUser.srv
+	GetComputer.srv
+	GetPerson.srv
+	GetRobot.srv
+	GetTask.srv
+	GetUser.srv
+	SetUser.srv
 	ValidatePassword.srv
 )
 

@@ -31,7 +31,7 @@ namespace unifei
 					Computer(int id, std::string hostname, bool mobile, unifei::expertinos::mrta_vc::places::Location location);
 					Computer(const ::mrta_vc::Agent::ConstPtr& computer_msg);
 					Computer(::mrta_vc::Agent computer_msg);		
-					~Computer();
+					virtual ~Computer();
 
 					std::string getHostname();
 					bool isMobile();

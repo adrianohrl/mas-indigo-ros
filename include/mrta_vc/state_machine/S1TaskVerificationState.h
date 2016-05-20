@@ -25,12 +25,13 @@ namespace mrta_vc
 
 		public:
 			S1TaskVerificationState(MachineController* controller);
-			~S1TaskVerificationState();
+			virtual ~S1TaskVerificationState();
 
-      virtual void process(std::string answer);
+			virtual bool process(std::string answer);
+			virtual std::string toString();
 
     private:
-      virtual void next(std::string answer);
+			virtual bool next(std::string answer);
 
  		};
 	}

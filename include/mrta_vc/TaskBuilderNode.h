@@ -17,44 +17,38 @@
 #include <std_msgs/String.h>
 #include "mrta_vc/GetPerson.h"
 #include "mrta_vc/GetUser.h"
+#include "mrta_vc/SetUser.h"
 #include "mrta_vc/state_machine/MachineController.h"
 #include "unifei/expertinos/mrta_vc/tasks/Task.h"
-#include "unifei/expertinos/mrta_vc/agents/User.h"
 
 namespace mrta_vc 
 {
 
-	class TaskBuilderNode 
+	class TaskBuilderNode : public mrta_vc::state_machine::MachineController
 	{
 
 	public:
-
-		/** Construtors */
 		TaskBuilderNode(ros::NodeHandle nh);
-		/** Destrutor */
-		~TaskBuilderNode();
+		virtual ~TaskBuilderNode();
 
-		/** métodos publicos relacionados ao gerenciamento do nó */
 		void spin();
 
 	private:
-	
-		/** atributos privados relacionados ao nó */
-		ros::NodeHandle nh_;
 		ros::Timer questions_timer_;
 		ros::Publisher question_pub_;
 		ros::Publisher message_pub_;
 		ros::Subscriber answer_sub_;
 		ros::Publisher task_pub_;
-    ros::ServiceServer abort_srv_;
+		ros::ServiceServer abort_srv_;
+		ros::ServiceServer set_user_srv_;
     ros::ServiceClient get_person_cli_;
-    ros::ServiceClient get_user_cli_;
-
-		state_machine::MachineController sm_controller_;
+		ros::ServiceClient get_user_cli_;
 
 		void answersCallback(const std_msgs::String::ConstPtr& answer_msg);
-    bool abort(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response);
+		bool abort(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response);
+		bool setUser(mrta_vc::SetUser::Request& request, mrta_vc::SetUser::Response& response);
 		void questionsTimerCallback(const ros::TimerEvent& event);
+		void publishQuestionAndMessage();
 
 	};
 

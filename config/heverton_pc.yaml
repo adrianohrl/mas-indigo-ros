@@ -1,6 +1,3 @@
-name: 'Héverton Soares'
-hierarchy_level: 5
 login_name: 'heverton'
 password: 'teste123456'
-location: {x: 0.15, y: 0.59, theta: deg(45.0)}
-computer: {hostname: 'heverton_pc', mobile: false, location: {x: 0.15, y: 0.59, theta: deg(45.0)}}
+computer/hostname: 'heverton-pc'

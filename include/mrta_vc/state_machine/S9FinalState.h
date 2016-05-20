@@ -23,7 +23,14 @@ namespace mrta_vc
 
 		public:
 			S9FinalState(MachineController* controller);
-			~S9FinalState();
+			virtual ~S9FinalState();
+
+			virtual bool process(std::string answer);
+			virtual std::string toString();
+
+		private:
+			virtual bool next(std::string answer);
+
 		};
 	}
 }

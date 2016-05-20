@@ -37,7 +37,7 @@ namespace unifei
           User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer);
           User(const ::mrta_vc::Agent::ConstPtr& user_msg);
           User(::mrta_vc::Agent user_msg);
-          ~User();
+					virtual ~User();
 
           std::string getLoginName();
           Computer getComputer();

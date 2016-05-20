@@ -27,3 +27,28 @@ mrta_vc::state_machine::S9FinalState::S9FinalState(mrta_vc::state_machine::Machi
 mrta_vc::state_machine::S9FinalState::~S9FinalState()
 {
 }
+
+/**
+ *
+ */
+bool mrta_vc::state_machine::S9FinalState::process(std::string answer)
+{
+	return next(answer);
+}
+
+/**
+ *
+ */
+bool mrta_vc::state_machine::S9FinalState::next(std::string answer)
+{
+	mrta_vc::state_machine::AbstractState::getController()->setNextToS0();
+	return true;
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::S9FinalState::toString()
+{
+	return "S9 (Final State)";
+}

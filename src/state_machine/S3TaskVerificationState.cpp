@@ -31,16 +31,29 @@ mrta_vc::state_machine::S3TaskVerificationState::~S3TaskVerificationState()
 /**
  *
  */
-void mrta_vc::state_machine::S3TaskVerificationState::process(std::string answer)
+bool mrta_vc::state_machine::S3TaskVerificationState::process(std::string answer)
 {
-  mrta_vc::state_machine::TaskVerificationState::process("take " + answer);
+	answer = "take " + answer;
+	if (mrta_vc::state_machine::TaskVerificationState::process(answer))
+	{
+		return next(answer);
+	}
+	return false;
 }
 
 /**
  *
  */
-void mrta_vc::state_machine::S3TaskVerificationState::next(std::string answer)
+bool mrta_vc::state_machine::S3TaskVerificationState::next(std::string answer)
 {
-    mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
-    controller->setNext(controller->getS5());
+		mrta_vc::state_machine::AbstractState::getController()->setNextToS5();
+		return true;
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::S3TaskVerificationState::toString()
+{
+	return "S3 (Task Verification State)";
 }

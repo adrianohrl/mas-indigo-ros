@@ -31,21 +31,29 @@ mrta_vc::state_machine::S6ReceiverVerificationState::~S6ReceiverVerificationStat
 /**
  * 
  */
-void mrta_vc::state_machine::S6ReceiverVerificationState::process(std::string answer)
+bool mrta_vc::state_machine::S6ReceiverVerificationState::process(std::string answer)
 { 
-    mrta_vc::state_machine::PersonVerificationState::process(answer);
-    if (mrta_vc::state_machine::PersonVerificationState::isValid())
-    {
-      mrta_vc::state_machine::AbstractState::getController()->getTask().setReceiver(mrta_vc::state_machine::PersonVerificationState::getPerson());
-      next(answer);
-    }
+	if (mrta_vc::state_machine::PersonVerificationState::process(answer))
+	{
+		mrta_vc::state_machine::AbstractState::getController()->setTaskReceiver(mrta_vc::state_machine::PersonVerificationState::getPerson());
+		return next(answer);
+	}
+	return false;
 }
 
 /**
  *
  */
-void mrta_vc::state_machine::S6ReceiverVerificationState::next(std::string answer)
+bool mrta_vc::state_machine::S6ReceiverVerificationState::next(std::string answer)
 {
-    mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
-    controller->setNext(controller->getS7());
+	mrta_vc::state_machine::AbstractState::getController()->setNextToS7();
+	return true;
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::S6ReceiverVerificationState::toString()
+{
+	return "S6 (Receiver Verification State)";
 }

@@ -30,7 +30,7 @@ namespace unifei
 					Floor(int id, std::string name, Building building, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg);
 					Floor(const ::mrta_vc::Place::ConstPtr& place_msg);
 					Floor(::mrta_vc::Place place_msg);		
-					~Floor();
+					virtual ~Floor();
 
 					Building getBuilding();
 					::mrta_vc::Place toMsg();

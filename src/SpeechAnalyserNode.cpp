@@ -64,7 +64,7 @@ void mrta_vc::SpeechAnalyserNode::questionsCallback(const std_msgs::String::Cons
 		possible_answers.push_back("coffee");
 		possible_answers.push_back("gallon");
 	}
-	else if (question_msg->data == "From whom?" || "To whom?")
+	else if (question_msg->data == "From whom?" || question_msg->data == "To whom?")
 	{
 		possible_answers.push_back("Adriano Henrique Rossette Leite");
 		possible_answers.push_back("Christiano Henrique Rezende");

@@ -30,7 +30,7 @@ namespace unifei
 					ExternalArea(int id, std::string name, Campus campus, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg);
 					ExternalArea(const ::mrta_vc::Place::ConstPtr& place_msg);
 					ExternalArea(::mrta_vc::Place place_msg);		
-					~ExternalArea();
+					virtual ~ExternalArea();
 
 					Campus getCampus();
 					::mrta_vc::Place toMsg();

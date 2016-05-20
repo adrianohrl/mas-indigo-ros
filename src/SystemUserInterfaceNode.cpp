@@ -18,6 +18,8 @@ mrta_vc::SystemUserInterfaceNode::SystemUserInterfaceNode(ros::NodeHandle nh) : 
 	beacon_timer_ = nh_.createTimer(ros::Duration(USER_BEACON_INTERVAL_DURATION), &mrta_vc::SystemUserInterfaceNode::beaconTimerCallback, this);
   beacon_pub_ = nh_.advertise<mrta_vc::Agent>("/users", 1);
 	message_sub_ = nh_.subscribe("messages", 1, &mrta_vc::SystemUserInterfaceNode::messagesCallback, this);
+	get_computer_cli_ = nh_.serviceClient<mrta_vc::GetComputer>("/get_computer");
+	set_user_cli_ = nh_.serviceClient<mrta_vc::SetUser>("set_user");
 	validate_cli_ = nh_.serviceClient<mrta_vc::ValidatePassword>("/validate_password");
 	setComputerUp();
 	logged_ = false;
@@ -40,7 +42,10 @@ mrta_vc::SystemUserInterfaceNode::~SystemUserInterfaceNode()
   logout();
   beacon_timer_.stop();
   beacon_pub_.shutdown();
-  validate_cli_.shutdown();
+	message_sub_.shutdown();
+	get_computer_cli_.shutdown();
+	set_user_cli_.shutdown();
+	validate_cli_.shutdown();
 }
 
 /**
@@ -73,7 +78,7 @@ void mrta_vc::SystemUserInterfaceNode::beaconTimerCallback(const ros::TimerEvent
  */
 void mrta_vc::SystemUserInterfaceNode::messagesCallback(const std_msgs::String::ConstPtr& message_msg)
 {
-	ROS_INFO("[MESSAGE]: %s", message_msg->data.c_str());
+	//ROS_INFO("[MESSAGE]: %s", message_msg->data.c_str());
 }
 
 /**
@@ -82,32 +87,40 @@ void mrta_vc::SystemUserInterfaceNode::messagesCallback(const std_msgs::String::
 void mrta_vc::SystemUserInterfaceNode::login(std::string login_name, std::string password)
 {
 	logged_ = false;
-	mrta_vc::ValidatePassword srv;
-	srv.request.login_name = login_name;
-	srv.request.password = password;
-	if (validate_cli_.call(srv) && srv.response.valid) 
+	mrta_vc::ValidatePassword validate_srv;
+	validate_srv.request.login_name = login_name;
+	validate_srv.request.password = password;
+	if (!validate_cli_.call(validate_srv) || !validate_srv.response.valid)
 	{
-    unifei::expertinos::mrta_vc::agents::User::operator=(srv.response.user);
-    unifei::expertinos::mrta_vc::agents::User::setComputer(unifei::expertinos::mrta_vc::agents::User::getComputer());
-    ROS_DEBUG("Login succeeded: %s", srv.response.message.c_str());
-		ROS_INFO("User is logged in!!!");
-		ROS_INFO("User Info:");
-    ROS_INFO("     id: %d", unifei::expertinos::mrta_vc::agents::User::getId());
-    ROS_INFO("     name: %s", unifei::expertinos::mrta_vc::agents::User::getName().c_str());
-		ROS_INFO("     hierarchy_level: %s", unifei::expertinos::mrta_vc::agents::HierarchyLevels::toString(unifei::expertinos::mrta_vc::agents::Person::getHierarchyLevel()).c_str());
-    ROS_INFO("     login_name: %s", unifei::expertinos::mrta_vc::agents::User::getLoginName().c_str());
-		ROS_INFO("     computer:");
-    ROS_INFO("          id: %d", unifei::expertinos::mrta_vc::agents::User::getComputer().getId());
-    ROS_INFO("          hostname: %s", unifei::expertinos::mrta_vc::agents::User::getComputer().getHostname().c_str());
-    ROS_INFO("          mobile: %s", unifei::expertinos::mrta_vc::agents::User::getComputer().isMobile() ? "true" : "false");
-    ROS_INFO("          location: (%f, %f, %f)", unifei::expertinos::mrta_vc::agents::User::getComputer().getLocation().getX(), unifei::expertinos::mrta_vc::agents::User::getComputer().getLocation().getY(), unifei::expertinos::mrta_vc::agents::User::getComputer().getLocation().getTheta());
-    ROS_INFO("     location: (%f, %f, %f)", unifei::expertinos::mrta_vc::agents::User::getLocation().getX(), unifei::expertinos::mrta_vc::agents::User::getLocation().getY(), unifei::expertinos::mrta_vc::agents::User::getLocation().getTheta());
-		logged_ = true;
+		ROS_ERROR("Login failure: %s", validate_srv.response.message.c_str());
+		return;
 	}
-	else
+	unifei::expertinos::mrta_vc::agents::User user(validate_srv.response.user);
+	user.setComputer(unifei::expertinos::mrta_vc::agents::User::getComputer());
+	unifei::expertinos::mrta_vc::agents::User::operator=(user);
+	ROS_DEBUG("Login succeeded: %s", validate_srv.response.message.c_str());
+	ROS_DEBUG("%s", unifei::expertinos::mrta_vc::agents::User::toString().c_str());
+	mrta_vc::SetUser set_user_srv;
+	set_user_srv.request.logged = true;
+	set_user_srv.request.user = unifei::expertinos::mrta_vc::agents::User::toMsg();
+	if (!set_user_cli_.call(set_user_srv))
 	{
-		ROS_ERROR("Login failure: %s", srv.response.message.c_str());
+		ROS_ERROR("Unable to log user in!!!");
+		return;
 	}
+	logged_ = true;
+	ROS_INFO("User Info:");
+	ROS_INFO("     id: %d", unifei::expertinos::mrta_vc::agents::User::getId());
+	ROS_INFO("     name: %s", unifei::expertinos::mrta_vc::agents::User::getName().c_str());
+	ROS_INFO("     hierarchy_level: %s", unifei::expertinos::mrta_vc::agents::HierarchyLevels::toString(unifei::expertinos::mrta_vc::agents::Person::getHierarchyLevel()).c_str());
+	ROS_INFO("     login_name: %s", unifei::expertinos::mrta_vc::agents::User::getLoginName().c_str());
+	ROS_INFO("     computer:");
+	ROS_INFO("          id: %d", unifei::expertinos::mrta_vc::agents::User::getComputer().getId());
+	ROS_INFO("          hostname: %s", unifei::expertinos::mrta_vc::agents::User::getComputer().getHostname().c_str());
+	ROS_INFO("          mobile: %s", unifei::expertinos::mrta_vc::agents::User::getComputer().isMobile() ? "true" : "false");
+	ROS_INFO("          location: (%f, %f, %f)", unifei::expertinos::mrta_vc::agents::User::getComputer().getLocation().getX(), unifei::expertinos::mrta_vc::agents::User::getComputer().getLocation().getY(), unifei::expertinos::mrta_vc::agents::User::getComputer().getLocation().getTheta());
+	ROS_INFO("     location: (%f, %f, %f)", unifei::expertinos::mrta_vc::agents::User::getLocation().getX(), unifei::expertinos::mrta_vc::agents::User::getLocation().getY(), unifei::expertinos::mrta_vc::agents::User::getLocation().getTheta());
+	ROS_INFO("User is logged in!!!");
 }
 
 /**
@@ -116,6 +129,14 @@ void mrta_vc::SystemUserInterfaceNode::login(std::string login_name, std::string
 void mrta_vc::SystemUserInterfaceNode::logout()
 {
   ROS_DEBUG("%s has been logged out!!!", unifei::expertinos::mrta_vc::agents::User::getLoginName().c_str());
+	mrta_vc::SetUser srv;
+	srv.request.logged = false;
+	srv.request.user = mrta_vc::Agent();
+	if (!set_user_cli_.call(srv))
+	{
+		ROS_ERROR("Unable to log user out!!!");
+		return;
+	}
 	logged_ = false;
 }
 
@@ -124,43 +145,24 @@ void mrta_vc::SystemUserInterfaceNode::logout()
  */
 void mrta_vc::SystemUserInterfaceNode::setComputerUp()
 {
-	ROS_DEBUG("********* Reading User Computer Parameters **********");
-  bool setted_up;
-  std::string ns = ros::this_node::getName();
-  ns.append("/computer");
-	
-	int user_computer_id = 0;
-  /*nh_.param<int>(ns + std::string("/id"), user_computer_id, 0);
-	ROS_ERROR_COND(user_computer_id == 0, "Invalid user computer ID!!!");
-  setted_up = user_computer_id != 0;*/
-	
-  std::string user_computer_hostname;
-	nh_.param<std::string>(ns + std::string("/hostname"), user_computer_hostname, "");
-	ROS_ERROR_COND(user_computer_hostname == "", "Invalid user computer hostname!!!");
-  setted_up = user_computer_hostname != "";
-	
-	bool user_computer_mobile;
-	nh_.param<bool>(ns + std::string("/mobile"), user_computer_mobile, false);
-
-  ns.append("/location");
-	double user_computer_location_x, user_computer_location_y, user_computer_location_theta;
-	nh_.param<double>(ns + std::string("/x"), user_computer_location_x, 0);
-	nh_.param<double>(ns + std::string("/y"), user_computer_location_y, 0);
-	nh_.param<double>(ns + std::string("/theta"), user_computer_location_theta, 0);
-	
-	unifei::expertinos::mrta_vc::agents::Computer user_computer(user_computer_id, user_computer_hostname, user_computer_mobile, user_computer_location_x, user_computer_location_y, user_computer_location_theta);
-  unifei::expertinos::mrta_vc::agents::User::setComputer(user_computer);
-	if (!setted_up) 
+	std::string hostname;
+	nh_.param<std::string>(ros::this_node::getName() + std::string("/computer/hostname"), hostname, "");
+	if (hostname == "")
 	{
 		ROS_ERROR("You must create and set a YAML file containing this machine info.");
-	} 
-	else 
-	{
-		ROS_INFO("This computer has been setted up!!!");
-		ROS_INFO("Computer Info:");
-    ROS_INFO("     id: %d", unifei::expertinos::mrta_vc::agents::User::getComputer().getId());
-    ROS_INFO("     hostname: %s", unifei::expertinos::mrta_vc::agents::User::getComputer().getHostname().c_str());
-    ROS_INFO("     mobile: %s", unifei::expertinos::mrta_vc::agents::User::getComputer().isMobile() ? "true" : "false");
-    ROS_INFO("     location: (%f, %f, %f)", unifei::expertinos::mrta_vc::agents::User::getComputer().getLocation().getX(), unifei::expertinos::mrta_vc::agents::User::getComputer().getLocation().getY(), unifei::expertinos::mrta_vc::agents::User::getComputer().getLocation().getTheta());
+		nh_.shutdown();
+		return;
 	}
+	mrta_vc::GetComputer srv;
+	srv.request.hostname = hostname;
+	if (!get_computer_cli_.call(srv) || !srv.response.valid)
+	{
+		ROS_ERROR("Computer setting up failure: %s", srv.response.message.c_str());
+		nh_.shutdown();
+		return;
+	}
+	unifei::expertinos::mrta_vc::agents::User::setComputer(unifei::expertinos::mrta_vc::agents::Computer(srv.response.computer));
+	ROS_INFO("This computer has been setted up!!!");
+	ROS_DEBUG("Computer setting up succeeded: %s", srv.response.message.c_str());
+	ROS_DEBUG("%s", unifei::expertinos::mrta_vc::agents::User::getComputer().toString().c_str());
 }
