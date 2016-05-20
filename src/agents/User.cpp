@@ -55,6 +55,13 @@ unifei::expertinos::mrta_vc::agents::User::User(int id, std::string name, unifei
 unifei::expertinos::mrta_vc::agents::User::User(const ::mrta_vc::Agent::ConstPtr& user_msg) : unifei::expertinos::mrta_vc::agents::Person(user_msg), computer_(::mrta_vc::Agent())
 {
   login_name_ = user_msg->login_name;
+	::mrta_vc::Agent computer_msg;
+	computer_msg.type = COMPUTER;
+	computer_msg.id = user_msg->computer_id;
+	computer_msg.name = user_msg->computer_hostname;
+	computer_msg.mobile = user_msg->computer_mobile;
+	computer_msg.location = user_msg->computer_location;
+	computer_ = unifei::expertinos::mrta_vc::agents::Computer(computer_msg);
 }
 
 /**
@@ -63,6 +70,13 @@ unifei::expertinos::mrta_vc::agents::User::User(const ::mrta_vc::Agent::ConstPtr
 unifei::expertinos::mrta_vc::agents::User::User(::mrta_vc::Agent user_msg) : unifei::expertinos::mrta_vc::agents::Person(user_msg), computer_(::mrta_vc::Agent())
 {
   login_name_ = user_msg.login_name;
+	::mrta_vc::Agent computer_msg;
+	computer_msg.type = COMPUTER;
+	computer_msg.id = user_msg.computer_id;
+	computer_msg.name = user_msg.computer_hostname;
+	computer_msg.mobile = user_msg.computer_mobile;
+	computer_msg.location = user_msg.computer_location;
+	computer_ = unifei::expertinos::mrta_vc::agents::Computer(computer_msg);
 }
 
 /**
@@ -180,7 +194,11 @@ void unifei::expertinos::mrta_vc::agents::User::setLastBeaconTimestamp(ros::Time
 {
 	::mrta_vc::Agent user_msg = unifei::expertinos::mrta_vc::agents::Person::toMsg();
 	user_msg.login_name = login_name_;
-	//user_msg.computer = computer_.toMsg();
+	::mrta_vc::Agent computer_msg = computer_.toMsg();
+	user_msg.computer_id = computer_msg.id;
+	user_msg.computer_hostname = computer_msg.name;
+	user_msg.computer_mobile = computer_msg.mobile;
+	user_msg.computer_location = computer_msg.location;
 	return user_msg;
 }
 
@@ -200,5 +218,5 @@ void unifei::expertinos::mrta_vc::agents::User::operator=(const unifei::expertin
 {
 	unifei::expertinos::mrta_vc::agents::Person::operator=(user);
 	login_name_ = user.login_name_;
-	//computer_ = user.computer_;
+	computer_ = user.computer_;
 }

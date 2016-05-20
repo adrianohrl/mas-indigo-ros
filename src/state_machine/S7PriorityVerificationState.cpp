@@ -31,21 +31,29 @@ mrta_vc::state_machine::S7PriorityVerificationState::~S7PriorityVerificationStat
 /**
  *
  */
-void mrta_vc::state_machine::S7PriorityVerificationState::process(std::string answer)
+bool mrta_vc::state_machine::S7PriorityVerificationState::process(std::string answer)
 {
-  mrta_vc::state_machine::S7PriorityVerificationState::process(answer);
   if (unifei::expertinos::mrta_vc::tasks::TaskPriorities::isValid(answer))
   {
-    mrta_vc::state_machine::AbstractState::getController()->getTask().setPriority(unifei::expertinos::mrta_vc::tasks::TaskPriorities::toEnumerated(answer));
-    next(answer);
+		mrta_vc::state_machine::AbstractState::getController()->setTaskPriority(unifei::expertinos::mrta_vc::tasks::TaskPriorities::toEnumerated(answer));
+		return next(answer);
   }
+	return false;
 }
 
 /**
  *
  */
-void mrta_vc::state_machine::S7PriorityVerificationState::next(std::string answer)
+bool mrta_vc::state_machine::S7PriorityVerificationState::next(std::string answer)
 {
-  mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
-  controller->setNext(controller->getS8());
+	mrta_vc::state_machine::AbstractState::getController()->setNextToS8();
+	return true;
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::S7PriorityVerificationState::toString()
+{
+	return "S7 (Priority Verification State)";
 }

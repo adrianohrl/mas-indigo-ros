@@ -25,12 +25,13 @@ namespace mrta_vc
 
 		public:
 			S0InitialState(MachineController* controller);
- 			~S0InitialState();
+			virtual ~S0InitialState();
 
- 			virtual void process(std::string answer);
+			virtual bool process(std::string answer);
+			virtual std::string toString();
 
     private:
-      void next(std::string answer);
+			virtual bool next(std::string answer);
 
  		};
 	}

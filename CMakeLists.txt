@@ -25,11 +25,12 @@ add_message_files(
 	
 add_service_files(
 	FILES
-        GetComputer.srv
-        GetPerson.srv
-        GetRobot.srv
-        GetTask.srv
-        GetUser.srv
+	GetComputer.srv
+	GetPerson.srv
+	GetRobot.srv
+	GetTask.srv
+	GetUser.srv
+	SetUser.srv
 	ValidatePassword.srv
 )
 
@@ -287,6 +288,10 @@ add_executable(task_builder_node
         src/state_machine/S8DeadlineVerificationState.cpp
         include/mrta_vc/state_machine/S9FinalState.h
         src/state_machine/S9FinalState.cpp
+        include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
+        src/utilities/StringManipulator.cpp
+        include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
+        src/utilities/TimeManipulator.cpp
 	)
 
 add_dependencies(task_builder_node 

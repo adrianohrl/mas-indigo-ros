@@ -22,15 +22,16 @@ namespace mrta_vc
 		{
 
 		public:
- 			~SenderVerificationState();
+			virtual ~SenderVerificationState();
 
-      virtual void process(std::string answer);
+			virtual bool process(std::string answer);
+			virtual std::string toString();
 
  		protected:
-      SenderVerificationState(MachineController* controller);
+			SenderVerificationState(MachineController* controller);
 
-    private:
-      virtual void next(std::string answer);
+		private:
+			virtual bool next(std::string answer);
 
  		};
 	}

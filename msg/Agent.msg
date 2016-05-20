@@ -1,13 +1,16 @@
 uint8 type
 uint32 id
-string name				# When agent's type is Computer or Robot, this correspond to its hostname.
-uint8 hierarchy_level
-string login_name			# Only Voice Commanders use this parameter.
+string name						# When agent's type is Computer or Robot, this correspond to its hostname.
+uint8 hierarchy_level				# Only persons use this parameter.
+string login_name					# Only users use this parameter.
 mrta_vc/Location location
-#mrta_vc/Agent computer		# All Voice Commanders must be logged in a computer.
-bool mobile				# This paremeter is not useful when agent's type is Person or Voice Commander, because they are always true.
-bool holonomic				# This paremeter is only needed when agent's type is Robot.
-geometry_msgs/Twist velocity	# Only robots have velocity.
+bool mobile						# This paremeter is not useful when agent's type is Person or User, because they are always true.
+bool holonomic						# This paremeter is only needed when agent's type is Robot.
+geometry_msgs/Twist velocity			# Only robots have velocity.
+uint32 computer_id					# Only if this is an user
+string computer_hostname				# Only if this is an user
+bool computer_mobile				# Only if this is an user
+mrta_vc/Location computer_location 	# Only if this is an user
 
 # Types:
 # -1 -> NON_AGENT

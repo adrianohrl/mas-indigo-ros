@@ -32,7 +32,7 @@ namespace unifei
 					Person(int id, std::string name, HierarchyLevelEnum hierarchy_level, unifei::expertinos::mrta_vc::places::Location location);
 					Person(const ::mrta_vc::Agent::ConstPtr& person_msg);
 					Person(::mrta_vc::Agent person_msg);		
-					~Person();
+					virtual ~Person();
 
 					std::string getName();
 					HierarchyLevelEnum getHierarchyLevel();

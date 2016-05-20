@@ -13,7 +13,6 @@
 #define S9_FINAL_STATE_H_
 
 #include "mrta_vc/state_machine/AbstractState.h"
-#include "unifei/expertinos/mrta_vc/tasks/Task.h"
 
 namespace mrta_vc
 {
@@ -24,12 +23,14 @@ namespace mrta_vc
 
 		public:
 			S9FinalState(MachineController* controller);
-			~S9FinalState();
+			virtual ~S9FinalState();
 
-			virtual void process(std::string answer);
+			virtual bool process(std::string answer);
+			virtual std::string toString();
 
 		private:
-			virtual void next(std::string answer);
+			virtual bool next(std::string answer);
+
 		};
 	}
 }

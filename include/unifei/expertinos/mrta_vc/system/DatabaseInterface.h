@@ -27,7 +27,8 @@ namespace unifei
 
 				public:
 					DatabaseInterface();	
-          ~DatabaseInterface();
+					virtual ~DatabaseInterface();
+
           bool isComputerRegistered(std::string hostname);
           bool isPersonRegistered(std::string name);
           bool isRobotRegistered(std::string hostname);

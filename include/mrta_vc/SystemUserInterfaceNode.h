@@ -13,6 +13,8 @@
 
 #include <ros/ros.h>
 #include <std_msgs/String.h>
+#include "mrta_vc/GetComputer.h"
+#include "mrta_vc/SetUser.h"
 #include "mrta_vc/ValidatePassword.h"
 #include "unifei/expertinos/mrta_vc/agents/User.h"
 
@@ -23,20 +25,18 @@ namespace mrta_vc
 	{
 
 	public:
-		/** Construtors */
 		SystemUserInterfaceNode(ros::NodeHandle nh);
-		/** Destrutor */
-		~SystemUserInterfaceNode();
+		virtual ~SystemUserInterfaceNode();
 
-		/** métodos publicos relacionados ao gerenciamento do nó */
 		void spin();
 
 	private:
-		/** atributos privados relacionados ao nó */
 		ros::NodeHandle nh_;
 		ros::Timer beacon_timer_;
 		ros::Publisher beacon_pub_;
 		ros::Subscriber message_sub_;
+		ros::ServiceClient get_computer_cli_;
+		ros::ServiceClient set_user_cli_;
 		ros::ServiceClient validate_cli_;
     bool logged_;
 		

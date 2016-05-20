@@ -31,16 +31,30 @@ mrta_vc::state_machine::S2TaskVerificationState::~S2TaskVerificationState()
 /**
  *
  */
-void mrta_vc::state_machine::S2TaskVerificationState::process(std::string answer)
+bool mrta_vc::state_machine::S2TaskVerificationState::process(std::string answer)
 {
-  mrta_vc::state_machine::TaskVerificationState::process("send " + answer);
+	answer = "send " + answer;
+	if (mrta_vc::state_machine::TaskVerificationState::process(answer))
+	{
+		mrta_vc::state_machine::AbstractState::getController()->setTaskSender(mrta_vc::state_machine::AbstractState::getController()->getUser());
+		return next(answer);
+	}
+	return false;
 }
 
 /**
  *
  */
-void mrta_vc::state_machine::S2TaskVerificationState::next(std::string answer)
+bool mrta_vc::state_machine::S2TaskVerificationState::next(std::string answer)
 {
-    mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
-    controller->setNext(controller->getS6());
+		mrta_vc::state_machine::AbstractState::getController()->setNextToS6();
+		return true;
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::S2TaskVerificationState::toString()
+{
+	return "S2 (Task Verification State)";
 }

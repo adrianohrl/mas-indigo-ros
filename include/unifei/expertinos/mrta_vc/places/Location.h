@@ -31,7 +31,7 @@ namespace unifei
 					Location(geometry_msgs::Pose pose_msg);
 					Location(const ::mrta_vc::Location::ConstPtr& location_msg);
 					Location(::mrta_vc::Location location_msg);	
-					~Location();
+					virtual ~Location();
 
 					double getX();
 					double getY();

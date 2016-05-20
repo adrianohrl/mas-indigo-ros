@@ -23,16 +23,12 @@ namespace mrta_vc
 	{
 
 	public:
-		/** Construtors */
 		SpeechAnalyserNode(ros::NodeHandle nh);
-		/** Destrutor */
 		~SpeechAnalyserNode();
 
-		/** métodos publicos relacionados ao gerenciamento do nó */
 		void spin();
 
 	private:
-		/** atributos privados relacionados ao nó */
 		ros::NodeHandle nh_;
     ros::Subscriber questions_sub_;
     ros::Publisher answers_pub_;

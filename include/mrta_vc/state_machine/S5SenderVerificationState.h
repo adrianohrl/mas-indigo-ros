@@ -25,10 +25,13 @@ namespace mrta_vc
 
 		public:
 			S5SenderVerificationState(MachineController* controller);
-			~S5SenderVerificationState();
+			virtual ~S5SenderVerificationState();
+
+			virtual bool process(std::string answer);
+			virtual std::string toString();
 
     private:
-      virtual void next(std::string answer);
+			virtual bool next(std::string answer);
 
  		};
 	}

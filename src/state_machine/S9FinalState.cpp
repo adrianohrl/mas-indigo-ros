@@ -31,16 +31,24 @@ mrta_vc::state_machine::S9FinalState::~S9FinalState()
 /**
  *
  */
-void mrta_vc::state_machine::S9FinalState::process(std::string answer = "")
+bool mrta_vc::state_machine::S9FinalState::process(std::string answer)
 {
-  next(answer);
+	return next(answer);
 }
 
 /**
  *
  */
-void mrta_vc::state_machine::S9FinalState::next(std::string answer = "")
+bool mrta_vc::state_machine::S9FinalState::next(std::string answer)
 {
-  mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
-  controller->setNext(controller->getS0());
+	mrta_vc::state_machine::AbstractState::getController()->setNextToS0();
+	return true;
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::S9FinalState::toString()
+{
+	return "S9 (Final State)";
 }

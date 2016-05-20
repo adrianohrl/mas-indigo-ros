@@ -30,7 +30,7 @@ namespace unifei
 					Building(int id, std::string name, Campus campus, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg);
 					Building(const ::mrta_vc::Place::ConstPtr& place_msg);
 					Building(::mrta_vc::Place place_msg);		
-					~Building();
+					virtual ~Building();
 
 					Campus getCampus();
 					::mrta_vc::Place toMsg();

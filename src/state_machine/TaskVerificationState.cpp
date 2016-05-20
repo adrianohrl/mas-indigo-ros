@@ -17,8 +17,7 @@
  */
 mrta_vc::state_machine::TaskVerificationState::TaskVerificationState(mrta_vc::state_machine::MachineController* controller, std::string question) : mrta_vc::state_machine::AbstractState(controller, question)
 {
-	ros::NodeHandle nh = mrta_vc::state_machine::AbstractState::getNodeHandle();
-    get_task_cli_ = nh.serviceClient<mrta_vc::GetTask>("/get_task");
+	get_task_cli_ = mrta_vc::state_machine::AbstractState::getNodeHandle().serviceClient<mrta_vc::GetTask>("/get_task");
 }
 
 /**
@@ -32,7 +31,7 @@ mrta_vc::state_machine::TaskVerificationState::~TaskVerificationState()
 /**
  * 
  */
-void mrta_vc::state_machine::TaskVerificationState::process(std::string answer)
+bool mrta_vc::state_machine::TaskVerificationState::process(std::string answer)
 { 
   mrta_vc::GetTask task_srv;
   task_srv.request.name = answer;
@@ -40,15 +39,24 @@ void mrta_vc::state_machine::TaskVerificationState::process(std::string answer)
   {
     ROS_ERROR("There is no task registered as %s!!!", task_srv.request.name.c_str());
     ROS_ERROR("%s", task_srv.response.message.c_str());
-    return;
-  }
-  mrta_vc::state_machine::AbstractState::getController()->setTask(unifei::expertinos::mrta_vc::tasks::Task(task_srv.response.task));
-  next(answer);
+		return task_srv.response.valid;
+	}
+	mrta_vc::state_machine::AbstractState::getController()->setTask(unifei::expertinos::mrta_vc::tasks::Task(task_srv.response.task));
+	return task_srv.response.valid;
 }
 
 /**
 *
 */
-void mrta_vc::state_machine::TaskVerificationState::next(std::string answer)
+bool mrta_vc::state_machine::TaskVerificationState::next(std::string answer)
 {
+	return false;
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::TaskVerificationState::toString()
+{
+	return "";
 }

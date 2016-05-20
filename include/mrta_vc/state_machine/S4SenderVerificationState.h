@@ -20,15 +20,18 @@ namespace mrta_vc
 {
 	namespace state_machine
 	{
-    		class S4SenderVerificationState : public SenderVerificationState
+		class S4SenderVerificationState : public SenderVerificationState
 		{
 
 		public:
 			S4SenderVerificationState(MachineController* controller);
-			~S4SenderVerificationState();
+			virtual ~S4SenderVerificationState();
+
+			virtual bool process(std::string answer);
+			virtual std::string toString();
 
     private:
-      virtual void next(std::string answer);
+			virtual bool next(std::string answer);
 
  		};
 	}

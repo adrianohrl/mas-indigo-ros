@@ -30,7 +30,7 @@ namespace unifei
 					Desk(int id, std::string name, Office office, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg);
 					Desk(const ::mrta_vc::Place::ConstPtr& place_msg);
 					Desk(::mrta_vc::Place place_msg);		
-					~Desk();
+					virtual ~Desk();
 
 					Office getOffice();
 					::mrta_vc::Place toMsg();

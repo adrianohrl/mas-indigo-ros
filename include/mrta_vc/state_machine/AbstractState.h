@@ -25,14 +25,15 @@ namespace mrta_vc
 		{
 
 		public:
- 			~AbstractState();
+			virtual ~AbstractState();
 
  			std::string getQuestion();
       std::string getMessage();
       bool isFinalState();
  			void setQuestion(std::string question);
       void setMessage(std::string message);
-      virtual void process(std::string answer);
+			virtual bool process(std::string answer);
+			virtual std::string toString();
 
  		protected:
       AbstractState(MachineController* controller, std::string question = "", bool final_state = false);
@@ -47,7 +48,7 @@ namespace mrta_vc
       std::string message_;
       bool final_state_;
 
-      virtual void next(std::string answer);
+			virtual bool next(std::string answer);
 		};
 	}
 }		

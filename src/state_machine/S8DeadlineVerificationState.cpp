@@ -17,7 +17,7 @@
 /**
  * Constructor
  */
-mrta_vc::state_machine::S8DeadlineVerificationState::S8DeadlineVerificationState(mrta_vc::state_machine::MachineController* controller) : mrta_vc::state_machine::AbstractState(controller, "How urgent?")
+mrta_vc::state_machine::S8DeadlineVerificationState::S8DeadlineVerificationState(mrta_vc::state_machine::MachineController* controller) : mrta_vc::state_machine::AbstractState(controller, "What is the deadline?")
 {
 }
 
@@ -31,33 +31,34 @@ mrta_vc::state_machine::S8DeadlineVerificationState::~S8DeadlineVerificationStat
 /**
  *
  */
-void mrta_vc::state_machine::S8DeadlineVerificationState::process(std::string answer)
+bool mrta_vc::state_machine::S8DeadlineVerificationState::process(std::string answer)
 {
-  mrta_vc::state_machine::S8DeadlineVerificationState::process(answer);
   if (isDeadline(answer))
   {
-    mrta_vc::state_machine::AbstractState::getController()->getTask().setDeadline(getDeadline(answer));
-    next(answer);
+		mrta_vc::state_machine::AbstractState::getController()->setTaskDeadline(getDeadline(answer));
   } 
   else if (isDuration(answer))
   {
-    mrta_vc::state_machine::AbstractState::getController()->getTask().setDeadline(getDuration(answer));
-    next(answer);
+		mrta_vc::state_machine::AbstractState::getController()->setTaskDeadline(getDuration(answer));
   }
   else if (answer == "")
- {
-    mrta_vc::state_machine::AbstractState::getController()->getTask().setDeadline(ros::Time::now() + ros::Duration(DEFAULT_DURATION));
-    next(answer);
+	{
+		mrta_vc::state_machine::AbstractState::getController()->setTaskDeadline(ros::Time::now() + ros::Duration(DEFAULT_DURATION));
   }
+	else
+	{
+		return false;
+	}
+	return next(answer);
 }
 
 /**
  *
  */
-void mrta_vc::state_machine::S8DeadlineVerificationState::next(std::string answer)
+bool mrta_vc::state_machine::S8DeadlineVerificationState::next(std::string answer)
 {
-  mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
-  controller->setNext(controller->getS9());
+	mrta_vc::state_machine::AbstractState::getController()->setNextToS9();
+	return true;
 }
 
 /**
@@ -65,7 +66,7 @@ void mrta_vc::state_machine::S8DeadlineVerificationState::next(std::string answe
  */
 bool mrta_vc::state_machine::S8DeadlineVerificationState::isDeadline(std::string answer)
 {
-  return false;
+	return false;//unifei::expertinos::mrta_vc::utilities::StringManipulator::isTimestampValid(answer);
 }
 
 /**
@@ -73,7 +74,7 @@ bool mrta_vc::state_machine::S8DeadlineVerificationState::isDeadline(std::string
  */
 bool mrta_vc::state_machine::S8DeadlineVerificationState::isDuration(std::string answer)
 {
-  return false;
+	return false;//unifei::expertinos::mrta_vc::utilities::StringManipulator::isDurationValid(answer);
 }
 
 /**
@@ -81,7 +82,7 @@ bool mrta_vc::state_machine::S8DeadlineVerificationState::isDuration(std::string
  */
 ros::Time mrta_vc::state_machine::S8DeadlineVerificationState::getDeadline(std::string answer)
 {
-  return ros::Time::now() + ros::Duration(DEFAULT_DURATION);
+	return ros::Time::now();//unifei::expertinos::mrta_vc::utilities::StringManipulator::getTimestamp(answer);
 }
 
 /**
@@ -89,5 +90,13 @@ ros::Time mrta_vc::state_machine::S8DeadlineVerificationState::getDeadline(std::
  */
 ros::Duration mrta_vc::state_machine::S8DeadlineVerificationState::getDuration(std::string answer)
 {
-  return ros::Duration(DEFAULT_DURATION);
+	return ros::Duration(DEFAULT_DURATION);//unifei::expertinos::mrta_vc::utilities::StringManipulator::getDuration(answer);
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::S8DeadlineVerificationState::toString()
+{
+	return "S8 (Deadline Verification State)";
 }

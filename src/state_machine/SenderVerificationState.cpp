@@ -15,7 +15,7 @@
 /**
  * Constructor
  */
-mrta_vc::state_machine::SenderVerificationState::SenderVerificationState(mrta_vc::state_machine::MachineController* controller) : mrta_vc::state_machine::PersonVerificationState(controller, "To whom?")
+mrta_vc::state_machine::SenderVerificationState::SenderVerificationState(mrta_vc::state_machine::MachineController* controller) : mrta_vc::state_machine::PersonVerificationState(controller, "From whom?")
 {
 }
 
@@ -29,19 +29,28 @@ mrta_vc::state_machine::SenderVerificationState::~SenderVerificationState()
 /**
  *
  */
-void mrta_vc::state_machine::SenderVerificationState::process(std::string answer)
+bool mrta_vc::state_machine::SenderVerificationState::process(std::string answer)
 {
-  mrta_vc::state_machine::PersonVerificationState::process(answer);
-  if (mrta_vc::state_machine::PersonVerificationState::isValid())
-  {
-    mrta_vc::state_machine::AbstractState::getController()->getTask().setSender(mrta_vc::state_machine::PersonVerificationState::getPerson());
-    next(answer);
+	if (mrta_vc::state_machine::PersonVerificationState::process(answer))
+	{
+		mrta_vc::state_machine::AbstractState::getController()->setTaskSender(mrta_vc::state_machine::PersonVerificationState::getPerson());
+		return true;
   }
+	return false;
 }
 
 /**
  *
  */
-void mrta_vc::state_machine::SenderVerificationState::next(std::string answer)
+bool mrta_vc::state_machine::SenderVerificationState::next(std::string answer)
 {
+	return false;
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::SenderVerificationState::toString()
+{
+	return "";
 }

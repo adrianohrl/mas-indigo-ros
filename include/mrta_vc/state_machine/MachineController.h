@@ -13,8 +13,10 @@
 #define MACHINE_CONTROLLER_H_
 
 #include <string>
-#include <ros/ros.h> 
+#include <ros/ros.h>
 #include "unifei/expertinos/mrta_vc/tasks/Task.h"
+#include "unifei/expertinos/mrta_vc/agents/User.h"
+#include "mrta_vc/state_machine/AbstractState.h"
 #include "mrta_vc/state_machine/S0InitialState.h"
 #include "mrta_vc/state_machine/S1TaskVerificationState.h"
 #include "mrta_vc/state_machine/S2TaskVerificationState.h"
@@ -29,41 +31,48 @@
 namespace mrta_vc
 {
 	namespace state_machine
-  {
-    class AbstractState;
-
+	{
 		class MachineController 
 		{
 
 		public:
 			MachineController(ros::NodeHandle nh);	
- 			~MachineController();
+			virtual ~MachineController();
 
 			ros::NodeHandle getNodeHandle();
 			std::string getQuestion();
 			std::string getMessage();
-			bool hasChangedState();
 			bool isFinalState();
       unifei::expertinos::mrta_vc::tasks::Task getTask();
-      S0InitialState getS0();
-      S1TaskVerificationState getS1();
-      S2TaskVerificationState getS2();
-      S3TaskVerificationState getS3();
-      S4SenderVerificationState getS4();
-      S5SenderVerificationState getS5();
-      S6ReceiverVerificationState getS6();
-			S7PriorityVerificationState getS7();
-			S8DeadlineVerificationState getS8();
-      S9FinalState getS9();
-      void setTask(unifei::expertinos::mrta_vc::tasks::Task task);
-			void setNext(AbstractState state);
-			void process(std::string answer);
+			unifei::expertinos::mrta_vc::agents::User getUser();
+			void setNextToS0();
+			void setNextToS1();
+			void setNextToS2();
+			void setNextToS3();
+			void setNextToS4();
+			void setNextToS5();
+			void setNextToS6();
+			void setNextToS7();
+			void setNextToS8();
+			void setNextToS9();
+			void setTask(unifei::expertinos::mrta_vc::tasks::Task task);
+			void setTaskSender(unifei::expertinos::mrta_vc::agents::Person sender);
+			void setTaskReceiver(unifei::expertinos::mrta_vc::agents::Person receiver);
+			void setTaskPriority(unifei::expertinos::mrta_vc::tasks::TaskPriorityEnum priority);
+			void setTaskDeadline(ros::Time deadline);
+			void setTaskDeadline(ros::Duration duration);
+			bool process(std::string answer);
       void reset();
+			std::string toString();
+
+		protected:
+			void setUser(unifei::expertinos::mrta_vc::agents::User user);
 
  		private:
- 			ros::NodeHandle nh_;
+			ros::NodeHandle nh_;
       unifei::expertinos::mrta_vc::tasks::Task task_;
-      AbstractState* current_;
+			unifei::expertinos::mrta_vc::agents::User user_;
+			AbstractState* current_;
       S0InitialState s0_;
       S1TaskVerificationState s1_;
       S2TaskVerificationState s2_;
@@ -73,8 +82,7 @@ namespace mrta_vc
       S6ReceiverVerificationState s6_;
 			S7PriorityVerificationState s7_;
 			S8DeadlineVerificationState s8_;
-      S9FinalState s9_;
-			bool changed_state_;
+			S9FinalState s9_;
 
 		};
 	}

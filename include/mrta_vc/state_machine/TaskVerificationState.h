@@ -24,9 +24,10 @@ namespace mrta_vc
 		{
 
 		public:
- 			~TaskVerificationState();
+			virtual ~TaskVerificationState();
 
-      virtual void process(std::string answer);
+			virtual bool process(std::string answer);
+			virtual std::string toString();
 
  		protected:
       TaskVerificationState(MachineController* controller, std::string question = "What?");
@@ -34,7 +35,7 @@ namespace mrta_vc
  		private:
       ros::ServiceClient get_task_cli_;
 
-      virtual void next(std::string answer);
+			virtual bool next(std::string answer);
 
  		};
 	}
