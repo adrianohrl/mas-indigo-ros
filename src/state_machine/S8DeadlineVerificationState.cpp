@@ -33,11 +33,11 @@ mrta_vc::state_machine::S8DeadlineVerificationState::~S8DeadlineVerificationStat
  */
 void mrta_vc::state_machine::S8DeadlineVerificationState::process(std::string answer)
 {
-  if (isDeadline(answer))
+  if (unifei::expertinos::mrta_vc::utilities::TimeManipulator::isDeadline(answer))
   {
     mrta_vc::state_machine::AbstractState::getController()->getTask().setDeadline(getDeadline(answer));
   } 
-  else if (isDuration(answer))
+  else if (unifei::expertinos::mrta_vc::utilities::TimeManipulator::isDuration(answer))
   {
     mrta_vc::state_machine::AbstractState::getController()->getTask().setDeadline(getDuration(answer));
   }
@@ -66,26 +66,6 @@ void mrta_vc::state_machine::S8DeadlineVerificationState::next(std::string answe
 {
   mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
   controller->setNext(controller->getS9());
-}
-
-/**
- *
- */
-bool mrta_vc::state_machine::S8DeadlineVerificationState::isDeadline(std::string answer)
-{
-  std::vector<std::string> split_answer;
-
-  split_answer = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(answer, ' ');
-
-  return false;
-}
-
-/**
- *
- */
-bool mrta_vc::state_machine::S8DeadlineVerificationState::isDuration(std::string answer)
-{
-  return false;
 }
 
 /**

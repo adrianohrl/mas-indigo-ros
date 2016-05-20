@@ -34,7 +34,6 @@ namespace mrta_vc
  			void setQuestion(std::string question);
       void setMessage(std::string message);
       virtual void process(std::string answer);
-      std::vector<std::string> split(std::string str, char delimiter);
 
  		protected:
       AbstractState(MachineController* controller, std::string question = "", bool final_state = false);
