@@ -139,11 +139,11 @@ bool unifei::expertinos::mrta_vc::tasks::Skill::equals(unifei::expertinos::mrta_
 }
 
 /**
- * IMPLEMENTAR
+ *
  */
 int unifei::expertinos::mrta_vc::tasks::Skill::compareTo(unifei::expertinos::mrta_vc::tasks::Skill skill) 
 {
-	return 0;
+    return level_ - skill.level_;
 }
 
 /**

@@ -46,6 +46,7 @@ void mrta_vc::SystemManagerNode::spin()
 	while (nh_.ok()) 
 	{
 		ros::spinOnce();
+        	std::cout << unifei::expertinos::mrta_vc::system::AllocationManager::getAvailableRobots().size() << "\n";
 		loop_rate.sleep();
 	}
 }
@@ -65,10 +66,12 @@ void mrta_vc::SystemManagerNode::robotsCallback(const mrta_vc::Agent::ConstPtr& 
  */
 void mrta_vc::SystemManagerNode::tasksCallback(const mrta_vc::Task::ConstPtr& task_msg)
 {
-  unifei::expertinos::mrta_vc::tasks::Task task(task_msg);
-  ROS_INFO("%s", task.toString().c_str());
-	ROS_WARN("now: %f s (%f s)", ros::Time::now().toSec(), task.getDeadline().toSec());
-  unifei::expertinos::mrta_vc::system::AllocationManager::add(task);
+	unifei::expertinos::mrta_vc::tasks::Task task(task_msg);
+	ROS_INFO("%s", task.toString().c_str());
+	//ROS_WARN("now: %f s (%f s)", ros::Time::now().toSec(), task.getDeadline().toSec());
+	unifei::expertinos::mrta_vc::system::AllocationManager::add(task);
+	//unifei::expertinos::mrta_vc::tasks::Task topTask = unifei::expertinos::mrta_vc::system::AllocationManager::getUnallocatedTasks().top();
+	//ROS_INFO("%s", topTask.toString().c_str());
 }
 
 /**
@@ -94,7 +97,7 @@ void mrta_vc::SystemManagerNode::robotsTimerCallback(const ros::TimerEvent& even
  */
 void mrta_vc::SystemManagerNode::tasksTimerCallback(const ros::TimerEvent& event)
 {
-  // IMPLEMENTAR
+	unifei::expertinos::mrta_vc::system::AllocationManager::updateUnallocatedTasks();
 }
 
 /**
