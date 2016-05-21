@@ -40,7 +40,7 @@ namespace unifei
 					Agent(int id, unifei::expertinos::mrta_vc::places::Location location);
 					Agent(const ::mrta_vc::Agent::ConstPtr& agent_msg);
 					Agent(::mrta_vc::Agent agent_msg);		
-					~Agent();
+					virtual ~Agent();
 
 					int getId();
 					unifei::expertinos::mrta_vc::places::Location getLocation();

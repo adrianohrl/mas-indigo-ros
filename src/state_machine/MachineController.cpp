@@ -10,15 +10,13 @@
  */
 
 #include "mrta_vc/state_machine/MachineController.h"
-#include "mrta_vc/state_machine/AbstractState.h"
 
 /**
  * Constructor
  */
 mrta_vc::state_machine::MachineController::MachineController(ros::NodeHandle nh) : nh_(nh), s0_(this), s1_(this), s2_(this), s3_(this), s4_(this), s5_(this), s6_(this), s7_(this), s8_(this), s9_(this)
 {
-  current_ = &s0_;
-	changed_state_ = false;
+	reset();
 }
 
 /**
@@ -54,15 +52,6 @@ std::string mrta_vc::state_machine::MachineController::getMessage()
 
 /**
  *
- *
- */
-bool mrta_vc::state_machine::MachineController::hasChangedState()
-{
-	return changed_state_;
-}
-
-/**
- *
  */
 bool mrta_vc::state_machine::MachineController::isFinalState()
 {
@@ -80,81 +69,97 @@ unifei::expertinos::mrta_vc::tasks::Task mrta_vc::state_machine::MachineControll
 /**
  *
  */
-mrta_vc::state_machine::S0InitialState mrta_vc::state_machine::MachineController::getS0()
+unifei::expertinos::mrta_vc::agents::User mrta_vc::state_machine::MachineController::getUser()
 {
-	return s0_;
+	return user_;
 }
 
 /**
  *
  */
-mrta_vc::state_machine::S1TaskVerificationState mrta_vc::state_machine::MachineController::getS1()
+void mrta_vc::state_machine::MachineController::setNextToS0()
 {
-	return s1_;
+	current_ = &s0_;
 }
 
 /**
  *
  */
-mrta_vc::state_machine::S2TaskVerificationState mrta_vc::state_machine::MachineController::getS2()
+void mrta_vc::state_machine::MachineController::setNextToS1()
 {
-	return s2_;
+	current_ = &s1_;
 }
 
 /**
  *
  */
-mrta_vc::state_machine::S3TaskVerificationState mrta_vc::state_machine::MachineController::getS3()
+void mrta_vc::state_machine::MachineController::setNextToS2()
 {
-	return s3_;
+	current_ = &s2_;
 }
 
 /**
  *
  */
-mrta_vc::state_machine::S4SenderVerificationState mrta_vc::state_machine::MachineController::getS4()
+void mrta_vc::state_machine::MachineController::setNextToS3()
 {
-	return s4_;
+	current_ = &s3_;
 }
 
 /**
  *
  */
-mrta_vc::state_machine::S5SenderVerificationState mrta_vc::state_machine::MachineController::getS5()
+void mrta_vc::state_machine::MachineController::setNextToS4()
 {
-	return s5_;
+	current_ = &s4_;
 }
 
 /**
  *
  */
-mrta_vc::state_machine::S6ReceiverVerificationState mrta_vc::state_machine::MachineController::getS6()
+void mrta_vc::state_machine::MachineController::setNextToS5()
 {
-	return s6_;
+	current_ = &s5_;
 }
 
 /**
  *
  */
-mrta_vc::state_machine::S7PriorityVerificationState mrta_vc::state_machine::MachineController::getS7()
+void mrta_vc::state_machine::MachineController::setNextToS6()
 {
-	return s7_;
+	current_ = &s6_;
 }
 
 /**
  *
  */
-mrta_vc::state_machine::S8DeadlineVerificationState mrta_vc::state_machine::MachineController::getS8()
+void mrta_vc::state_machine::MachineController::setNextToS7()
 {
-	return s8_;
+	current_ = &s7_;
 }
 
 /**
  *
  */
-mrta_vc::state_machine::S9FinalState mrta_vc::state_machine::MachineController::getS9()
+void mrta_vc::state_machine::MachineController::setNextToS8()
 {
-	return s9_;
+	current_ = &s8_;
+}
+
+/**
+ *
+ */
+void mrta_vc::state_machine::MachineController::setNextToS9()
+{
+	current_ = &s9_;
+}
+
+/**
+ *
+ */
+void mrta_vc::state_machine::MachineController::setUser(unifei::expertinos::mrta_vc::agents::User user)
+{
+	user_ = user;
 }
 
 /**
@@ -163,29 +168,60 @@ mrta_vc::state_machine::S9FinalState mrta_vc::state_machine::MachineController::
 void mrta_vc::state_machine::MachineController::setTask(unifei::expertinos::mrta_vc::tasks::Task task)
 {
 	task_ = task;
+	task_.setUser(user_);
 }
 
 /**
  *
  */
-void mrta_vc::state_machine::MachineController::setNext(mrta_vc::state_machine::AbstractState state)
+void mrta_vc::state_machine::MachineController::setTaskSender(unifei::expertinos::mrta_vc::agents::Person sender)
 {
-	current_ = &state;
-	changed_state_ = true;
+	task_.setSender(sender);
 }
 
 /**
  *
  */
-void mrta_vc::state_machine::MachineController::process(std::string answer)
+void mrta_vc::state_machine::MachineController::setTaskReceiver(unifei::expertinos::mrta_vc::agents::Person receiver)
 {
-	changed_state_ = false;
+	task_.setReceiver(receiver);
+}
+
+/**
+ *
+ */
+void mrta_vc::state_machine::MachineController::setTaskPriority(unifei::expertinos::mrta_vc::tasks::TaskPriorityEnum priority)
+{
+	task_.setPriority(priority);
+}
+
+/**
+ *
+ */
+void mrta_vc::state_machine::MachineController::setTaskDeadline(ros::Time deadline)
+{
+	task_.setDeadline(deadline);
+}
+
+/**
+ *
+ */
+void mrta_vc::state_machine::MachineController::setTaskDeadline(ros::Duration duration)
+{
+	task_.setDeadline(duration);
+}
+
+/**
+ *
+ */
+bool mrta_vc::state_machine::MachineController::process(std::string answer)
+{
 	if (answer == "cancel" || answer == "abort")
 	{
 		reset();
-		return;
+		return true;
 	}
-	current_->process(answer);
+	return current_->process(answer);
 }
 
 /**
@@ -193,6 +229,14 @@ void mrta_vc::state_machine::MachineController::process(std::string answer)
  */
 void mrta_vc::state_machine::MachineController::reset()
 {
-	setNext(s0_);
+	current_ = &s0_;
 	task_ = unifei::expertinos::mrta_vc::tasks::Task();
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::MachineController::toString()
+{
+	return current_->toString();
 }

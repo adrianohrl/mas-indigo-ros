@@ -42,7 +42,7 @@ namespace unifei
 					int getId();
 					std::string getName();
 					std::string getDescription();
-					std::vector<Skill> getDesiredSkills();
+                    std::vector<unifei::expertinos::mrta_vc::tasks::Skill> getDesiredSkills();
           unifei::expertinos::mrta_vc::agents::User getUser();
           unifei::expertinos::mrta_vc::agents::Person getSender();
 					unifei::expertinos::mrta_vc::agents::Person getReceiver();
@@ -85,7 +85,7 @@ namespace unifei
         {
           bool operator()(Task task1, Task task2)
           {
-            return task1.compareTo(task2) > 0;
+            return task2.compareTo(task1) > 0;
           }
         };
 

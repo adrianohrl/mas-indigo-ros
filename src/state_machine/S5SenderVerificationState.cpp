@@ -31,8 +31,28 @@ mrta_vc::state_machine::S5SenderVerificationState::~S5SenderVerificationState()
 /**
  *
  */
-void mrta_vc::state_machine::S5SenderVerificationState::next(std::string answer)
+bool mrta_vc::state_machine::S5SenderVerificationState::process(std::string answer)
 {
-  mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
-  controller->setNext(controller->getS6());
+	if (mrta_vc::state_machine::SenderVerificationState::process(answer))
+	{
+		return next(answer);
+	}
+	return false;
+}
+
+/**
+ *
+ */
+bool mrta_vc::state_machine::S5SenderVerificationState::next(std::string answer)
+{
+	mrta_vc::state_machine::AbstractState::getController()->setNextToS6();
+	return true;
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::S5SenderVerificationState::toString()
+{
+	return "S5 (Sender Verification State)";
 }

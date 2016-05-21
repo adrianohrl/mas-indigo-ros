@@ -31,27 +31,39 @@ mrta_vc::state_machine::S0InitialState::~S0InitialState()
 /**
  * 
  */
-void mrta_vc::state_machine::S0InitialState::process(std::string answer)
+bool mrta_vc::state_machine::S0InitialState::process(std::string answer)
 { 
-  next(answer);
+	return next(answer);
 }
 
 /**
 * 
 */
-void mrta_vc::state_machine::S0InitialState::next(std::string answer)
+bool mrta_vc::state_machine::S0InitialState::next(std::string answer)
 {
-	mrta_vc::state_machine::MachineController* controller = mrta_vc::state_machine::AbstractState::getController();
 	if (answer == "bring")
 	{
-		controller->setNext(controller->getS1());
+		mrta_vc::state_machine::AbstractState::getController()->setNextToS1();
 	}
 	else if (answer == "send")
 	{
-		controller->setNext(controller->getS2());
+		mrta_vc::state_machine::AbstractState::getController()->setNextToS2();
 	}
 	else if (answer == "take")
 	{
-		controller->setNext(controller->getS3());
+		mrta_vc::state_machine::AbstractState::getController()->setNextToS3();
 	}
+	else
+	{
+		return false;
+	}
+	return true;
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::S0InitialState::toString()
+{
+	return "S0 (Initial State)";
 }

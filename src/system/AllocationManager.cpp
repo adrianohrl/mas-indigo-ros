@@ -157,6 +157,7 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::experti
     }
     ++it;
   }
+  std::cout << robot.getSkills().size() << "\n";
 	available_robots_.push_back(robot);
 }
 
@@ -244,4 +245,93 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedRobots(
 void unifei::expertinos::mrta_vc::system::AllocationManager::updateLoggedUsers() 
 {
   logged_users_.remove_if(unifei::expertinos::mrta_vc::agents::User::isNotLoggedAnyMore);
+}
+
+/**
+ *
+ */
+std::vector<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta_vc::system::AllocationManager::getBestTeam(unifei::expertinos::mrta_vc::tasks::Task task)
+{
+    std::vector<unifei::expertinos::mrta_vc::agents::Robot> best_team;
+    unifei::expertinos::mrta_vc::agents::Robot best_robot;
+    double best_utility = 0.0;
+
+    if (available_robots_.size() == 0)
+    {
+        return best_team;
+    }
+    std::list<unifei::expertinos::mrta_vc::agents::Robot>::iterator it = available_robots_.begin();
+    while (it != available_robots_.end())
+    {
+        unifei::expertinos::mrta_vc::agents::Robot robot = (*it);
+        if (robot.getUtility(task) > best_utility)
+        {
+            ROS_INFO("achei um robo q pode realizar");
+            best_utility = robot.getUtility(task);
+            best_robot = robot;
+        }
+        ++it;
+    }
+    if (best_utility != 0.0)
+    {
+        best_team.push_back(best_robot);
+    }
+    return best_team;
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::system::AllocationManager::allocate(unifei::expertinos::mrta_vc::tasks::Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots)
+{
+    allocated_tasks_.push_back(task);
+    unallocated_tasks_.pop();
+
+    std::list<unifei::expertinos::mrta_vc::agents::Robot>::iterator it = available_robots_.begin();
+    while (it != available_robots_.end())
+    {
+        unifei::expertinos::mrta_vc::agents::Robot available_robot = (*it);
+        for (int j = 0; j < robots.size(); j++)
+        {
+            if (robots.at(j) == available_robot)
+            {
+                ROS_INFO("achei meu robo, vou ocupa-lo");
+                available_robots_.erase(it);
+                busy_robots_.push_back(available_robot);
+                break;
+            }
+        }
+        ++it;
+    }
+    unifei::expertinos::mrta_vc::tasks::Allocation allocation = unifei::expertinos::mrta_vc::tasks::Allocation(task, robots);
+    //allocations_.push_back(allocation);
+    ROS_INFO("cheguei ao fim do allocate");
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::system::AllocationManager::updateUnallocatedTasks()
+{
+    std::vector<unifei::expertinos::mrta_vc::tasks::Task> unallocated_tasks;
+    for (int i = 0; i < unallocated_tasks_.size(); i++)
+    {
+        unifei::expertinos::mrta_vc::tasks::Task task = unallocated_tasks_.top();
+        std::vector<unifei::expertinos::mrta_vc::agents::Robot> best_team = getBestTeam(task);
+        if (best_team.size() != 0)
+        {
+            unifei::expertinos::mrta_vc::agents::Robot print_robot = best_team.at(0);
+            ROS_INFO("Vou alocar! Task: %s para robo: %s", task.getName().c_str(), print_robot.getHostname().c_str());
+            allocate(task, best_team);
+        }
+        else
+        {
+            unallocated_tasks.push_back(task);
+            unallocated_tasks_.pop();
+        }
+    }
+    for (int i = 0; i < unallocated_tasks.size(); i++)
+    {
+        unallocated_tasks_.push(unallocated_tasks.at(i));
+    }
 }

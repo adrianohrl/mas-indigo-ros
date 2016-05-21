@@ -1,0 +1,8 @@
+mrta_vc/Agent user
+bool logged			# true if this user is logged, otherwise it is false
+
+---
+
+
+
+

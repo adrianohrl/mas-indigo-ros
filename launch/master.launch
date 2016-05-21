@@ -5,5 +5,7 @@
 		</node>
 		<node name="system_database_interface_node" pkg="mrta_vc" type="system_database_interface_node" output="screen">
 		</node>
+		<node name="task_builder_node" pkg="mrta_vc" type="task_builder_node" output="screen">
+		</node>
 	</group>
 </launch>

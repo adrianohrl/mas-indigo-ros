@@ -41,7 +41,7 @@ namespace unifei
 					Place(int id, std::string name, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg);
 					Place(const ::mrta_vc::Place::ConstPtr& place_msg);
 					Place(::mrta_vc::Place place_msg);		
-					~Place();
+					virtual ~Place();
 
 					int getId();
 					std::string getName();

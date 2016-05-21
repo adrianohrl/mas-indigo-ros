@@ -15,8 +15,9 @@
 /**
  * Constructor
  */
-mrta_vc::state_machine::AbstractState::AbstractState(mrta_vc::state_machine::MachineController* controller, std::string question, bool final_state) : controller_(controller)
+mrta_vc::state_machine::AbstractState::AbstractState(mrta_vc::state_machine::MachineController* controller, std::string question, bool final_state)
 {
+	controller_ = controller;
   question_ = question;
   message_ = "";
   final_state_ = final_state;
@@ -88,13 +89,23 @@ void mrta_vc::state_machine::AbstractState::setMessage(std::string message)
 /**
  *
  */
-void mrta_vc::state_machine::AbstractState::process(std::string answer)
+bool mrta_vc::state_machine::AbstractState::process(std::string answer)
 {
+	return false;
 }
 
 /**
  *
  */
-void mrta_vc::state_machine::AbstractState::next(std::string answer)
+bool mrta_vc::state_machine::AbstractState::next(std::string answer)
 {
+	return false;
+}
+
+/**
+ *
+ */
+std::string mrta_vc::state_machine::AbstractState::toString()
+{
+	return "";
 }

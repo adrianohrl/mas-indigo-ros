@@ -22,22 +22,15 @@ namespace mrta_vc
 	{
 
 	public:
-
-		/** Construtores */
 		SystemRobotInterfaceNode(ros::NodeHandle nh);
-		/** Destrutor */
-		~SystemRobotInterfaceNode();
+		virtual ~SystemRobotInterfaceNode();
 
-		/** métodos publicos relacionados ao gerenciamento do nó */
 		void spin();
 
 	private:
-	
-		/** atributos privados relacionados ao nó */
 		ros::NodeHandle nh_;
 		ros::Timer beacon_timer_;
 		ros::Publisher beacon_pub_;
-
     bool setted_up_;
 		
 		void beaconTimerCallback(const ros::TimerEvent& event);

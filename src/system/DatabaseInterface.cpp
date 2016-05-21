@@ -382,7 +382,6 @@ unifei::expertinos::mrta_vc::agents::Person unifei::expertinos::mrta_vc::system:
 {
   int id = 0;
   unifei::expertinos::mrta_vc::agents::HierarchyLevelEnum hierarchy_level = unifei::expertinos::mrta_vc::agents::HierarchyLevels::getDefault();
-  unifei::expertinos::mrta_vc::agents::Computer computer(0, "");
   // realizar consultas no DB para preencher o objeto a partir do seu id e enviá-lo
   if (name == "Adriano Henrique Rossette Leite")
   {

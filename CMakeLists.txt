@@ -25,11 +25,12 @@ add_message_files(
 	
 add_service_files(
 	FILES
-        GetComputer.srv
-        GetPerson.srv
-        GetRobot.srv
-        GetTask.srv
-        GetUser.srv
+	GetComputer.srv
+	GetPerson.srv
+	GetRobot.srv
+	GetTask.srv
+	GetUser.srv
+	SetUser.srv
 	ValidatePassword.srv
 )
 
@@ -143,12 +144,26 @@ add_executable(system_robot_interface_node
 	src/system_robot_interface_node.cpp
 	include/mrta_vc/SystemRobotInterfaceNode.h
 	src/SystemRobotInterfaceNode.cpp
-	include/unifei/expertinos/mrta_vc/agents/Robot.h
-	src/agents/Robot.cpp
-	include/unifei/expertinos/mrta_vc/agents/Computer.h
-	src/agents/Computer.cpp
 	include/unifei/expertinos/mrta_vc/agents/Agent.h
 	src/agents/Agent.cpp
+	include/unifei/expertinos/mrta_vc/agents/Computer.h
+	src/agents/Computer.cpp
+	include/unifei/expertinos/mrta_vc/agents/Person.h
+	src/agents/Person.cpp
+	include/unifei/expertinos/mrta_vc/agents/HierarchyLevels.h
+	src/agents/HierarchyLevels.cpp
+	include/unifei/expertinos/mrta_vc/agents/Robot.h
+	src/agents/Robot.cpp
+	include/unifei/expertinos/mrta_vc/agents/User.h
+	src/agents/User.cpp
+        include/unifei/expertinos/mrta_vc/tasks/Task.h
+        src/tasks/Task.cpp
+        include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
+        src/tasks/TaskPriorities.cpp
+        include/unifei/expertinos/mrta_vc/tasks/TaskStates.h
+        src/tasks/TaskStates.cpp
+        include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
+        src/tasks/TaskSatisfactions.cpp
         include/unifei/expertinos/mrta_vc/tasks/Skill.h
         src/tasks/Skill.cpp
         include/unifei/expertinos/mrta_vc/tasks/SkillLevels.h

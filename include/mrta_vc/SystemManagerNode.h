@@ -23,18 +23,12 @@ namespace mrta_vc
 	{
 
 	public:
-
-		/** Construtors */
 		SystemManagerNode(ros::NodeHandle nh);
-		/** Destrutor */
 		~SystemManagerNode();
 
-		/** métodos publicos relacionados ao gerenciamento do nó */
 		void spin();
 
 	private:
-	
-		/** atributos privados relacionados ao nó */
     ros::NodeHandle nh_;
     ros::Subscriber robots_sub_;
     ros::Subscriber tasks_sub_;
