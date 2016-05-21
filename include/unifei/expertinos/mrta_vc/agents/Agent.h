@@ -49,7 +49,7 @@ namespace unifei
 					void setLocation(unifei::expertinos::mrta_vc::places::Location location);
           virtual ::mrta_vc::Agent toMsg();
           virtual std::string toString();
-          virtual bool equals(Agent agent);
+					bool equals(Agent agent);
           virtual bool operator==(const Agent& agent);
           bool operator!=(const Agent& agent);
           virtual void operator=(const Agent& agent);

@@ -162,7 +162,7 @@ std::string unifei::expertinos::mrta_vc::agents::Agent::toString()
  */
 bool unifei::expertinos::mrta_vc::agents::Agent::equals(Agent agent) 
 {
-	return id_ == agent.id_;
+	return operator==(agent);
 }
 
 /**

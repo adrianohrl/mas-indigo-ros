@@ -115,7 +115,7 @@ std::string unifei::expertinos::mrta_vc::tasks::Resource::toString()
  */
 bool unifei::expertinos::mrta_vc::tasks::Resource::equals(unifei::expertinos::mrta_vc::tasks::Resource resource) 
 {
-	return name_ == resource.name_;
+	return operator==(resource);
 }
 
 /**
@@ -131,7 +131,7 @@ bool unifei::expertinos::mrta_vc::tasks::Resource::operator==(const unifei::expe
  */
 bool unifei::expertinos::mrta_vc::tasks::Resource::operator!=(const unifei::expertinos::mrta_vc::tasks::Resource& resource) 
 {
-	return name_ != resource.name_;
+	return !operator==(resource);
 }
 
 /**

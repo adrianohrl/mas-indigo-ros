@@ -18,6 +18,9 @@ unifei::expertinos::mrta_vc::tasks::satisfactions::TaskSatisfactionEnum unifei::
 	unifei::expertinos::mrta_vc::tasks::satisfactions::TaskSatisfactionEnum enumerated;
 	switch (code)
 	{
+		case -100:
+			enumerated = unifei::expertinos::mrta_vc::tasks::satisfactions::NONE;
+			break;
 		case -3:
 			enumerated = unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_DISSATISFIED;
 			break;
@@ -53,6 +56,9 @@ int unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toCode(unifei::expert
 	int code;
 	switch (enumerated)
 	{
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::NONE:
+			code = -100;
+			break;
 		case unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_DISSATISFIED:
 		case unifei::expertinos::mrta_vc::tasks::satisfactions::HORRIBLE:
 			code = -3;
@@ -95,6 +101,9 @@ std::string unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toString(unif
 	std::string enumerated_name;
 	switch (enumerated)
 	{
+		case unifei::expertinos::mrta_vc::tasks::satisfactions::NONE:
+			enumerated_name = "NONE";
+			break;
 		case unifei::expertinos::mrta_vc::tasks::satisfactions::VERY_DISSATISFIED:
 			enumerated_name = "VERY_DISSATISFIED";
 			break;
@@ -148,7 +157,15 @@ std::string unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toString(unif
  */
 unifei::expertinos::mrta_vc::tasks::satisfactions::TaskSatisfactionEnum unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::getDefault()
 {
-	return unifei::expertinos::mrta_vc::tasks::satisfactions::NEITHER_DISSATISFIED_NOR_SATISFIED;
+	return unifei::expertinos::mrta_vc::tasks::satisfactions::NONE;
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::isValid(unifei::expertinos::mrta_vc::tasks::satisfactions::TaskSatisfactionEnum enumerated)
+{
+	return enumerated != unifei::expertinos::mrta_vc::tasks::satisfactions::NONE;
 }
 
 /**

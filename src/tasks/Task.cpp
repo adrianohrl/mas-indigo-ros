@@ -312,22 +312,20 @@ std::string unifei::expertinos::mrta_vc::tasks::Task::toString()
   return "task: {name: " + name_ + ", description: " + description_ + ", skills: {" + desired_skills_ss.str() + "}, user: " + user_.toString() + ", sender: " + sender_.toString() + ", receiver: " + receiver_.toString() + ", priority: " + unifei::expertinos::mrta_vc::tasks::TaskPriorities::toString(priority_) + ", deadline: " + deadline_ss.str() + "}";
 }
 
-
-/**
- *
- */
-bool unifei::expertinos::mrta_vc::tasks::Task::equals(unifei::expertinos::mrta_vc::tasks::Task task)
-{
-  return name_ == task.name_;
-}
-
-
 /**
  *
  */
 int unifei::expertinos::mrta_vc::tasks::Task::compareTo(unifei::expertinos::mrta_vc::tasks::Task task)
 {
   return 10*unifei::expertinos::mrta_vc::tasks::TaskPriorities::compare(priority_, task.priority_) + 2 * unifei::expertinos::mrta_vc::agents::HierarchyLevels::compare(user_.getHierarchyLevel(),task.getUser().getHierarchyLevel()) + unifei::expertinos::mrta_vc::agents::HierarchyLevels::compare(sender_.getHierarchyLevel(),task.getSender().getHierarchyLevel()) + unifei::expertinos::mrta_vc::agents::HierarchyLevels::compare(receiver_.getHierarchyLevel(),task.getReceiver().getHierarchyLevel());
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::tasks::Task::equals(unifei::expertinos::mrta_vc::tasks::Task task)
+{
+	return operator==(task);
 }
 
 /**
@@ -343,7 +341,7 @@ bool unifei::expertinos::mrta_vc::tasks::Task::operator==(const unifei::expertin
  */
 bool unifei::expertinos::mrta_vc::tasks::Task::operator!=(const unifei::expertinos::mrta_vc::tasks::Task& task) 
 {
-	return name_ != task.name_;
+	return !operator==(task);
 }
 
 /**

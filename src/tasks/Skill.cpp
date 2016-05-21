@@ -131,19 +131,19 @@ std::string unifei::expertinos::mrta_vc::tasks::Skill::toString()
 }
 
 /**
- * 
- */
-bool unifei::expertinos::mrta_vc::tasks::Skill::equals(unifei::expertinos::mrta_vc::tasks::Skill skill) 
-{ 
-	return resource_.equals(skill.resource_);	
-}
-
-/**
  *
  */
 int unifei::expertinos::mrta_vc::tasks::Skill::compareTo(unifei::expertinos::mrta_vc::tasks::Skill skill) 
 {
     return level_ - skill.level_;
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::tasks::Skill::equals(unifei::expertinos::mrta_vc::tasks::Skill skill)
+{
+	return operator==(skill);
 }
 
 /**
@@ -159,7 +159,7 @@ bool unifei::expertinos::mrta_vc::tasks::Skill::operator==(const unifei::experti
  */
 bool unifei::expertinos::mrta_vc::tasks::Skill::operator!=(const unifei::expertinos::mrta_vc::tasks::Skill& skill) 
 {
-	return resource_ != skill.resource_;
+	return !operator==(skill);
 }
 
 /**

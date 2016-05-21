@@ -36,8 +36,7 @@ namespace unifei
 					std::string getHostname();
 					bool isMobile();
           virtual ::mrta_vc::Agent toMsg();
-          virtual std::string toString();
-          virtual bool equals(Computer computer);
+					virtual std::string toString();
           virtual bool operator==(const Computer& computer);
           virtual void operator=(const Computer& computer);
 					
