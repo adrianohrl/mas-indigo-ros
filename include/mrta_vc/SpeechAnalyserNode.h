@@ -15,6 +15,7 @@
 #include <stdlib.h>     /* srand, rand */
 #include <ros/ros.h>
 #include "std_msgs/String.h"
+#include "unifei/expertinos/mrta_vc/utilities/TimeManipulator.h"
 
 namespace mrta_vc 
 {

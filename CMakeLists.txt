@@ -306,9 +306,11 @@ add_executable(task_builder_node
 	include/mrta_vc/state_machine/S9FinalState.h
 	src/state_machine/S9FinalState.cpp
 	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
-	src/utilities/StringManipulator.cpp
-	include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
-	src/utilities/TimeManipulator.cpp
+    src/utilities/StringManipulator.cpp
+    include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
+    src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/mrta_vc/utilities/MathManipulator.h
+	src/utilities/MathManipulator.cpp
 	)
 
 add_dependencies(task_builder_node 
@@ -324,6 +326,12 @@ add_executable(speech_analyser_node
 	src/speech_analyser_node.cpp
 	include/mrta_vc/SpeechAnalyserNode.h
 	src/SpeechAnalyserNode.cpp
+	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
+    src/utilities/StringManipulator.cpp
+    include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
+    src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/mrta_vc/utilities/MathManipulator.h
+	src/utilities/MathManipulator.cpp
 	)
 
 add_dependencies(speech_analyser_node 

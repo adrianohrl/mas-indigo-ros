@@ -80,8 +80,9 @@ void mrta_vc::SpeechAnalyserNode::questionsCallback(const std_msgs::String::Cons
 		possible_answers.push_back("critical");
 	}
 	else if (question_msg->data == "What is the deadline?")
-	{
-		possible_answers.push_back("");
+	{		
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 31104000)));
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Duration(rand() % 86400)));
 	}
 	else
 	{
