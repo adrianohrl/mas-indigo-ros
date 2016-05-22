@@ -139,14 +139,6 @@ std::string unifei::expertinos::mrta_vc::agents::Person::toString()
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::agents::Person::equals(unifei::expertinos::mrta_vc::agents::Person person) 
-{
-	return name_ == person.name_;
-}
-
-/**
- *
- */
 bool unifei::expertinos::mrta_vc::agents::Person::operator==(const unifei::expertinos::mrta_vc::agents::Person& person)
 {
 	return name_ == person.name_;

@@ -26,7 +26,6 @@ namespace unifei
 			{
 				class Skill 
 				{
-
         public:
           Skill(std::string resource_name, SkillLevelEnum level = SkillLevels::getDefault());
           Skill(int id, Resource resource, SkillLevelEnum level = SkillLevels::getDefault());
@@ -42,9 +41,9 @@ namespace unifei
           void setId(int id);
 					void setLevel(SkillLevelEnum level);
           ::mrta_vc::Skill toMsg();
-          std::string toString();
-					bool equals(Skill skill);
+					std::string toString();
 					int compareTo(Skill skill);
+					bool equals(Skill skill);
 					bool operator==(const Skill& skill);
 					bool operator!=(const Skill& skill);
 					void operator=(const Skill& skill);

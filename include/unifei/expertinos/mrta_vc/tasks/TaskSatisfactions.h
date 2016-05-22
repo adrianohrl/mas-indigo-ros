@@ -26,6 +26,7 @@ namespace unifei
 				{
 					typedef enum 
 					{
+						NONE,
 						VERY_DISSATISFIED,
 						HORRIBLE,
 						DISSATISFIED,
@@ -47,12 +48,12 @@ namespace unifei
 
 				class TaskSatisfactions
 				{
-
 				public:
 					static TaskSatisfactionEnum toEnumerated(int code);
 					static int toCode(TaskSatisfactionEnum enumerated);
 					static std::string toString(TaskSatisfactionEnum enumerated);
 					static TaskSatisfactionEnum getDefault();
+					static bool isValid(TaskSatisfactionEnum enumerated);
 					static std::vector<TaskSatisfactionEnum> getAll();
 
 				};

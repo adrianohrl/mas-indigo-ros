@@ -40,7 +40,6 @@ namespace unifei
 
 				class TaskStates
 				{
-
 				public:
 					static TaskStateEnum toEnumerated(int code);
 					static int toCode(TaskStateEnum enumerated);

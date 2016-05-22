@@ -30,6 +30,7 @@ add_service_files(
 	GetRobot.srv
 	GetTask.srv
 	GetUser.srv
+	FinishAllocation.srv
 	SetUser.srv
 	ValidatePassword.srv
 )
@@ -156,20 +157,22 @@ add_executable(system_robot_interface_node
 	src/agents/Robot.cpp
 	include/unifei/expertinos/mrta_vc/agents/User.h
 	src/agents/User.cpp
-        include/unifei/expertinos/mrta_vc/tasks/Task.h
-        src/tasks/Task.cpp
-        include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
-        src/tasks/TaskPriorities.cpp
-        include/unifei/expertinos/mrta_vc/tasks/TaskStates.h
-        src/tasks/TaskStates.cpp
-        include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
-        src/tasks/TaskSatisfactions.cpp
-        include/unifei/expertinos/mrta_vc/tasks/Skill.h
-        src/tasks/Skill.cpp
-        include/unifei/expertinos/mrta_vc/tasks/SkillLevels.h
-        src/tasks/SkillLevels.cpp
-        include/unifei/expertinos/mrta_vc/tasks/Resource.h
-        src/tasks/Resource.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Allocation.h
+	src/tasks/Allocation.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Task.h
+	src/tasks/Task.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
+	src/tasks/TaskPriorities.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskStates.h
+	src/tasks/TaskStates.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
+	src/tasks/TaskSatisfactions.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Skill.h
+	src/tasks/Skill.cpp
+	include/unifei/expertinos/mrta_vc/tasks/SkillLevels.h
+	src/tasks/SkillLevels.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Resource.h
+	src/tasks/Resource.cpp
 	include/unifei/expertinos/mrta_vc/places/Location.h
 	src/places/Location.cpp
 	)
@@ -248,64 +251,64 @@ add_executable(task_builder_node
 	src/task_builder_node.cpp
 	include/mrta_vc/TaskBuilderNode.h
 	src/TaskBuilderNode.cpp
-        include/unifei/expertinos/mrta_vc/tasks/Task.h
-        src/tasks/Task.cpp
-        include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
-        src/tasks/TaskPriorities.cpp
-        include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
-        src/tasks/TaskSatisfactions.cpp
-        include/unifei/expertinos/mrta_vc/tasks/Skill.h
-        src/tasks/Skill.cpp
-        include/unifei/expertinos/mrta_vc/tasks/SkillLevels.h
-        src/tasks/SkillLevels.cpp
-        include/unifei/expertinos/mrta_vc/tasks/Resource.h
-        src/tasks/Resource.cpp
-        include/unifei/expertinos/mrta_vc/places/Location.h
-        src/places/Location.cpp
-        include/unifei/expertinos/mrta_vc/agents/Agent.h
-        src/agents/Agent.cpp
-        include/unifei/expertinos/mrta_vc/agents/Person.h
-        src/agents/Person.cpp
-        include/unifei/expertinos/mrta_vc/agents/Computer.h
-        src/agents/Computer.cpp
-        include/unifei/expertinos/mrta_vc/agents/HierarchyLevels.h
-        src/agents/HierarchyLevels.cpp
-        include/unifei/expertinos/mrta_vc/agents/User.h
-        src/agents/User.cpp
-        include/mrta_vc/state_machine/MachineController.h
-        src/state_machine/MachineController.cpp
-        include/mrta_vc/state_machine/AbstractState.h
-        src/state_machine/AbstractState.cpp
-        include/mrta_vc/state_machine/TaskVerificationState.h
-        src/state_machine/TaskVerificationState.cpp
-        include/mrta_vc/state_machine/PersonVerificationState.h
-        src/state_machine/PersonVerificationState.cpp
-        include/mrta_vc/state_machine/SenderVerificationState.h
-        src/state_machine/SenderVerificationState.cpp
-        include/mrta_vc/state_machine/S0InitialState.h
-        src/state_machine/S0InitialState.cpp
-        include/mrta_vc/state_machine/S1TaskVerificationState.h
-        src/state_machine/S1TaskVerificationState.cpp
-        include/mrta_vc/state_machine/S2TaskVerificationState.h
-        src/state_machine/S2TaskVerificationState.cpp
-        include/mrta_vc/state_machine/S3TaskVerificationState.h
-        src/state_machine/S3TaskVerificationState.cpp
-        include/mrta_vc/state_machine/S4SenderVerificationState.h
-        src/state_machine/S4SenderVerificationState.cpp
-        include/mrta_vc/state_machine/S5SenderVerificationState.h
-        src/state_machine/S5SenderVerificationState.cpp
-        include/mrta_vc/state_machine/S6ReceiverVerificationState.h
-        src/state_machine/S6ReceiverVerificationState.cpp
-        include/mrta_vc/state_machine/S7PriorityVerificationState.h
-        src/state_machine/S7PriorityVerificationState.cpp
-        include/mrta_vc/state_machine/S8DeadlineVerificationState.h
-        src/state_machine/S8DeadlineVerificationState.cpp
-        include/mrta_vc/state_machine/S9FinalState.h
-        src/state_machine/S9FinalState.cpp
-        include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
-        src/utilities/StringManipulator.cpp
-        include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
-        src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Task.h
+	src/tasks/Task.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
+	src/tasks/TaskPriorities.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
+	src/tasks/TaskSatisfactions.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Skill.h
+	src/tasks/Skill.cpp
+	include/unifei/expertinos/mrta_vc/tasks/SkillLevels.h
+	src/tasks/SkillLevels.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Resource.h
+	src/tasks/Resource.cpp
+	include/unifei/expertinos/mrta_vc/places/Location.h
+	src/places/Location.cpp
+	include/unifei/expertinos/mrta_vc/agents/Agent.h
+	src/agents/Agent.cpp
+	include/unifei/expertinos/mrta_vc/agents/Person.h
+	src/agents/Person.cpp
+	include/unifei/expertinos/mrta_vc/agents/Computer.h
+	src/agents/Computer.cpp
+	include/unifei/expertinos/mrta_vc/agents/HierarchyLevels.h
+	src/agents/HierarchyLevels.cpp
+	include/unifei/expertinos/mrta_vc/agents/User.h
+	src/agents/User.cpp
+	include/mrta_vc/state_machine/MachineController.h
+	src/state_machine/MachineController.cpp
+	include/mrta_vc/state_machine/AbstractState.h
+	src/state_machine/AbstractState.cpp
+	include/mrta_vc/state_machine/TaskVerificationState.h
+	src/state_machine/TaskVerificationState.cpp
+	include/mrta_vc/state_machine/PersonVerificationState.h
+	src/state_machine/PersonVerificationState.cpp
+	include/mrta_vc/state_machine/SenderVerificationState.h
+	src/state_machine/SenderVerificationState.cpp
+	include/mrta_vc/state_machine/S0InitialState.h
+	src/state_machine/S0InitialState.cpp
+	include/mrta_vc/state_machine/S1TaskVerificationState.h
+	src/state_machine/S1TaskVerificationState.cpp
+	include/mrta_vc/state_machine/S2TaskVerificationState.h
+	src/state_machine/S2TaskVerificationState.cpp
+	include/mrta_vc/state_machine/S3TaskVerificationState.h
+	src/state_machine/S3TaskVerificationState.cpp
+	include/mrta_vc/state_machine/S4SenderVerificationState.h
+	src/state_machine/S4SenderVerificationState.cpp
+	include/mrta_vc/state_machine/S5SenderVerificationState.h
+	src/state_machine/S5SenderVerificationState.cpp
+	include/mrta_vc/state_machine/S6ReceiverVerificationState.h
+	src/state_machine/S6ReceiverVerificationState.cpp
+	include/mrta_vc/state_machine/S7PriorityVerificationState.h
+	src/state_machine/S7PriorityVerificationState.cpp
+	include/mrta_vc/state_machine/S8DeadlineVerificationState.h
+	src/state_machine/S8DeadlineVerificationState.cpp
+	include/mrta_vc/state_machine/S9FinalState.h
+	src/state_machine/S9FinalState.cpp
+	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
+	src/utilities/StringManipulator.cpp
+	include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
+	src/utilities/TimeManipulator.cpp
 	)
 
 add_dependencies(task_builder_node 

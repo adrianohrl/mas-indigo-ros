@@ -33,7 +33,7 @@ namespace unifei
 				{
 
 				public:
-                    Robot();
+					Robot();
 					Robot(int id, std::string hostname, bool holonomic, bool mobile = true, double x = 0, double y = 0, double theta = 0);
 					Robot(int id, std::string hostname, bool holonomic, bool mobile, geometry_msgs::Pose pose_msg);
 					Robot(int id, std::string hostname, bool holonomic, bool mobile, unifei::expertinos::mrta_vc::places::Location location);
@@ -41,20 +41,20 @@ namespace unifei
 					Robot(::mrta_vc::Agent robot_msg);		
 					virtual ~Robot();
 
-                    std::vector<unifei::expertinos::mrta_vc::tasks::Skill> getSkills();
+					std::vector<unifei::expertinos::mrta_vc::tasks::Skill> getSkills();
 					bool isHolonomic();
 					double getVelX();
 					double getVelY();
 					double getVelTheta();
 					geometry_msgs::Twist getVelocity();
 					ros::Time getLastBeaconTimestamp();
-                    void setSkills(std::vector<unifei::expertinos::mrta_vc::tasks::Skill> skills);
+					void setSkills(std::vector<unifei::expertinos::mrta_vc::tasks::Skill> skills);
 					void setVelocity(double x = 0, double y = 0, double theta = 0);
 					void setVelocity(geometry_msgs::Twist twist_msg);
 					void setLastBeaconTimestamp(ros::Time last_beacon_timestamp = ros::Time::now());
 					bool isLogged();
-                    static bool isNotLoggedAnyMore(Robot robot);
-                    double getUtility(unifei::expertinos::mrta_vc::tasks::Task task);
+					static bool isNotLoggedAnyMore(Robot robot);
+					double getUtility(unifei::expertinos::mrta_vc::tasks::Task task);
 					virtual ::mrta_vc::Agent toMsg();
 					virtual std::string toString();
 					virtual void operator=(const Robot& robot);
@@ -73,7 +73,7 @@ namespace unifei
 					double vel_theta_;
 					ros::Time last_beacon_timestamp_;
 
-         				virtual std::string getClassName();
+					virtual std::string getClassName();
 					
 				};
 			}

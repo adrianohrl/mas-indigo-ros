@@ -25,7 +25,6 @@ namespace unifei
 			{
 				class Resource 
 				{
-
         public:
           Resource(std::string name);
           Resource(int id, std::string name, std::string description);
