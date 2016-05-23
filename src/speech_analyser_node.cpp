@@ -12,8 +12,8 @@
 
 int main(int argc, char** argv)
 {
-	ros::init(argc, argv, "speech_analyser_node");
-	ros::NodeHandle nh;
+  ros::init(argc, argv, "speech_analyser_node");
+  ros::NodeHandle nh;
 	mrta_vc::SpeechAnalyserNode node(nh);
 	node.spin();
 	return 0;

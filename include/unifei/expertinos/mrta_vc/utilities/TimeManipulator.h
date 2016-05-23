@@ -12,10 +12,9 @@
 #ifndef TIME_MANIPULATOR_H_
 #define TIME_MANIPULATOR_H_
 
-#include <string>
 #include <ros/ros.h>
-#include <time.h>
 #include "unifei/expertinos/mrta_vc/utilities/StringManipulator.h"
+#include "unifei/expertinos/mrta_vc/utilities/MathManipulator.h"
 
 namespace unifei
 {
@@ -30,16 +29,25 @@ namespace unifei
                         
                         public:
                               static bool isDeadline(std::string answer);
+                              static bool isTimestamp(std::string answer);
                               static bool isDuration(std::string answer);
+															static ros::Time getTime(std::string answer);
+                              static ros::Duration getDuration(std::string answer);
+                              static std::string toString(ros::Time timestamp);
+                              static std::string toString(ros::Duration duration);
 
                         private:
-                              static bool hasDateSyntax(std::vector<std::string> split_answer, int vector_position);
-                              static bool hasTimeSyntax(std::vector<std::string> split_answer, int vector_position);
-                              static bool hasCorrectDateIntervals(std::vector<std::string> date);
-                              static bool hasCorrectTimeIntervals(std::vector<std::string> time);
-                              static bool isLeapYear(std::string year); 
-                              static bool isFuture(std::vector<std::string> time_str, std::vector<std::string> date);
-                        };
+                              static bool hasDateSyntax(std::string date);
+                              static bool hasTimeSyntax(std::string time);
+															static bool isValidDuration(int hours, int minutes, float seconds = 0.0);
+                              static bool isValidDate(int month, int day, int year);
+                              static bool isValidTime(int hours, int minutes, float seconds = 0.0);
+                              static bool isLeapYear(int year);
+                              static bool isFuture(int month, int day, int year, int hours, int minutes, float seconds = 0.0);
+															static double getTimestamp(int month, int day, int year, int hours, int minutes, float seconds = 0.0);
+															static double getSecondsDuration(int hours, int minutes, float seconds = 0.0);
+
+												};
                   }
             }
 	}
