@@ -60,6 +60,7 @@ unifei::expertinos::mrta_vc::tasks::Task::Task(const ::mrta_vc::Task::ConstPtr& 
 		desired_skills_.push_back(skill);	
 	}	
 	priority_ = unifei::expertinos::mrta_vc::tasks::TaskPriorities::toEnumerated(task_msg->priority);
+	deadline_ = task_msg->deadline;
 }
 
 /**
@@ -76,6 +77,7 @@ unifei::expertinos::mrta_vc::tasks::Task::Task(::mrta_vc::Task task_msg) : user_
 		desired_skills_.push_back(skill);	
 	}	
 	priority_ = unifei::expertinos::mrta_vc::tasks::TaskPriorities::toEnumerated(task_msg.priority);	
+	deadline_ = task_msg.deadline;
 }
 
 /**
@@ -262,9 +264,17 @@ void unifei::expertinos::mrta_vc::tasks::Task::setDeadline(ros::Duration duratio
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Task::isExpired() 
+bool unifei::expertinos::mrta_vc::tasks::Task::isExpired()
 {
 	return deadline_.toSec() != 0.0 && deadline_ < ros::Time::now();
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::tasks::Task::isInvolved(unifei::expertinos::mrta_vc::agents::Person person)
+{
+	return person == user_ || person == receiver_ || person == sender_;
 }
 
 /**
@@ -302,14 +312,16 @@ std::string unifei::expertinos::mrta_vc::tasks::Task::toString()
       desired_skills_ss << ", ";
     }
     desired_skills_ss << i << " " << desired_skills_.at(i).toString();
-  }
-  std::stringstream deadline_ss;
-  double seconds = ceil((deadline_ - ros::Time::now()).toSec());
-  double hours = floor(seconds / 3600);
-  double minutes = floor(seconds / 60) - 60 * hours;
-  seconds = floor(seconds - 60 * minutes - 3600 * hours);
-  deadline_ss << hours << "h" << minutes << "min" << seconds << "s";
-  return "task: {name: " + name_ + ", description: " + description_ + ", skills: {" + desired_skills_ss.str() + "}, user: " + user_.toString() + ", sender: " + sender_.toString() + ", receiver: " + receiver_.toString() + ", priority: " + unifei::expertinos::mrta_vc::tasks::TaskPriorities::toString(priority_) + ", deadline: " + deadline_ss.str() + "}";
+	}
+	return "task: {name: " + name_ +
+			", description: " + description_ +
+			", skills: {" + desired_skills_ss.str() +
+			"}, user: " + user_.toString() +
+			", sender: " + sender_.toString() +
+			", receiver: " + receiver_.toString() +
+			", priority: " + unifei::expertinos::mrta_vc::tasks::TaskPriorities::toString(priority_) +
+			", deadline: " + unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(deadline_) +
+			"}";
 }
 
 /**

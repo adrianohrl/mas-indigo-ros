@@ -19,6 +19,7 @@
 #include "unifei/expertinos/mrta_vc/agents/User.h"
 #include "unifei/expertinos/mrta_vc/tasks/Skill.h"
 #include "unifei/expertinos/mrta_vc/tasks/TaskPriorities.h"
+#include "unifei/expertinos/mrta_vc/utilities/TimeManipulator.h"
 
 namespace unifei 
 {
@@ -59,6 +60,7 @@ namespace unifei
           void setDeadline(ros::Time deadline);
           void setDeadline(ros::Duration duration);
 					bool isExpired();
+					bool isInvolved(unifei::expertinos::mrta_vc::agents::Person person);
 					::mrta_vc::Task toMsg();
 					std::string toString();
 					int compareTo(Task task);

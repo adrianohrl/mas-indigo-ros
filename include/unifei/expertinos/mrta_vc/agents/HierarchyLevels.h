@@ -24,7 +24,7 @@ namespace unifei
 			{
 				namespace levels
 				{
-					typedef enum 
+					typedef enum
 					{
 						VISITOR,
 						INTERN,

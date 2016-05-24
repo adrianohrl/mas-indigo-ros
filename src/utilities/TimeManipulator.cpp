@@ -16,44 +16,44 @@
  */
 bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::isDeadline(std::string answer)
 {
-  std::vector<std::string> split_answer, date, time;
-  split_answer = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(answer, ' ');
-  if(split_answer.empty() || split_answer.size() > 2)
-  {
-    return false;
-  }
-  if(hasDateSyntax(split_answer[0]))
-  {
+	std::vector<std::string> split_answer, date, time;
+	split_answer = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(answer, ' ');
+	if(split_answer.empty() || split_answer.size() > 2)
+	{
+		return false;
+	}
+	if(hasDateSyntax(split_answer[0]))
+	{
 		date = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(split_answer[0], '/');
 		if(!hasTimeSyntax(split_answer[1]))
 		{
 			return false;
 		}
 		time = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(split_answer[1], ':');
-  }
+	}
 	else if(hasTimeSyntax(split_answer[0]))
-  {
+	{
 		time = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(split_answer[0], ':');
 		if(!hasDateSyntax(split_answer[1]))
 		{
 			return false;
 		}
 		date = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(split_answer[1], '/');
-  }
-  else
-  {
-    return false;
-  }
-  int hours = atoi(time[0].c_str());
-  int minutes = atoi(time[1].c_str());
-  float seconds = 0;
+	}
+	else
+	{
+		return false;
+	}
+	int hours = atoi(time[0].c_str());
+	int minutes = atoi(time[1].c_str());
+	float seconds = 0;
 	int month = atoi(date[0].c_str());
 	int day = atoi(date[1].c_str());
 	int year = atoi(date[2].c_str());
-  if(time.size() == 3)
-  {
-    seconds = atof(time[2].c_str());
-  }
+	if(time.size() == 3)
+	{
+		seconds = atof(time[2].c_str());
+	}
 	return isValidTime(hours, minutes, seconds) && isValidDate(month, day, year) && isFuture(month, day, year, hours, minutes, seconds);
 }
 
@@ -274,7 +274,7 @@ std::string unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ro
  */
 bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::hasDateSyntax(std::string date)
 {
-  return std::count(date.begin(), date.end(), '/') == 2;
+	return std::count(date.begin(), date.end(), '/') == 2;
 }
 
 /**
@@ -282,8 +282,8 @@ bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::hasDateSyntax(std:
  */
 bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::hasTimeSyntax(std::string time)
 {
-  int counter = std::count(time.begin(), time.end(), ':');
-  return counter == 1 || counter == 2;
+	int counter = std::count(time.begin(), time.end(), ':');
+	return counter == 1 || counter == 2;
 }
 
 /**
@@ -299,10 +299,10 @@ bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::isValidDuration(in
  */
 bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::isValidDate(int month, int day, int year)
 {
-  return year > 0 && month > 0 && month <= 12 && day > 0 &&
-         (((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day <= 31) ||
-          ((month == 4 || month == 6 || month == 9 || month == 11) && day <= 30) ||
-           (month == 2 && ((isLeapYear(year) && day <= 29) || day <= 28)));
+	return year > 0 && month > 0 && month <= 12 && day > 0 &&
+			(((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day <= 31) ||
+			 ((month == 4 || month == 6 || month == 9 || month == 11) && day <= 30) ||
+			 (month == 2 && ((isLeapYear(year) && day <= 29) || day <= 28)));
 }
 
 /**
@@ -310,7 +310,7 @@ bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::isValidDate(int mo
  */
 bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::isValidTime(int hour, int minutes, float seconds)
 {
-  return hour >= 0 && hour < 24 && minutes >= 0 && minutes < 60 && seconds >= 0 && seconds < 60;
+	return hour >= 0 && hour < 24 && minutes >= 0 && minutes < 60 && seconds >= 0 && seconds < 60;
 }
 
 /**
@@ -318,7 +318,7 @@ bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::isValidTime(int ho
  */
 bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::isLeapYear(int year)
 {
-  return year % 4 == 0 && (year % 400 == 0 || year % 100 != 0);
+	return year % 4 == 0 && (year % 400 == 0 || year % 100 != 0);
 }
 
 /**

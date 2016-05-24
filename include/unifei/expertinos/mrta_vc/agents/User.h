@@ -26,35 +26,35 @@ namespace unifei
 		{
 			namespace agents
 			{
-        class User : public Person
+				class User : public Person
 				{
 
 				public:
-          User();
-          User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, double x, double y = 0.0, double theta = 0.0);
-          User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, geometry_msgs::Pose pose_msg);
-          User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, unifei::expertinos::mrta_vc::places::Location location);
-          User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer);
-          User(const ::mrta_vc::Agent::ConstPtr& user_msg);
-          User(::mrta_vc::Agent user_msg);
+					User();
+					User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, double x, double y = 0.0, double theta = 0.0);
+					User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, geometry_msgs::Pose pose_msg);
+					User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, unifei::expertinos::mrta_vc::places::Location location);
+					User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer);
+					User(const ::mrta_vc::Agent::ConstPtr& user_msg);
+					User(::mrta_vc::Agent user_msg);
 					virtual ~User();
 
-          std::string getLoginName();
-          Computer getComputer();
-          ros::Time getLastBeaconTimestamp();
-          bool isValid(std::string password);
-          bool isLogged();
-          static bool isNotLoggedAnyMore(User user);
-          void setComputer(Computer computer);
-          void setLastBeaconTimestamp(ros::Time last_beacon_timestamp = ros::Time::now());
-          virtual ::mrta_vc::Agent toMsg();
-          virtual std::string toString();
-          virtual void operator=(const User& user);
-          		
-        protected:
-          virtual int getType();
-          void setLoginName(std::string login_name);
-          void setPassword(std::string password);
+					std::string getLoginName();
+					Computer getComputer();
+					ros::Time getLastBeaconTimestamp();
+					bool isValid(std::string password);
+					bool isLogged();
+					static bool isNotLoggedAnyMore(User user);
+					void setComputer(Computer computer);
+					void setLastBeaconTimestamp(ros::Time last_beacon_timestamp = ros::Time::now());
+					virtual ::mrta_vc::Agent toMsg();
+					virtual std::string toString();
+					virtual void operator=(const User& user);
+
+				protected:
+					virtual int getType();
+					void setLoginName(std::string login_name);
+					void setPassword(std::string password);
 
 				private:
 					std::string login_name_;
@@ -62,12 +62,12 @@ namespace unifei
 					Computer computer_;
 					ros::Time last_beacon_timestamp_;
 					
-          virtual std::string getClassName();
+					virtual std::string getClassName();
 
 				};
 			}
 		}
 	}
 }		
-					
+
 #endif /* USER_H_ */

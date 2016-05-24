@@ -208,7 +208,10 @@ void unifei::expertinos::mrta_vc::agents::User::setLastBeaconTimestamp(ros::Time
 std::string unifei::expertinos::mrta_vc::agents::User::toString() 
 {
   std::string aux = unifei::expertinos::mrta_vc::agents::Person::toString();
-  return aux.substr(0, aux.length() - 1) + ", login: " + login_name_ + ", " + computer_.toString() + "}";
+	return aux.substr(0, aux.length() - 1) +
+			", login: " + login_name_ +
+			", " + computer_.toString() +
+			"}";
 }
 
 /**

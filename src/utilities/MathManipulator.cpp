@@ -27,6 +27,6 @@ int unifei::expertinos::mrta_vc::utilities::MathManipulator::getUnsignedRest(lon
 long unifei::expertinos::mrta_vc::utilities::MathManipulator::getUnsignedDivision(long dividend, int divisor)
 {
 	return dividend >= 0L
-				 ? dividend / divisor
-				 : (dividend / divisor) - (dividend % divisor == 0 ? 0 : 1);
+			? dividend / divisor
+			: (dividend / divisor) - (dividend % divisor == 0 ? 0 : 1);
 }

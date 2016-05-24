@@ -107,7 +107,9 @@ void unifei::expertinos::mrta_vc::tasks::Resource::setDescription(std::string de
  */
 std::string unifei::expertinos::mrta_vc::tasks::Resource::toString()
 {
-  return "resource: {name: " + name_ + ", description: " + description_ + "}";
+	return "resource: {name: " + name_ +
+			", description: " + description_ +
+			"}";
 }
 
 /**
