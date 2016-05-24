@@ -16,8 +16,10 @@
 mrta_vc::SystemUserInterfaceNode::SystemUserInterfaceNode(ros::NodeHandle nh) : unifei::expertinos::mrta_vc::agents::User()
 {
 	beacon_timer_ = nh_.createTimer(ros::Duration(USER_BEACON_INTERVAL_DURATION), &mrta_vc::SystemUserInterfaceNode::beaconTimerCallback, this);
-  beacon_pub_ = nh_.advertise<mrta_vc::Agent>("/users", 1);
+	beacon_pub_ = nh_.advertise<mrta_vc::Agent>("/users", 1);
+	allocation_pub_ = nh_.advertise<mrta_vc::Agent>("/finished_allocations", 1);
 	message_sub_ = nh_.subscribe("messages", 1, &mrta_vc::SystemUserInterfaceNode::messagesCallback, this);
+	allocation_sub_ = nh_.subscribe("/running_allocations", 1, &mrta_vc::SystemUserInterfaceNode::allocationsCallback, this);
 	get_computer_cli_ = nh_.serviceClient<mrta_vc::GetComputer>("/get_computer");
 	set_user_cli_ = nh_.serviceClient<mrta_vc::SetUser>("set_user");
 	validate_cli_ = nh_.serviceClient<mrta_vc::ValidatePassword>("/validate_password");
@@ -39,23 +41,25 @@ mrta_vc::SystemUserInterfaceNode::SystemUserInterfaceNode(ros::NodeHandle nh) : 
  */
 mrta_vc::SystemUserInterfaceNode::~SystemUserInterfaceNode()
 {
-  logout();
-  beacon_timer_.stop();
-  beacon_pub_.shutdown();
+	logout();
+	beacon_timer_.stop();
+	beacon_pub_.shutdown();
+	allocation_pub_.shutdown();
 	message_sub_.shutdown();
+	allocation_sub_.shutdown();
 	get_computer_cli_.shutdown();
 	set_user_cli_.shutdown();
 	validate_cli_.shutdown();
 }
 
 /**
- * 
+ *
  */
 void mrta_vc::SystemUserInterfaceNode::spin() 
 {
 	ROS_INFO("System User Interface Node is up and running!!!");
 	ros::Rate loop_rate(10.0);
-	while (nh_.ok()) 
+	while (nh_.ok())
 	{
 		ros::spinOnce();
 		loop_rate.sleep();
@@ -63,13 +67,13 @@ void mrta_vc::SystemUserInterfaceNode::spin()
 }
 
 /**
- * 
+ *
  */
 void mrta_vc::SystemUserInterfaceNode::beaconTimerCallback(const ros::TimerEvent& event) 
 {
 	if (logged_)
 	{
-    beacon_pub_.publish(unifei::expertinos::mrta_vc::agents::User::toMsg());
+		beacon_pub_.publish(unifei::expertinos::mrta_vc::agents::User::toMsg());
 	}
 }
 
@@ -79,6 +83,24 @@ void mrta_vc::SystemUserInterfaceNode::beaconTimerCallback(const ros::TimerEvent
 void mrta_vc::SystemUserInterfaceNode::messagesCallback(const std_msgs::String::ConstPtr& message_msg)
 {
 	//ROS_INFO("[MESSAGE]: %s", message_msg->data.c_str());
+}
+
+/**
+ *
+ */
+void mrta_vc::SystemUserInterfaceNode::allocationsCallback(const mrta_vc::Allocation::ConstPtr& allocation_msg)
+{
+	if (hasAssignedAnyTask())
+	{
+		unifei::expertinos::mrta_vc::tasks::Allocation allocation(allocation_msg);
+		if (allocation.isInvolved(*this))
+		{
+			ROS_INFO("I'm involved in: %s", allocation.toString().c_str());
+			allocations_.push_back(allocation);
+			//allocation_.start();
+			//allocation_pub_.publish(allocation_.toMsg());
+		}
+	}
 }
 
 /**
@@ -124,11 +146,11 @@ void mrta_vc::SystemUserInterfaceNode::login(std::string login_name, std::string
 }
 
 /**
- * 
+ *
  */
 void mrta_vc::SystemUserInterfaceNode::logout()
 {
-  ROS_DEBUG("%s has been logged out!!!", unifei::expertinos::mrta_vc::agents::User::getLoginName().c_str());
+	ROS_DEBUG("%s has been logged out!!!", unifei::expertinos::mrta_vc::agents::User::getLoginName().c_str());
 	mrta_vc::SetUser srv;
 	srv.request.logged = false;
 	srv.request.user = mrta_vc::Agent();
@@ -165,4 +187,12 @@ void mrta_vc::SystemUserInterfaceNode::setComputerUp()
 	ROS_INFO("This computer has been setted up!!!");
 	ROS_DEBUG("Computer setting up succeeded: %s", srv.response.message.c_str());
 	ROS_DEBUG("%s", unifei::expertinos::mrta_vc::agents::User::getComputer().toString().c_str());
+}
+
+/**
+ *
+ */
+bool mrta_vc::SystemUserInterfaceNode::hasAssignedAnyTask()
+{
+	return !allocations_.empty();
 }

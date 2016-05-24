@@ -440,6 +440,14 @@ bool unifei::expertinos::mrta_vc::tasks::Allocation::isInvolved(unifei::expertin
 /**
  *
  */
+bool unifei::expertinos::mrta_vc::tasks::Allocation::isInvolved(unifei::expertinos::mrta_vc::agents::Person person)
+{
+	return task_.isInvolved(person);
+}
+
+/**
+ *
+ */
 ::mrta_vc::Allocation unifei::expertinos::mrta_vc::tasks::Allocation::toMsg()
 {
 	::mrta_vc::Allocation allocation_msg;
@@ -454,6 +462,30 @@ bool unifei::expertinos::mrta_vc::tasks::Allocation::isInvolved(unifei::expertin
 	allocation_msg.start_timestamp = start_timestamp_;
 	allocation_msg.end_timestamp = end_timestamp_;
 	return allocation_msg;
+}
+
+/**
+ *
+ */
+std::string unifei::expertinos::mrta_vc::tasks::Allocation::toString()
+{
+	std::stringstream robots_ss;
+	for (int i = 0; i < robots_.size(); i++)
+	{
+		if (i != 0)
+		{
+			robots_ss << ", ";
+		}
+		robots_ss << i << " " << robots_.at(i).toString();
+	}
+	return "allocation: {" + task_.toString() +
+			", robots: {" + robots_ss.str() +
+			"}, state: " + unifei::expertinos::mrta_vc::tasks::TaskStates::toString(state_) +
+			", satisfaction: " + unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toString(satisfaction_) +
+			", allocation timestamp: " + unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(allocation_timestamp_) +
+			", start timestamp: " + unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(start_timestamp_) +
+			", end timestamp: " + unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(end_timestamp_) +
+			"}";
 }
 
 /**

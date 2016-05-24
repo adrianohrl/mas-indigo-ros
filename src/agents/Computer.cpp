@@ -133,7 +133,9 @@ void unifei::expertinos::mrta_vc::agents::Computer::setMobile(bool mobile)
  */
 std::string unifei::expertinos::mrta_vc::agents::Computer::toString() 
 {
-  return unifei::expertinos::mrta_vc::agents::Agent::toString() + ", hostname: " + hostname_ + "}";
+	return unifei::expertinos::mrta_vc::agents::Agent::toString() +
+			", hostname: " + hostname_ +
+			"}";
 }
 
 /**

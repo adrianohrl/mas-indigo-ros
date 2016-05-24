@@ -133,7 +133,10 @@ void unifei::expertinos::mrta_vc::agents::Person::setHierarchyLevel(unifei::expe
  */
 std::string unifei::expertinos::mrta_vc::agents::Person::toString() 
 {
-  return unifei::expertinos::mrta_vc::agents::Agent::toString() + ", name: " + name_ + ", hierarchy level: " + unifei::expertinos::mrta_vc::agents::HierarchyLevels::toString(hierarchy_level_) + "}";
+	return unifei::expertinos::mrta_vc::agents::Agent::toString() +
+			", name: " + name_ +
+			", hierarchy level: " + unifei::expertinos::mrta_vc::agents::HierarchyLevels::toString(hierarchy_level_) +
+			"}";
 }
 
 /**

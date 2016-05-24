@@ -17,11 +17,12 @@
 #include "mrta_vc/SetUser.h"
 #include "mrta_vc/ValidatePassword.h"
 #include "unifei/expertinos/mrta_vc/agents/User.h"
+#include "unifei/expertinos/mrta_vc/tasks/Allocation.h"
 
 namespace mrta_vc 
 {
 
-  class SystemUserInterfaceNode : public unifei::expertinos::mrta_vc::agents::User
+	class SystemUserInterfaceNode : public unifei::expertinos::mrta_vc::agents::User
 	{
 
 	public:
@@ -34,17 +35,22 @@ namespace mrta_vc
 		ros::NodeHandle nh_;
 		ros::Timer beacon_timer_;
 		ros::Publisher beacon_pub_;
+		ros::Publisher allocation_pub_;
 		ros::Subscriber message_sub_;
+		ros::Subscriber allocation_sub_;
 		ros::ServiceClient get_computer_cli_;
 		ros::ServiceClient set_user_cli_;
 		ros::ServiceClient validate_cli_;
-    bool logged_;
+		std::list<unifei::expertinos::mrta_vc::tasks::Allocation> allocations_;
+		bool logged_;
 		
 		void beaconTimerCallback(const ros::TimerEvent& event);
 		void messagesCallback(const std_msgs::String::ConstPtr& message_msg);
+		void allocationsCallback(const mrta_vc::Allocation::ConstPtr& allocation_msg);
 		void login(std::string login_name, std::string password);
 		void logout();
 		void setComputerUp();
+		bool hasAssignedAnyTask();
 
 
 	};

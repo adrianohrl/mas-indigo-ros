@@ -41,7 +41,7 @@ namespace mrta_vc
 		ros::Publisher task_pub_;
 		ros::ServiceServer abort_srv_;
 		ros::ServiceServer set_user_srv_;
-    ros::ServiceClient get_person_cli_;
+		ros::ServiceClient get_person_cli_;
 		ros::ServiceClient get_user_cli_;
 
 		void answersCallback(const std_msgs::String::ConstPtr& answer_msg);
@@ -49,6 +49,7 @@ namespace mrta_vc
 		bool setUser(mrta_vc::SetUser::Request& request, mrta_vc::SetUser::Response& response);
 		void questionsTimerCallback(const ros::TimerEvent& event);
 		void publishQuestionAndMessage();
+		bool isUserLogged();
 
 	};
 

@@ -36,15 +36,15 @@ mrta_vc::TaskBuilderNode::~TaskBuilderNode()
 	question_pub_.shutdown();
 	message_pub_.shutdown();
 	answer_sub_.shutdown();
-  task_pub_.shutdown();
-  abort_srv_.shutdown();
+	task_pub_.shutdown();
+	abort_srv_.shutdown();
 	set_user_srv_.shutdown();
 	get_person_cli_.shutdown();
 	get_user_cli_.shutdown();
 }
 
 /**
- * 
+ *
  */
 void mrta_vc::TaskBuilderNode::spin() 
 {
@@ -58,7 +58,7 @@ void mrta_vc::TaskBuilderNode::spin()
 }
 
 /**
- * 
+ *
  */
 bool mrta_vc::TaskBuilderNode::abort(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response)
 {
@@ -72,7 +72,12 @@ bool mrta_vc::TaskBuilderNode::abort(std_srvs::Empty::Request& request, std_srvs
  */
 bool mrta_vc::TaskBuilderNode::setUser(mrta_vc::SetUser::Request& request, mrta_vc::SetUser::Response& response)
 {
-	mrta_vc::state_machine::MachineController::setUser(unifei::expertinos::mrta_vc::agents::User(request.user));
+	unifei::expertinos::mrta_vc::agents::User user(request.user);
+	if (user.getLoginName() == "")
+	{
+		return false;
+	}
+	mrta_vc::state_machine::MachineController::setUser(user);
 	return true;
 }
 
@@ -81,17 +86,23 @@ bool mrta_vc::TaskBuilderNode::setUser(mrta_vc::SetUser::Request& request, mrta_
  */
 void mrta_vc::TaskBuilderNode::answersCallback(const std_msgs::String::ConstPtr& answer_msg)
 {
-	ROS_DEBUG("[TASK_BUILDER] state: %s, question: %s, answer: %s", mrta_vc::state_machine::MachineController::toString().c_str(), mrta_vc::state_machine::MachineController::getQuestion().c_str(), answer_msg->data.c_str());
-	if (mrta_vc::state_machine::MachineController::process(answer_msg->data))
+	if (!isUserLogged())
 	{
-		publishQuestionAndMessage();
-		if (mrta_vc::state_machine::MachineController::isFinalState())
-		{
-			ROS_DEBUG("[TASK_BUILDER] task: %s", mrta_vc::state_machine::MachineController::getTask().toString().c_str());
-			task_pub_.publish(mrta_vc::state_machine::MachineController::getTask().toMsg());
-			mrta_vc::state_machine::MachineController::reset();
-			ROS_DEBUG("----------------------------------------------");
-		}
+		ROS_DEBUG("[TASK_BUILDER] There is no user logged yet!!!");
+		return;
+	}
+	if (!mrta_vc::state_machine::MachineController::process(answer_msg->data))
+	{
+		ROS_DEBUG("[TASK_BUILDER] Invalid answer!!!");
+		return;
+	}
+	publishQuestionAndMessage();
+	if (mrta_vc::state_machine::MachineController::isFinalState())
+	{
+		ROS_DEBUG("[TASK_BUILDER] task: %s", mrta_vc::state_machine::MachineController::getTask().toString().c_str());
+		task_pub_.publish(mrta_vc::state_machine::MachineController::getTask().toMsg());
+		mrta_vc::state_machine::MachineController::reset();
+		ROS_DEBUG("----------------------------------------------");
 	}
 }
 
@@ -116,4 +127,12 @@ void mrta_vc::TaskBuilderNode::publishQuestionAndMessage()
 	message_msg.data = mrta_vc::state_machine::MachineController::getMessage();
 	ROS_DEBUG("[TASK_BUILDER_MESSAGE] %s", message_msg.data.c_str());
 	message_pub_.publish(message_msg);
+}
+
+/**
+ *
+ */
+bool mrta_vc::TaskBuilderNode::isUserLogged()
+{
+	return mrta_vc::state_machine::MachineController::getUser().getLoginName() != "";
 }

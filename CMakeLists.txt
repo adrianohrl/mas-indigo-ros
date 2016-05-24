@@ -17,6 +17,7 @@ add_message_files(
 	Agent.msg
 	Allocation.msg
 	Location.msg
+	ManagerState.msg
 	Place.msg
 	Resource.msg
 	Skill.msg
@@ -103,6 +104,12 @@ add_executable(system_manager_node
 	src/agents/Robot.cpp
 	include/unifei/expertinos/mrta_vc/agents/User.h
 	src/agents/User.cpp
+	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
+	 src/utilities/StringManipulator.cpp
+	 include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
+	 src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/mrta_vc/utilities/MathManipulator.h
+	src/utilities/MathManipulator.cpp
 	)
 
 add_dependencies(system_manager_node 
@@ -120,6 +127,8 @@ add_executable(system_user_interface_node
 	src/SystemUserInterfaceNode.cpp
 	include/unifei/expertinos/mrta_vc/agents/User.h
 	src/agents/User.cpp
+	include/unifei/expertinos/mrta_vc/agents/Robot.h
+	src/agents/Robot.cpp
 	include/unifei/expertinos/mrta_vc/agents/Computer.h
 	src/agents/Computer.cpp
 	include/unifei/expertinos/mrta_vc/agents/Person.h
@@ -130,6 +139,28 @@ add_executable(system_user_interface_node
 	src/agents/Agent.cpp
 	include/unifei/expertinos/mrta_vc/places/Location.h
 	src/places/Location.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Allocation.h
+	src/tasks/Allocation.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Task.h
+	src/tasks/Task.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
+	src/tasks/TaskPriorities.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskStates.h
+	src/tasks/TaskStates.cpp
+	include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
+	src/tasks/TaskSatisfactions.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Skill.h
+	src/tasks/Skill.cpp
+	include/unifei/expertinos/mrta_vc/tasks/SkillLevels.h
+	src/tasks/SkillLevels.cpp
+	include/unifei/expertinos/mrta_vc/tasks/Resource.h
+	src/tasks/Resource.cpp
+	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
+	 src/utilities/StringManipulator.cpp
+	 include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
+	 src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/mrta_vc/utilities/MathManipulator.h
+	src/utilities/MathManipulator.cpp
 	)
 
 add_dependencies(system_user_interface_node 
@@ -175,6 +206,12 @@ add_executable(system_robot_interface_node
 	src/tasks/Resource.cpp
 	include/unifei/expertinos/mrta_vc/places/Location.h
 	src/places/Location.cpp
+	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
+	 src/utilities/StringManipulator.cpp
+	 include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
+	 src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/mrta_vc/utilities/MathManipulator.h
+	src/utilities/MathManipulator.cpp
 	)
 
 add_dependencies(system_robot_interface_node 
@@ -236,6 +273,12 @@ add_executable(system_database_interface_node
 	src/agents/Robot.cpp
 	include/unifei/expertinos/mrta_vc/agents/User.h
 	src/agents/User.cpp
+	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
+	 src/utilities/StringManipulator.cpp
+	 include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
+	 src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/mrta_vc/utilities/MathManipulator.h
+	src/utilities/MathManipulator.cpp
 	)
 
 add_dependencies(system_database_interface_node 

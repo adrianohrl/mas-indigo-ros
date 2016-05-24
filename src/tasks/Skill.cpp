@@ -127,7 +127,9 @@ void unifei::expertinos::mrta_vc::tasks::Skill::setLevel(unifei::expertinos::mrt
  */
 std::string unifei::expertinos::mrta_vc::tasks::Skill::toString()
 {
-  return "skill: {" + resource_.toString() + ", level: " + unifei::expertinos::mrta_vc::tasks::SkillLevels::toString(level_) + "}";
+	return "skill: {" + resource_.toString() +
+			", level: " + unifei::expertinos::mrta_vc::tasks::SkillLevels::toString(level_) +
+			"}";
 }
 
 /**

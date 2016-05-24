@@ -60,7 +60,9 @@ namespace unifei
 					void cancel();
 					bool finish(TaskStateEnum state);
 					bool isInvolved(unifei::expertinos::mrta_vc::agents::Robot robot);
+					bool isInvolved(unifei::expertinos::mrta_vc::agents::Person person);
 					::mrta_vc::Allocation toMsg();
+					std::string toString();
 					int compareTo(Allocation allocation);
 					bool equals(const Allocation& allocation);
 					bool operator==(const Allocation& allocation);

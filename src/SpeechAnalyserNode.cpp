@@ -16,8 +16,8 @@
  */
 mrta_vc::SpeechAnalyserNode::SpeechAnalyserNode(ros::NodeHandle nh) : nh_(nh)
 {
-  questions_sub_ = nh_.subscribe("questions", 1, &mrta_vc::SpeechAnalyserNode::questionsCallback, this);
-  answers_pub_ = nh_.advertise<std_msgs::String>("answers", 1);
+	questions_sub_ = nh_.subscribe("questions", 1, &mrta_vc::SpeechAnalyserNode::questionsCallback, this);
+	answers_pub_ = nh_.advertise<std_msgs::String>("answers", 1);
 }
 
 /**
@@ -25,18 +25,18 @@ mrta_vc::SpeechAnalyserNode::SpeechAnalyserNode(ros::NodeHandle nh) : nh_(nh)
  */
 mrta_vc::SpeechAnalyserNode::~SpeechAnalyserNode()
 {
-  questions_sub_.shutdown();
-  answers_pub_.shutdown();
+	questions_sub_.shutdown();
+	answers_pub_.shutdown();
 }
 
 /**
- * 
+ *
  */
 void mrta_vc::SpeechAnalyserNode::spin() 
 {
 	ROS_INFO("Speech Analyser Node is up and running!!!");
 	ros::Rate loop_rate(10.0);
-	while (nh_.ok()) 
+	while (nh_.ok())
 	{
 		ros::spinOnce();
 		loop_rate.sleep();
@@ -80,15 +80,22 @@ void mrta_vc::SpeechAnalyserNode::questionsCallback(const std_msgs::String::Cons
 		possible_answers.push_back("critical");
 	}
 	else if (question_msg->data == "What is the deadline?")
-	{		
-		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 31104000)));
+	{
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 373248000))); // até 1 ano
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 31104000))); // até 1 mês
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 604800))); // até 1 semana
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 86400))); // até 1 dia
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 3600))); // até 1 hora
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Duration(rand() % 604800)));
 		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Duration(rand() % 86400)));
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Duration(rand() % 3600)));
 	}
 	else
 	{
-		ROS_ERROR("Unknown question!!!");
+		ROS_DEBUG("[SPEECH_ANALYSER] Unknown question!!!");
 		return;
 	}
 	answer_msg.data = possible_answers.at(rand() % possible_answers.size());
+	ROS_INFO("[SPEECH_ANALYSER] answer: %s", answer_msg.data.c_str());
 	answers_pub_.publish(answer_msg);
 }
