@@ -17,6 +17,7 @@ add_message_files(
 	Agent.msg
 	Allocation.msg
 	Location.msg
+	ManagerState.msg
 	Place.msg
 	Resource.msg
 	Skill.msg

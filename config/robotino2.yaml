@@ -4,4 +4,4 @@ holonomic: true
 location: {x: 20.0, y: 3.0, theta: deg(-90.0)}
 skill0: {resource: {name: 'velocity', description: 'robot velocity'}, level: 'high'} 
 skill1: {resource: {name: 'strength', description: 'robot strength'}, level: 'low'} 
-skill2: {resource: {name: 'flexible', description: 'robot has flexible movements'}, level: 'high'} 
+skill2: {resource: {name: 'flexibility', description: 'robot has flexible movements'}, level: 'high'} 
