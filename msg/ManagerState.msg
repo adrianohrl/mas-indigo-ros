@@ -1,0 +1,6 @@
+int8 number_of_unallocated_tasks
+int8 number_of_allocated_tasks
+int8 number_of_available_robots
+int8 number_of_busy_robots
+int8 number_of_logged_users
+int8 number_of_allocations

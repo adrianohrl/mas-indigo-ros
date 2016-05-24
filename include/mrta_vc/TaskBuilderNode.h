@@ -24,33 +24,34 @@
 namespace mrta_vc 
 {
 
-	class TaskBuilderNode : public mrta_vc::state_machine::MachineController
-	{
+class TaskBuilderNode : public mrta_vc::state_machine::MachineController
+{
 
-	public:
-		TaskBuilderNode(ros::NodeHandle nh);
-		virtual ~TaskBuilderNode();
+public:
+    TaskBuilderNode(ros::NodeHandle nh);
+    virtual ~TaskBuilderNode();
 
-		void spin();
+    void spin();
 
-	private:
-		ros::Timer questions_timer_;
-		ros::Publisher question_pub_;
-		ros::Publisher message_pub_;
-		ros::Subscriber answer_sub_;
-		ros::Publisher task_pub_;
-		ros::ServiceServer abort_srv_;
-		ros::ServiceServer set_user_srv_;
+private:
+    ros::Timer questions_timer_;
+    ros::Publisher question_pub_;
+    ros::Publisher message_pub_;
+    ros::Subscriber answer_sub_;
+    ros::Publisher task_pub_;
+    ros::ServiceServer abort_srv_;
+    ros::ServiceServer set_user_srv_;
     ros::ServiceClient get_person_cli_;
-		ros::ServiceClient get_user_cli_;
+    ros::ServiceClient get_user_cli_;
+    int counter_; //Para testes
 
-		void answersCallback(const std_msgs::String::ConstPtr& answer_msg);
-		bool abort(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response);
-		bool setUser(mrta_vc::SetUser::Request& request, mrta_vc::SetUser::Response& response);
-		void questionsTimerCallback(const ros::TimerEvent& event);
-		void publishQuestionAndMessage();
+    void answersCallback(const std_msgs::String::ConstPtr& answer_msg);
+    bool abort(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response);
+    bool setUser(mrta_vc::SetUser::Request& request, mrta_vc::SetUser::Response& response);
+    void questionsTimerCallback(const ros::TimerEvent& event);
+    void publishQuestionAndMessage();
 
-	};
+};
 
 }
 

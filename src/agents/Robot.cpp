@@ -254,16 +254,16 @@ double unifei::expertinos::mrta_vc::agents::Robot::getUtility(unifei::expertinos
   int number_of_robot_skills = getSkills().size();
   if (number_of_robot_skills < number_of_task_skills)
   {
-    ROS_INFO("robo tem menos skill q tarefa precisa :(");
+    //ROS_INFO("robo tem menos skill q tarefa precisa :(");
     return 0;
   }
   for (int i = 0; i < number_of_task_skills; i++)
   {
     unifei::expertinos::mrta_vc::tasks::Skill task_skill(desired_skills.at(i));
-    ROS_INFO("procurando match entre skills; skill: %s", task_skill.getResource().getName().c_str());
+    //ROS_INFO("procurando match entre skills; skill: %s", task_skill.getResource().getName().c_str());
     for (int j = 0; j < number_of_robot_skills; j++)
     {
-      ROS_INFO("rodando skills do robo");
+      //ROS_INFO("rodando skills do robo");
       unifei::expertinos::mrta_vc::tasks::Skill robot_skill = getSkills().at(j);
       if (robot_skill == task_skill)
       {
@@ -271,7 +271,7 @@ double unifei::expertinos::mrta_vc::agents::Robot::getUtility(unifei::expertinos
         {
           return 0;
         }
-        ROS_INFO("skills batem e e maior");
+        //ROS_INFO("skills batem e e maior");
         utility += robot_skill.getLevel() / task_skill.getLevel();
         break;
       }
