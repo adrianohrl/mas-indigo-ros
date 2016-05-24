@@ -139,14 +139,6 @@ std::string unifei::expertinos::mrta_vc::agents::Computer::toString()
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::agents::Computer::equals(unifei::expertinos::mrta_vc::agents::Computer computer) 
-{
-	return hostname_ == computer.hostname_;
-}
-
-/**
- *
- */
 bool unifei::expertinos::mrta_vc::agents::Computer::operator==(const unifei::expertinos::mrta_vc::agents::Computer& computer)
 {
 	return hostname_ == computer.hostname_;

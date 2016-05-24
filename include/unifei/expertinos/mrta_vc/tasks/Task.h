@@ -30,7 +30,6 @@ namespace unifei
       {
 				class Task 
 				{
-
 				public:
           Task();
           Task(int id, std::string name, std::string description, std::vector<Skill> desired_skills, unifei::expertinos::mrta_vc::agents::User user, unifei::expertinos::mrta_vc::agents::Person sender, unifei::expertinos::mrta_vc::agents::Person receiver, ros::Time deadline, TaskPriorityEnum priority = TaskPriorities::getDefault());
@@ -42,7 +41,7 @@ namespace unifei
 					int getId();
 					std::string getName();
 					std::string getDescription();
-                    std::vector<unifei::expertinos::mrta_vc::tasks::Skill> getDesiredSkills();
+					std::vector<unifei::expertinos::mrta_vc::tasks::Skill> getDesiredSkills();
           unifei::expertinos::mrta_vc::agents::User getUser();
           unifei::expertinos::mrta_vc::agents::Person getSender();
 					unifei::expertinos::mrta_vc::agents::Person getReceiver();
@@ -61,9 +60,9 @@ namespace unifei
           void setDeadline(ros::Duration duration);
 					bool isExpired();
 					::mrta_vc::Task toMsg();
-          std::string toString();
-					bool equals(Task task);
+					std::string toString();
 					int compareTo(Task task);
+					bool equals(Task task);
 					bool operator==(const Task& task);
 					bool operator!=(const Task& task);
 					void operator=(const Task& task);

@@ -28,8 +28,8 @@ namespace unifei
 			{
 				class Allocation 
 				{
-
 				public:
+					Allocation();
 					Allocation(Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots = std::vector<unifei::expertinos::mrta_vc::agents::Robot>(), TaskStateEnum state = TaskStates::getDefault(), TaskSatisfactionEnum satisfaction = TaskSatisfactions::getDefault());
 					Allocation(Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots, TaskStateEnum state, TaskSatisfactionEnum satisfaction, ros::Time allocation_timestamp, ros::Time start_timestamp, ros::Time end_timestamp);
 					Allocation(const ::mrta_vc::Allocation::ConstPtr& allocation_msg);
@@ -43,6 +43,7 @@ namespace unifei
 					ros::Time getAllocationTimestamp();
 					ros::Time getStartTimestamp();
 					ros::Time getEndTimestamp();
+					bool wasEvaluated();
 					bool wasAllocated();
 					bool wasAccepted();
 					bool isExecuting();
@@ -50,21 +51,18 @@ namespace unifei
 					bool wasSucceeded();
 					bool wasAborted();
 					bool wasCancelled();
-					void addRobot(unifei::expertinos::mrta_vc::agents::Robot robot);
-					void removeRobot(unifei::expertinos::mrta_vc::agents::Robot robot);
-					void setState(TaskStateEnum state);
 					void setSatisfaction(TaskSatisfactionEnum satisfaction);
-					void setAllocationTimestamp(ros::Time allocation_timestamp);
-					void setStartTimestamp(ros::Time start_timestamp);
-					void setEndTimestamp(ros::Time end_timestamp);
-					::mrta_vc::Allocation toMsg();
 					void allocate(std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots);
 					void start();
 					void end();
 					void abort();
+					void fail();
 					void cancel();
-					bool equals(Allocation allocation);
+					bool finish(TaskStateEnum state);
+					bool isInvolved(unifei::expertinos::mrta_vc::agents::Robot robot);
+					::mrta_vc::Allocation toMsg();
 					int compareTo(Allocation allocation);
+					bool equals(const Allocation& allocation);
 					bool operator==(const Allocation& allocation);
 					bool operator!=(const Allocation& allocation);
 					void operator=(const Allocation& allocation);
@@ -77,6 +75,16 @@ namespace unifei
 					ros::Time allocation_timestamp_;
 					ros::Time start_timestamp_;
 					ros::Time end_timestamp_;
+
+					void addRobots(std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots);
+					void addRobot(unifei::expertinos::mrta_vc::agents::Robot robot);
+					void removeRobot(unifei::expertinos::mrta_vc::agents::Robot robot);
+					bool isValid(TaskStateEnum state);
+					void setState(TaskStateEnum state);
+					bool hasStateChanged(TaskStateEnum state);
+					void setAllocationTimestamp(ros::Time allocation_timestamp = ros::Time::now());
+					void setStartTimestamp(ros::Time start_timestamp = ros::Time::now());
+					void setEndTimestamp(ros::Time end_timestamp = ros::Time::now());
 					
 				};
 			}

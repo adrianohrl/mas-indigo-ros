@@ -38,7 +38,6 @@ namespace unifei
 
 				class TaskPriorities
 				{
-
 				public:
 					static TaskPriorityEnum toEnumerated(int code);
           static TaskPriorityEnum toEnumerated(std::string name);

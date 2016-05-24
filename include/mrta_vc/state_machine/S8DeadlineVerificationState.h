@@ -14,7 +14,7 @@
 
 #include "mrta_vc/state_machine/AbstractState.h"
 #include "unifei/expertinos/mrta_vc/tasks/TaskPriorities.h"
-#include "unifei/expertinos/mrta_vc/utilities/StringManipulator.h"
+#include "unifei/expertinos/mrta_vc/utilities/TimeManipulator.h"
 
 #define DEFAULT_DURATION 3600
 
@@ -34,10 +34,7 @@ namespace mrta_vc
 
  		private:
 			virtual bool next(std::string answer);
-			bool isDeadline(std::string answer);
-			bool isDuration(std::string answer);
-			ros::Time getDeadline(std::string answer);
-			ros::Duration getDuration(std::string answer);
+
 		};
 	}
 }		

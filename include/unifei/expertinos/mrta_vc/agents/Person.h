@@ -38,9 +38,7 @@ namespace unifei
 					HierarchyLevelEnum getHierarchyLevel();
 					::mrta_vc::Agent toMsg();
 					std::string toString();
-					bool equals(Person person);
 					bool operator==(const Person& person);
-					bool operator!=(const Person& person);
 					void operator=(const Person& person);
 					
 				protected:					

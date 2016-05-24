@@ -16,7 +16,13 @@
 mrta_vc::SystemRobotInterfaceNode::SystemRobotInterfaceNode(ros::NodeHandle nh) : unifei::expertinos::mrta_vc::agents::Robot(), nh_(nh)
 {
 	beacon_timer_ = nh_.createTimer(ros::Duration(ROBOT_BEACON_INTERVAL_DURATION), &mrta_vc::SystemRobotInterfaceNode::beaconTimerCallback, this);
+	task_end_timer_ = nh_.createTimer(ros::Duration(10), &mrta_vc::SystemRobotInterfaceNode::taskEndTimerCallback, this); // para testes
+	allocation_timer_ = nh_.createTimer(ros::Duration(ALLOCATION_INTERVAL_DURATION), &mrta_vc::SystemRobotInterfaceNode::allocationTimerCallback, this);
   beacon_pub_ = nh_.advertise<mrta_vc::Agent>("/robots", 1);
+	allocation_pub_ = nh_.advertise<mrta_vc::Allocation>("/running_allocations", 1);
+	allocation_sub_ = nh_.subscribe("/allocations", 1, &mrta_vc::SystemRobotInterfaceNode::allocationsCallback, this);
+	allocation_cancellation_sub_ = nh_.subscribe("/allocation_cancellations", 1, &mrta_vc::SystemRobotInterfaceNode::allocationCancellationsCallback, this);
+	allocation_abortion_sub_ = nh_.subscribe("/allocation_abortions", 1, &mrta_vc::SystemRobotInterfaceNode::allocationAbortionsCallback, this);
   setted_up_ = false;
   setUp();
 }
@@ -26,8 +32,14 @@ mrta_vc::SystemRobotInterfaceNode::SystemRobotInterfaceNode(ros::NodeHandle nh) 
  */
 mrta_vc::SystemRobotInterfaceNode::~SystemRobotInterfaceNode()
 {
-  beacon_timer_.stop();
-  beacon_pub_.shutdown();
+	beacon_timer_.stop();
+	task_end_timer_.stop(); // para testes
+	allocation_timer_.stop();
+	beacon_pub_.shutdown();
+	allocation_pub_.shutdown();
+	allocation_sub_.shutdown();
+	allocation_cancellation_sub_.shutdown();
+	allocation_abortion_sub_.shutdown();
 }
 
 /**
@@ -49,10 +61,105 @@ void mrta_vc::SystemRobotInterfaceNode::spin()
  */
 void mrta_vc::SystemRobotInterfaceNode::beaconTimerCallback(const ros::TimerEvent& event)
 {
-  if (setted_up_)
-  {
-    beacon_pub_.publish(unifei::expertinos::mrta_vc::agents::Robot::toMsg());
-  }
+	if (setted_up_)
+	{
+		beacon_pub_.publish(unifei::expertinos::mrta_vc::agents::Robot::toMsg());
+	}
+}
+
+/**
+ * PARA TESTES
+ */
+void mrta_vc::SystemRobotInterfaceNode::taskEndTimerCallback(const ros::TimerEvent& event)
+{
+	if (isBusy())
+	{
+		allocation_.end();
+		allocation_pub_.publish(allocation_.toMsg());
+		allocation_ = unifei::expertinos::mrta_vc::tasks::Allocation();
+	}
+}
+
+/**
+ *
+ */
+void mrta_vc::SystemRobotInterfaceNode::allocationTimerCallback(const ros::TimerEvent& event)
+{
+	if (allocation_.isExecuting())
+	{
+		allocation_pub_.publish(allocation_.toMsg());
+	}
+	if (allocation_.isFinished())
+	{
+		allocation_pub_.publish(allocation_.toMsg());
+		allocation_ = unifei::expertinos::mrta_vc::tasks::Allocation();
+	}
+}
+
+/**
+ *
+ */
+void mrta_vc::SystemRobotInterfaceNode::allocationsCallback(const mrta_vc::Allocation::ConstPtr& allocation_msg)
+{
+	if (isAvailable())
+	{
+		unifei::expertinos::mrta_vc::tasks::Allocation allocation(allocation_msg);
+		if (allocation.isInvolved(*this))
+		{
+			allocation_ = allocation;
+			allocation_.start();
+			allocation_pub_.publish(allocation_.toMsg());
+		}
+	}
+}
+
+/**
+ *
+ */
+void mrta_vc::SystemRobotInterfaceNode::allocationCancellationsCallback(const mrta_vc::Task::ConstPtr& task_msg)
+{
+	if (isBusy())
+	{
+		unifei::expertinos::mrta_vc::tasks::Allocation allocation;
+		allocation = unifei::expertinos::mrta_vc::tasks::Allocation(unifei::expertinos::mrta_vc::tasks::Task(task_msg));
+		if (allocation_ == allocation)
+		{
+			allocation_.cancel();
+			allocation_pub_.publish(allocation_.toMsg());
+		}
+	}
+}
+
+/**
+ *
+ */
+void mrta_vc::SystemRobotInterfaceNode::allocationAbortionsCallback(const mrta_vc::Task::ConstPtr& task_msg)
+{
+	if (isBusy())
+	{
+		unifei::expertinos::mrta_vc::tasks::Allocation allocation;
+		allocation = unifei::expertinos::mrta_vc::tasks::Allocation(unifei::expertinos::mrta_vc::tasks::Task(task_msg));
+		if (allocation_ == allocation)
+		{
+			allocation_.abort();
+			allocation_pub_.publish(allocation_.toMsg());
+		}
+	}
+}
+
+/**
+ *
+ */
+bool mrta_vc::SystemRobotInterfaceNode::finishAllocationCallback(mrta_vc::FinishAllocation::Request& request, mrta_vc::FinishAllocation::Response& response)
+{
+	unifei::expertinos::mrta_vc::tasks::TaskStateEnum state = unifei::expertinos::mrta_vc::tasks::TaskStates::toEnumerated(request.state);
+	response.valid = allocation_.finish(state);
+	response.message = "Invalid state code!!!";
+	if (response.valid)
+	{
+		response.message = "Finished!!!";
+	}
+	return response.valid;
 }
 
 /**
@@ -60,7 +167,7 @@ void mrta_vc::SystemRobotInterfaceNode::beaconTimerCallback(const ros::TimerEven
  */
 void mrta_vc::SystemRobotInterfaceNode::setUp()
 {
-  bool setted_up;
+	bool setted_up = false;
   ROS_DEBUG("********* Reading Robot Parameters **********");
   std::string ns = ros::this_node::getName();
 
@@ -98,25 +205,41 @@ void mrta_vc::SystemRobotInterfaceNode::setUp()
     aux.str("");
     aux << ns << ++counter;
   }
-  if (!setted_up)
+	if (setted_up)
   {
-    ROS_ERROR("You must create and set a YAML file containing this robot info!!!");
+		ROS_INFO("This robot has been setted up!!!");
+		ROS_INFO("Robot Info:");
+		ROS_INFO("     hostname: %s", unifei::expertinos::mrta_vc::agents::Robot::getHostname().c_str());
+		ROS_INFO("     holonomic: %s", unifei::expertinos::mrta_vc::agents::Robot::isHolonomic() ? "true" : "false");
+		ROS_INFO("     mobile: %s", unifei::expertinos::mrta_vc::agents::Robot::isMobile() ? "true" : "false");
+		ROS_INFO("     location: (%f, %f, %f)", unifei::expertinos::mrta_vc::agents::Robot::getLocation().getX(), unifei::expertinos::mrta_vc::agents::Robot::getLocation().getY(), unifei::expertinos::mrta_vc::agents::Robot::getLocation().getTheta());
+		for (int i = 0; i < unifei::expertinos::mrta_vc::agents::Robot::getSkills().size(); i++)
+		{
+			unifei::expertinos::mrta_vc::tasks::Skill skill(unifei::expertinos::mrta_vc::agents::Robot::getSkills().at(i));
+			ROS_INFO("     skill %d:", i);
+			ROS_INFO("          resource: %s", skill.getResource().getName().c_str());
+			ROS_INFO("          level: %s", unifei::expertinos::mrta_vc::tasks::SkillLevels::toString(skill.getLevel()).c_str());
+		}
   }
   else
   {
-    ROS_INFO("This robot has been setted up!!!");
-    ROS_INFO("Robot Info:");
-    ROS_INFO("     hostname: %s", unifei::expertinos::mrta_vc::agents::Robot::getHostname().c_str());
-    ROS_INFO("     holonomic: %s", unifei::expertinos::mrta_vc::agents::Robot::isHolonomic() ? "true" : "false");
-    ROS_INFO("     mobile: %s", unifei::expertinos::mrta_vc::agents::Robot::isMobile() ? "true" : "false");
-    ROS_INFO("     location: (%f, %f, %f)", unifei::expertinos::mrta_vc::agents::Robot::getLocation().getX(), unifei::expertinos::mrta_vc::agents::Robot::getLocation().getY(), unifei::expertinos::mrta_vc::agents::Robot::getLocation().getTheta());
-    for (int i = 0; i < unifei::expertinos::mrta_vc::agents::Robot::getSkills().size(); i++)
-    {
-      unifei::expertinos::mrta_vc::tasks::Skill skill(unifei::expertinos::mrta_vc::agents::Robot::getSkills().at(i));
-      ROS_INFO("     skill %d:", i);
-      ROS_INFO("          resource: %s", skill.getResource().getName().c_str());
-      ROS_INFO("          level: %s", unifei::expertinos::mrta_vc::tasks::SkillLevels::toString(skill.getLevel()).c_str());
-    }
-    setted_up_ = setted_up;
+		ROS_ERROR("You must create and set a YAML file containing this robot info!!!");
   }
+	setted_up_ = setted_up;
+}
+
+/**
+ *
+ */
+bool mrta_vc::SystemRobotInterfaceNode::isAvailable()
+{
+	return allocation_.getTask().getName() == "";
+}
+
+/**
+ *
+ */
+bool mrta_vc::SystemRobotInterfaceNode::isBusy()
+{
+	return !isAvailable();
 }
