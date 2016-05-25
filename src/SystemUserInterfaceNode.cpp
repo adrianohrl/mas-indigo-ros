@@ -90,16 +90,17 @@ void mrta_vc::SystemUserInterfaceNode::messagesCallback(const std_msgs::String::
  */
 void mrta_vc::SystemUserInterfaceNode::allocationsCallback(const mrta_vc::Allocation::ConstPtr& allocation_msg)
 {
-	if (hasAssignedAnyTask())
+	if (logged_ && !hasAssignedAnyTask())
 	{
-		unifei::expertinos::mrta_vc::tasks::Allocation allocation(allocation_msg);
-		if (allocation.isInvolved(*this))
-		{
-			ROS_INFO("I'm involved in: %s", allocation.toString().c_str());
-			allocations_.push_back(allocation);
-			//allocation_.start();
-			//allocation_pub_.publish(allocation_.toMsg());
-		}
+		return;
+	}
+	unifei::expertinos::mrta_vc::tasks::Allocation allocation(allocation_msg);
+	if (allocation.isInvolved(*this))
+	{
+		ROS_INFO("I'm involved in: %s", allocation.toString().c_str());
+		allocations_.push_back(allocation);
+		//allocation_.start();
+		//allocation_pub_.publish(allocation_.toMsg());
 	}
 }
 
@@ -125,6 +126,11 @@ void mrta_vc::SystemUserInterfaceNode::login(std::string login_name, std::string
 	mrta_vc::SetUser set_user_srv;
 	set_user_srv.request.logged = true;
 	set_user_srv.request.user = unifei::expertinos::mrta_vc::agents::User::toMsg();
+	if (!set_user_cli_.waitForExistence(ros::Duration(5)))
+	{
+		ROS_ERROR("You must run this user task_builder_node at first!!!");
+		return;
+	}
 	if (!set_user_cli_.call(set_user_srv))
 	{
 		ROS_ERROR("Unable to log user in!!!");

@@ -81,11 +81,11 @@ void mrta_vc::SpeechAnalyserNode::questionsCallback(const std_msgs::String::Cons
 	}
 	else if (question_msg->data == "What is the deadline?")
 	{
-		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 373248000))); // até 1 ano
-		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 31104000))); // até 1 mês
-		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 604800))); // até 1 semana
-		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 86400))); // até 1 dia
-		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 3600))); // até 1 hora
+		//possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 373248000))); // até 1 ano
+		//possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 31104000))); // até 1 mês
+		//possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 604800))); // até 1 semana
+		//possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 86400))); // até 1 dia
+		//possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 3600))); // até 1 hora
 		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Duration(rand() % 604800)));
 		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Duration(rand() % 86400)));
 		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Duration(rand() % 3600)));
@@ -95,6 +95,7 @@ void mrta_vc::SpeechAnalyserNode::questionsCallback(const std_msgs::String::Cons
 		ROS_DEBUG("[SPEECH_ANALYSER] Unknown question!!!");
 		return;
 	}
+	srand(time(NULL));
 	answer_msg.data = possible_answers.at(rand() % possible_answers.size());
 	ROS_INFO("[SPEECH_ANALYSER] answer: %s", answer_msg.data.c_str());
 	answers_pub_.publish(answer_msg);

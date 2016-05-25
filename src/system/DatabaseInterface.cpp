@@ -618,7 +618,7 @@ unifei::expertinos::mrta_vc::agents::User unifei::expertinos::mrta_vc::system::D
 	int id = 0;
 	std::string name = "";
   unifei::expertinos::mrta_vc::agents::HierarchyLevelEnum hierarchy_level = unifei::expertinos::mrta_vc::agents::HierarchyLevels::getDefault();
-	unifei::expertinos::mrta_vc::agents::Computer computer(0, "");
+	unifei::expertinos::mrta_vc::agents::Computer computer;
 	// realizar consultas no DB para preencher o objeto a partir do seu login_name e enviá-lo
 	// Simulado, por enquanto
 	if (login_name == "adrianohrl") 
