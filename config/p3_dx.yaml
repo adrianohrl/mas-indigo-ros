@@ -1,0 +1,8 @@
+hostname: 'p3_dx'
+mobile: true
+holonomic: false
+location: {x: 2.0, y: 3.0, theta: deg(-30.0)}
+skill0: {resource: {name: 'velocity', description: 'robot speed'}, level: 'high'} 
+skill1: {resource: {name: 'strength', description: 'robot can deal with heavy objects'}, level: 'resourceful'} 
+skill2: {resource: {name: 'flexibility', description: 'robot has flexible movements'}, level: 'high'} 
+skill3: {resource: {name: 'smoothness', description: ' '}, level: 'resourceful'} 
