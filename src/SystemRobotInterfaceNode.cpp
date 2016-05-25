@@ -101,15 +101,16 @@ void mrta_vc::SystemRobotInterfaceNode::allocationTimerCallback(const ros::Timer
  */
 void mrta_vc::SystemRobotInterfaceNode::allocationsCallback(const mrta_vc::Allocation::ConstPtr& allocation_msg)
 {
-	if (isAvailable())
+	if (!isAvailable())
 	{
-		unifei::expertinos::mrta_vc::tasks::Allocation allocation(allocation_msg);
-		if (allocation.isInvolved(*this))
-		{
-			allocation_ = allocation;
-			allocation_.start();
-			allocation_pub_.publish(allocation_.toMsg());
-		}
+		return;
+	}
+	unifei::expertinos::mrta_vc::tasks::Allocation allocation(allocation_msg);
+	if (allocation.isInvolved(*this))
+	{
+		allocation_ = allocation;
+		allocation_.start();
+		allocation_pub_.publish(allocation_.toMsg());
 	}
 }
 

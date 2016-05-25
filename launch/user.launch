@@ -7,7 +7,7 @@
 		<node name="system_user_interface_node" pkg="mrta_vc" type="system_user_interface_node" output="screen">
 			<rosparam file="$(arg _computer_yaml)" command="load"/>
 		</node>
-		<node name="task_builder_node" pkg="mrta_vc" type="task_builder_node" output="screen">
+		<node name="task_builder_node" pkg="mrta_vc" type="task_builder_node" output="screen" launch-prefix="valgrind">
 		</node>
 		<node name="speech_analyser_node" pkg="mrta_vc" type="speech_analyser_node" output="screen">
 		</node>
