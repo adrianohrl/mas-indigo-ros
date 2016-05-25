@@ -18,7 +18,7 @@ bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::isDeadline(std::st
 {
 	std::vector<std::string> split_answer, date, time;
 	split_answer = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(answer, ' ');
-	if(split_answer.empty() || split_answer.size() > 2)
+	if(split_answer.empty() || split_answer.size() == 0 || split_answer.size() == 1 || split_answer.size() > 2)
 	{
 		return false;
 	}
@@ -92,7 +92,7 @@ bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::isTimestamp(std::s
 	}
 	int hours = atoi(time[0].c_str());
 	int minutes = atoi(time[1].c_str());
-	float seconds = 0;
+	float seconds = 0.0;
 	int month = atoi(date[0].c_str());
 	int day = atoi(date[1].c_str());
 	int year = atoi(date[2].c_str());
@@ -163,7 +163,7 @@ ros::Time unifei::expertinos::mrta_vc::utilities::TimeManipulator::getTime(std::
 	}
 	int hours = atoi(time[0].c_str());
 	int minutes = atoi(time[1].c_str());
-	float seconds = 0;
+	float seconds = 0.0;
 	int month = atoi(date[0].c_str());
 	int day = atoi(date[1].c_str());
 	int year = atoi(date[2].c_str());
@@ -204,6 +204,7 @@ ros::Duration unifei::expertinos::mrta_vc::utilities::TimeManipulator::getDurati
  */
 std::string unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time timestamp)
 {
+	double tenths = timestamp.toSec() - floor(timestamp.toSec());
 	long minutes_unix = unifei::expertinos::mrta_vc::utilities::MathManipulator::getUnsignedDivision((long)floor(timestamp.toSec()), 60);
 	int seconds = unifei::expertinos::mrta_vc::utilities::MathManipulator::getUnsignedRest((long)floor(timestamp.toSec()), 60);
 	long hours_unix = unifei::expertinos::mrta_vc::utilities::MathManipulator::getUnsignedDivision(minutes_unix, 60);
@@ -251,7 +252,38 @@ std::string unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ro
 	int month = month_counter + 1;
 	int day = year_days + 1;
 	std::stringstream ss;
-	ss << month << "/" << day << "/" << year << " " << hours << ":" << minutes << ":" << seconds;
+	if(hours < 10 && minutes < 10 && seconds < 10)
+	{
+		ss << month << "/" << day << "/" << year << " 0" << hours << ":0" << minutes << ":0" << seconds + tenths;
+	}
+	else if(hours < 10 && minutes < 10 && seconds > 10)
+	{
+		ss << month << "/" << day << "/" << year << " 0" << hours << ":0" << minutes << ":" << seconds + tenths;
+	}
+	else if(hours < 10 && minutes > 10 && seconds < 10)
+	{
+		ss << month << "/" << day << "/" << year << " 0" << hours << ":" << minutes << ":0" << seconds + tenths;
+	}
+	else if(hours < 10 && minutes > 10 && seconds > 10)
+	{
+		ss << month << "/" << day << "/" << year << " 0" << hours << ":" << minutes << ":" << seconds + tenths;
+	}
+	else if(hours > 10 && minutes < 10 && seconds < 10)
+	{
+		ss << month << "/" << day << "/" << year << " " << hours << ":0" << minutes << ":0" << seconds + tenths;
+	}
+	else if(hours > 10 && minutes < 10 && seconds > 10)
+	{
+		ss << month << "/" << day << "/" << year << " " << hours << ":0" << minutes << ":" << seconds + tenths;
+	}
+	else if(hours > 10 && minutes > 10 && seconds < 10)
+	{
+		ss << month << "/" << day << "/" << year << " " << hours << ":" << minutes << ":0" << seconds + tenths;
+	}
+	else
+	{
+		ss << month << "/" << day << "/" << year << " " << hours << ":" << minutes << ":" << seconds + tenths;
+	}
 	return ss.str();
 }
 
@@ -260,12 +292,46 @@ std::string unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ro
  */
 std::string unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Duration duration)
 {
+	double tenths = duration.toSec() - floor(duration.toSec());
 	int seconds_duration = floor(duration.toSec());
 	int hours = (seconds_duration / 3600);
 	int minutes = (seconds_duration -(3600 * hours)) / 60;
 	int seconds = seconds_duration - (3600 * hours) - (minutes * 60);
 	std::stringstream ss;
-	ss << hours << ":" << minutes << ":" << seconds;
+	if(hours < 10 && minutes < 10 && seconds < 10)
+	{
+		ss << "0" << hours << ":0" << minutes << ":0" << seconds + tenths;
+	}
+	else if(hours < 10 && minutes < 10 && seconds > 10)
+	{
+		ss << "0" << hours << ":0" << minutes << ":" << seconds + tenths;
+	}
+	else if(hours < 10 && minutes > 10 && seconds < 10)
+	{
+		ss << "0" << hours << ":" << minutes << ":0" << seconds + tenths;
+	}
+	else if(hours < 10 && minutes > 10 && seconds > 10)
+	{
+		ss << "0" << hours << ":" << minutes << ":" << seconds + tenths;
+	}
+	else if(hours > 10 && minutes < 10 && seconds < 10)
+	{
+		ss << hours << ":0" << minutes << ":0" << seconds + tenths;
+	}
+	else if(hours > 10 && minutes < 10 && seconds > 10)
+	{
+		ss << hours << ":0" << minutes << ":" << seconds + tenths;
+	}
+	else if(hours > 10 && minutes > 10 && seconds < 10)
+	{
+		ss << hours << ":" << minutes << ":0" << seconds + tenths;
+	}
+	else
+	{
+		ss << hours << ":" << minutes << ":" << seconds + tenths;
+	}
+
+	ss << hours << ":" << minutes << ":" << seconds + tenths;
 	return ss.str();
 }
 

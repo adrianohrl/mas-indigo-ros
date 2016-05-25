@@ -81,13 +81,14 @@ void mrta_vc::SpeechAnalyserNode::questionsCallback(const std_msgs::String::Cons
 	}
 	else if (question_msg->data == "What is the deadline?")
 	{
-		//possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 373248000))); // até 1 ano
-		//possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 31104000))); // até 1 mês
-		//possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 604800))); // até 1 semana
-		//possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 86400))); // até 1 dia
-		//possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 3600))); // até 1 hora
-		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Duration(rand() % 604800)));
+		srand(time(NULL));
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 373248000))); // até 1 ano
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 31104000))); // até 1 mês
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 604800))); // até 1 semana
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 86400))); // até 1 dia
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Time::now() + ros::Duration(rand() % 3600))); // até 1 hora
 		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Duration(rand() % 86400)));
+		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Duration(rand() % 43200)));
 		possible_answers.push_back(unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ros::Duration(rand() % 3600)));
 	}
 	else
