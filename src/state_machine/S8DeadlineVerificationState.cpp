@@ -40,7 +40,7 @@ bool mrta_vc::state_machine::S8DeadlineVerificationState::process(std::string an
 	else if (unifei::expertinos::mrta_vc::utilities::TimeManipulator::isDuration(answer))
   {
 		mrta_vc::state_machine::AbstractState::getController()->setTaskDeadline(unifei::expertinos::mrta_vc::utilities::TimeManipulator::getDuration(answer));
-  }
+	}
   else if (answer == "")
 	{
 		mrta_vc::state_machine::AbstractState::getController()->setTaskDeadline(ros::Time::now() + ros::Duration(DEFAULT_DURATION));
