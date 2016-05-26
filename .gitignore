@@ -48,3 +48,8 @@ Thumbs.db
 #############
 CMakeLists.txt.user
 CMakeLists.txt.*
+*.user
+*.config
+*.creator
+*.files
+*.includes

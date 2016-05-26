@@ -1,7 +1,0 @@
-include/mrta_vc
-include/mrta_vc/state_machine
-include/unifei/expertinos/mrta_vc/agents
-include/unifei/expertinos/mrta_vc/places
-include/unifei/expertinos/mrta_vc/system
-include/unifei/expertinos/mrta_vc/tasks
-include/unifei/expertinos/mrta_vc/utilities
