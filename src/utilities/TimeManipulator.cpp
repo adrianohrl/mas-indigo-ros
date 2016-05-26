@@ -18,7 +18,7 @@ bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::isDeadline(std::st
 {
 	std::vector<std::string> split_answer, date, time;
 	split_answer = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(answer, ' ');
-	if(split_answer.empty() || split_answer.size() == 0 || split_answer.size() == 1 || split_answer.size() > 2)
+	if(split_answer.empty() || split_answer.size() != 2)
 	{
 		return false;
 	}
@@ -64,7 +64,7 @@ bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::isTimestamp(std::s
 {
 	std::vector<std::string> split_answer, date, time;
 	split_answer = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(answer, ' ');
-	if(split_answer.empty() || split_answer.size() > 2)
+	if(split_answer.empty() || split_answer.size() != 2)
 	{
 		return false;
 	}
@@ -114,7 +114,7 @@ bool unifei::expertinos::mrta_vc::utilities::TimeManipulator::isDuration(std::st
 		return false;
 	}
 	split_answer = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(answer, ':');
-	if(split_answer.empty() || split_answer.size() > 3)
+	if(split_answer.empty() || split_answer.size() < 2 || split_answer.size() > 3)
 	{
 		return false;
 	}
@@ -135,7 +135,7 @@ ros::Time unifei::expertinos::mrta_vc::utilities::TimeManipulator::getTime(std::
 {
 	std::vector<std::string> split_answer, date, time;
 	split_answer = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(answer, ' ');
-	if(split_answer.empty() || split_answer.size() > 2)
+	if(split_answer.empty() || split_answer.size() != 2)
 	{
 		return ros::Time();
 	}
@@ -185,7 +185,7 @@ ros::Duration unifei::expertinos::mrta_vc::utilities::TimeManipulator::getDurati
 		return ros::Duration();
 	}
 	split_answer = unifei::expertinos::mrta_vc::utilities::StringManipulator::split(answer, ':');
-	if(split_answer.empty() || split_answer.size() > 3)
+	if(split_answer.empty() || split_answer.size() < 2 || split_answer.size() > 3)
 	{
 		return ros::Duration();
 	}
@@ -298,39 +298,6 @@ std::string unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(ro
 	int minutes = (seconds_duration -(3600 * hours)) / 60;
 	int seconds = seconds_duration - (3600 * hours) - (minutes * 60);
 	std::stringstream ss;
-	if(hours < 10 && minutes < 10 && seconds < 10)
-	{
-		ss << "0" << hours << ":0" << minutes << ":0" << seconds + tenths;
-	}
-	else if(hours < 10 && minutes < 10 && seconds > 10)
-	{
-		ss << "0" << hours << ":0" << minutes << ":" << seconds + tenths;
-	}
-	else if(hours < 10 && minutes > 10 && seconds < 10)
-	{
-		ss << "0" << hours << ":" << minutes << ":0" << seconds + tenths;
-	}
-	else if(hours < 10 && minutes > 10 && seconds > 10)
-	{
-		ss << "0" << hours << ":" << minutes << ":" << seconds + tenths;
-	}
-	else if(hours > 10 && minutes < 10 && seconds < 10)
-	{
-		ss << hours << ":0" << minutes << ":0" << seconds + tenths;
-	}
-	else if(hours > 10 && minutes < 10 && seconds > 10)
-	{
-		ss << hours << ":0" << minutes << ":" << seconds + tenths;
-	}
-	else if(hours > 10 && minutes > 10 && seconds < 10)
-	{
-		ss << hours << ":" << minutes << ":0" << seconds + tenths;
-	}
-	else
-	{
-		ss << hours << ":" << minutes << ":" << seconds + tenths;
-	}
-
 	ss << hours << ":" << minutes << ":" << seconds + tenths;
 	return ss.str();
 }
