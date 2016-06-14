@@ -1,0 +1,11 @@
+## ------------------ goal definition ------------------ ##
+mrta_vc/Allocation allocation
+
+---
+## ----------------- result definition ----------------- ##
+mrta_vc/Allocation allocation
+string message
+
+---
+## ---------------- feedback definition ---------------- ##
+mrta_vc/Allocation allocation

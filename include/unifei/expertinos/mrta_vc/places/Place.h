@@ -37,7 +37,7 @@ namespace unifei
 				{
 
 				public:
-					Place(int id, std::string name, geometry_msgs::Polygon boundary, double x = 0, double y = 0, double theta = 0);
+					Place(int id, std::string name, geometry_msgs::Polygon boundary, double x = 0.0, double y = 0.0, double theta = 0.0);
 					Place(int id, std::string name, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg);
 					Place(const ::mrta_vc::Place::ConstPtr& place_msg);
 					Place(::mrta_vc::Place place_msg);		

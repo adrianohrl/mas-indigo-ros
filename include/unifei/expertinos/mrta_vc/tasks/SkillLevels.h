@@ -30,7 +30,7 @@ namespace unifei
 						LOW,
 						MODERATE,
 						HIGH,
-						RESOURCEFUL,
+						RESOURCEFUL
 					} SkillLevelEnum;
 				}
 				
@@ -38,6 +38,7 @@ namespace unifei
 
 				class SkillLevels
 				{
+
         public:
           static SkillLevelEnum toEnumerated(int code);
           static SkillLevelEnum toEnumerated(std::string name);

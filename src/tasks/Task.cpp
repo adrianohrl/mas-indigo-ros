@@ -320,7 +320,7 @@ std::string unifei::expertinos::mrta_vc::tasks::Task::toString()
 			", sender: " + sender_.toString() +
 			", receiver: " + receiver_.toString() +
 			", priority: " + unifei::expertinos::mrta_vc::tasks::TaskPriorities::toString(priority_) +
-			", deadline: " + unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(deadline_) +
+			", deadline: " + unifei::expertinos::utilities::TimeManipulator::toString(deadline_) +
 			"}";
 }
 
@@ -329,7 +329,10 @@ std::string unifei::expertinos::mrta_vc::tasks::Task::toString()
  */
 int unifei::expertinos::mrta_vc::tasks::Task::compareTo(unifei::expertinos::mrta_vc::tasks::Task task)
 {
-  return 10*unifei::expertinos::mrta_vc::tasks::TaskPriorities::compare(priority_, task.priority_) + 2 * unifei::expertinos::mrta_vc::agents::HierarchyLevels::compare(user_.getHierarchyLevel(),task.getUser().getHierarchyLevel()) + unifei::expertinos::mrta_vc::agents::HierarchyLevels::compare(sender_.getHierarchyLevel(),task.getSender().getHierarchyLevel()) + unifei::expertinos::mrta_vc::agents::HierarchyLevels::compare(receiver_.getHierarchyLevel(),task.getReceiver().getHierarchyLevel());
+	return 10 * unifei::expertinos::mrta_vc::tasks::TaskPriorities::compare(priority_, task.priority_)
+			+ 2 * user_.compareTo(task.user_)
+			+ sender_.compareTo(task.sender_)
+			+ receiver_.compareTo(task.receiver_);
 }
 
 /**
@@ -345,7 +348,7 @@ bool unifei::expertinos::mrta_vc::tasks::Task::equals(unifei::expertinos::mrta_v
  */
 bool unifei::expertinos::mrta_vc::tasks::Task::operator==(const unifei::expertinos::mrta_vc::tasks::Task& task)
 {
-	return name_ == task.name_;
+	return id_ == task.id_;
 }
 
 /**

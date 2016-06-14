@@ -13,16 +13,11 @@
 /**
  * Constructor
  */
-mrta_vc::SystemRobotInterfaceNode::SystemRobotInterfaceNode(ros::NodeHandle nh) : unifei::expertinos::mrta_vc::agents::Robot(), nh_(nh)
+mrta_vc::SystemRobotInterfaceNode::SystemRobotInterfaceNode(ros::NodeHandle nh) : unifei::expertinos::mrta_vc::agents::Robot(), nh_(nh), execute_action_srv_(nh, "/execute_task", boost::bind(&mrta_vc::SystemRobotInterfaceNode::executeCallback, this, _1), false)
 {
 	beacon_timer_ = nh_.createTimer(ros::Duration(ROBOT_BEACON_INTERVAL_DURATION), &mrta_vc::SystemRobotInterfaceNode::beaconTimerCallback, this);
 	task_end_timer_ = nh_.createTimer(ros::Duration(10), &mrta_vc::SystemRobotInterfaceNode::taskEndTimerCallback, this); // para testes
-	allocation_timer_ = nh_.createTimer(ros::Duration(ALLOCATION_INTERVAL_DURATION), &mrta_vc::SystemRobotInterfaceNode::allocationTimerCallback, this);
 	beacon_pub_ = nh_.advertise<mrta_vc::Agent>("/robots", 1);
-	allocation_pub_ = nh_.advertise<mrta_vc::Allocation>("/running_allocations", 1);
-	allocation_sub_ = nh_.subscribe("/allocations", 1, &mrta_vc::SystemRobotInterfaceNode::allocationsCallback, this);
-	allocation_cancellation_sub_ = nh_.subscribe("/allocation_cancellations", 1, &mrta_vc::SystemRobotInterfaceNode::allocationCancellationsCallback, this);
-	allocation_abortion_sub_ = nh_.subscribe("/allocation_abortions", 1, &mrta_vc::SystemRobotInterfaceNode::allocationAbortionsCallback, this);
 	setted_up_ = false;
 	setUp();
 }
@@ -34,12 +29,8 @@ mrta_vc::SystemRobotInterfaceNode::~SystemRobotInterfaceNode()
 {
 	beacon_timer_.stop();
 	task_end_timer_.stop(); // para testes
-	allocation_timer_.stop();
 	beacon_pub_.shutdown();
-	allocation_pub_.shutdown();
-	allocation_sub_.shutdown();
-	allocation_cancellation_sub_.shutdown();
-	allocation_abortion_sub_.shutdown();
+	execute_action_srv_.shutdown();
 }
 
 /**
@@ -57,7 +48,7 @@ void mrta_vc::SystemRobotInterfaceNode::spin()
 }
 
 /**
- *
+ * This callback send a beacon signal of this robot to the system manager.
  */
 void mrta_vc::SystemRobotInterfaceNode::beaconTimerCallback(const ros::TimerEvent& event)
 {
@@ -72,88 +63,20 @@ void mrta_vc::SystemRobotInterfaceNode::beaconTimerCallback(const ros::TimerEven
  */
 void mrta_vc::SystemRobotInterfaceNode::taskEndTimerCallback(const ros::TimerEvent& event)
 {
+	ROS_INFO("task end cb!!!");
 	if (isBusy())
 	{
 		allocation_.end();
-		allocation_pub_.publish(allocation_.toMsg());
-		allocation_ = unifei::expertinos::mrta_vc::tasks::Allocation();
+		ROS_INFO("Successfully ending %s task!", allocation_.getTask().getName().c_str());
 	}
 }
 
 /**
- *
- */
-void mrta_vc::SystemRobotInterfaceNode::allocationTimerCallback(const ros::TimerEvent& event)
-{
-	if (allocation_.isExecuting())
-	{
-		allocation_pub_.publish(allocation_.toMsg());
-	}
-	if (allocation_.isFinished())
-	{
-		allocation_pub_.publish(allocation_.toMsg());
-		allocation_ = unifei::expertinos::mrta_vc::tasks::Allocation();
-	}
-}
-
-/**
- *
- */
-void mrta_vc::SystemRobotInterfaceNode::allocationsCallback(const mrta_vc::Allocation::ConstPtr& allocation_msg)
-{
-	if (!isAvailable())
-	{
-		return;
-	}
-	unifei::expertinos::mrta_vc::tasks::Allocation allocation(allocation_msg);
-	if (allocation.isInvolved(*this))
-	{
-		allocation_ = allocation;
-		allocation_.start();
-		allocation_pub_.publish(allocation_.toMsg());
-	}
-}
-
-/**
- *
- */
-void mrta_vc::SystemRobotInterfaceNode::allocationCancellationsCallback(const mrta_vc::Task::ConstPtr& task_msg)
-{
-	if (isBusy())
-	{
-		unifei::expertinos::mrta_vc::tasks::Allocation allocation;
-		allocation = unifei::expertinos::mrta_vc::tasks::Allocation(unifei::expertinos::mrta_vc::tasks::Task(task_msg));
-		if (allocation_ == allocation)
-		{
-			allocation_.cancel();
-			allocation_pub_.publish(allocation_.toMsg());
-		}
-	}
-}
-
-/**
- *
- */
-void mrta_vc::SystemRobotInterfaceNode::allocationAbortionsCallback(const mrta_vc::Task::ConstPtr& task_msg)
-{
-	if (isBusy())
-	{
-		unifei::expertinos::mrta_vc::tasks::Allocation allocation;
-		allocation = unifei::expertinos::mrta_vc::tasks::Allocation(unifei::expertinos::mrta_vc::tasks::Task(task_msg));
-		if (allocation_ == allocation)
-		{
-			allocation_.abort();
-			allocation_pub_.publish(allocation_.toMsg());
-		}
-	}
-}
-
-/**
- *
+ * This function set the current allocation to a final state.
  */
 bool mrta_vc::SystemRobotInterfaceNode::finishAllocationCallback(mrta_vc::FinishAllocation::Request& request, mrta_vc::FinishAllocation::Response& response)
 {
-	unifei::expertinos::mrta_vc::tasks::TaskStateEnum state = unifei::expertinos::mrta_vc::tasks::TaskStates::toEnumerated(request.state);
+	unifei::expertinos::mrta_vc::tasks::AllocationStateEnum state = unifei::expertinos::mrta_vc::tasks::AllocationStates::toEnumerated(request.state);
 	response.valid = allocation_.finish(state);
 	response.message = "Invalid state code!!!";
 	if (response.valid)
@@ -164,7 +87,111 @@ bool mrta_vc::SystemRobotInterfaceNode::finishAllocationCallback(mrta_vc::Finish
 }
 
 /**
+ * This callback receives new allocations from system manager.
+ */
+void mrta_vc::SystemRobotInterfaceNode::executeCallback(const mrta_vc::ExecuteGoal::ConstPtr& goal)
+{
+	ros::Rate loop_rate(10);
+	unifei::expertinos::mrta_vc::tasks::Allocation allocation(goal->allocation);
+	ROS_WARN("[GOAL CB] Got new allocation: %d, and this: %d", allocation.getTask().getId(), allocation_.getTask().getId());
+	if (!allocation.isInvolved(*this))
+	{
+		ROS_WARN("Not involved!!!");
+		return;
+	}
+	allocation_ = allocation;
+	allocation_.start();
+	while (nh_.ok())
+	{
+		if (execute_action_srv_.isPreemptRequested())
+		{
+			if (execute_action_srv_.isNewGoalAvailable())
+			{
+				allocation = unifei::expertinos::mrta_vc::tasks::Allocation(execute_action_srv_.acceptNewGoal()->allocation);
+				if (allocation == allocation_)
+				{
+					ROS_WARN("You've already sent this allocation before!!!");
+					continue;
+				}
+				ROS_WARN("[GOAL CB] Got new allocation while executing one: %d, and this: %d", allocation.getTask().getId(), allocation_.getTask().getId());
+				if (!allocation.isInvolved(*this))
+				{
+					ROS_WARN("Not accepted!!!");
+					ROS_ERROR("What do I do here????");
+					return;
+				}
+			}
+			ROS_INFO("Canceling!!!");
+			allocation_.cancel();
+			publishExecuteResult();
+			return;
+		}
+		executingTask();
+		publishExecuteFeedback();
+		if (allocation_.isFinished())
+		{
+			publishExecuteResult();
+			ROS_INFO("Sending result!!!");
+		}
+		ros::spinOnce();
+		loop_rate.sleep();
+	}
+	ROS_INFO("Aborting allocation: this node has been killed!!!");
+	allocation_.abort();
+	publishExecuteResult();
+}
+
+/**
  *
+ */
+void mrta_vc::SystemRobotInterfaceNode::executingTask()
+{
+
+}
+
+/**
+ * This function prepares the execute action feedback message to send to client
+ */
+void mrta_vc::SystemRobotInterfaceNode::publishExecuteFeedback()
+{
+	//ROS_INFO("[ROBOT] Publishing Feedback!!!");
+	mrta_vc::ExecuteFeedback feedback;
+	feedback.allocation = allocation_.toMsg();
+	execute_action_srv_.publishFeedback(feedback);
+}
+
+/**
+ * This function prepares the execute action result message to send to client, and also prepares
+ * this server to receive a new goal allocation
+ */
+void mrta_vc::SystemRobotInterfaceNode::publishExecuteResult(std::string message)
+{
+	ROS_INFO("[ROBOT] Publishing Result!!!");
+	mrta_vc::ExecuteResult result;
+	result.allocation = allocation_.toMsg();
+	result.message = message;
+	switch (allocation_.getState())
+	{
+		case unifei::expertinos::mrta_vc::tasks::states::ABORTED:
+			execute_action_srv_.setAborted(result, message);
+			break;
+		case unifei::expertinos::mrta_vc::tasks::states::CANCELLED:
+			execute_action_srv_.setPreempted(result, message);
+			break;
+		case unifei::expertinos::mrta_vc::tasks::states::SUCCEEDED:
+			execute_action_srv_.setSucceeded(result, message);
+			break;
+		default:
+			ROS_ERROR("Unable to publish execute action result: NOT A FINAL STATE!!!");
+			ROS_ERROR("state: %s", unifei::expertinos::mrta_vc::tasks::AllocationStates::toString(allocation_.getState()).c_str());
+			return;
+	}
+	allocation_ = unifei::expertinos::mrta_vc::tasks::Allocation();
+}
+
+/**
+ * This methods sets this object to a robot according to the giving YAML file when this application
+ * started.
  */
 void mrta_vc::SystemRobotInterfaceNode::setUp()
 {
@@ -221,6 +248,7 @@ void mrta_vc::SystemRobotInterfaceNode::setUp()
 			ROS_INFO("          resource: %s", skill.getResource().getName().c_str());
 			ROS_INFO("          level: %s", unifei::expertinos::mrta_vc::tasks::SkillLevels::toString(skill.getLevel()).c_str());
 		}
+		execute_action_srv_.start();
 	}
 	else
 	{
@@ -230,7 +258,7 @@ void mrta_vc::SystemRobotInterfaceNode::setUp()
 }
 
 /**
- *
+ * Checks if this robot is not executing any task.
  */
 bool mrta_vc::SystemRobotInterfaceNode::isAvailable()
 {
@@ -238,7 +266,7 @@ bool mrta_vc::SystemRobotInterfaceNode::isAvailable()
 }
 
 /**
- *
+ * Check if this robot is executing a task.
  */
 bool mrta_vc::SystemRobotInterfaceNode::isBusy()
 {

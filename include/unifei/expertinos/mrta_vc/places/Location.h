@@ -27,7 +27,7 @@ namespace unifei
 				{
 
 				public:
-					Location(double x = 0, double y = 0, double theta = 0);	
+					Location(double x = 0.0, double y = 0.0, double theta = 0.0);
 					Location(geometry_msgs::Pose pose_msg);
 					Location(const ::mrta_vc::Location::ConstPtr& location_msg);
 					Location(::mrta_vc::Location location_msg);	
@@ -37,7 +37,7 @@ namespace unifei
 					double getY();
 					double getTheta();
 					geometry_msgs::Pose getPose();
-					void setPose(double x, double y, double theta);
+					void setPose(double x, double y, double theta = 0.0);
 					void setPose(geometry_msgs::Pose pose_msg);
 					void setPose(::mrta_vc::Location location_msg);
 					void setPose(Location location);

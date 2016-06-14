@@ -26,7 +26,7 @@ namespace unifei
 				{
 
 				public:
-					Desk(int id, std::string name, Office office, geometry_msgs::Polygon boundary, double x, double y, double theta = 0);
+					Desk(int id, std::string name, Office office, geometry_msgs::Polygon boundary, double x, double y, double theta = 0.0);
 					Desk(int id, std::string name, Office office, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg);
 					Desk(const ::mrta_vc::Place::ConstPtr& place_msg);
 					Desk(::mrta_vc::Place place_msg);		

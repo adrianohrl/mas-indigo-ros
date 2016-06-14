@@ -93,7 +93,7 @@ bool unifei::expertinos::mrta_vc::agents::Agent::isValidType(int type)
  */
 int unifei::expertinos::mrta_vc::agents::Agent::getType() 
 {
-	return AGENT;
+	return AGENT_;
 }
 
 /**
@@ -178,7 +178,7 @@ bool unifei::expertinos::mrta_vc::agents::Agent::operator==(const unifei::expert
  */
 bool unifei::expertinos::mrta_vc::agents::Agent::operator!=(const unifei::expertinos::mrta_vc::agents::Agent& agent) 
 {
-  return !(operator==(agent));
+	return !operator==(agent);
 }
 
 /**

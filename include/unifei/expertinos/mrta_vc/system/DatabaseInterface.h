@@ -25,7 +25,7 @@ namespace unifei
 				class DatabaseInterface 
 				{
 
-				public:
+				protected:
 					DatabaseInterface();	
 					virtual ~DatabaseInterface();
 
@@ -45,6 +45,20 @@ namespace unifei
           unifei::expertinos::mrta_vc::agents::Robot getRobot(std::string hostname);
           unifei::expertinos::mrta_vc::tasks::Task getTask(std::string name);
           unifei::expertinos::mrta_vc::agents::User getUser(std::string login_name);
+					int generateNewAgentId();
+					int generateNewAllocationId();
+					int generateNewPlaceId();
+					int generateNewResourceId();
+					int generateNewSkillId();
+					int generateNewTaskId();
+
+				private:
+					int agents_counter_;
+					int allocations_counter_;
+					int places_counter_;
+					int resources_counter_;
+					int skills_counter_;
+					int tasks_counter_;
 
 				};
 			}

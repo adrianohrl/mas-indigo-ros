@@ -143,7 +143,7 @@ unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum unifei::expertinos::m
  */
 std::vector<unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum> unifei::expertinos::mrta_vc::tasks::SkillLevels::getAll()
 {
-	std::vector<levels::SkillLevelEnum> enumerateds;
+	std::vector<unifei::expertinos::mrta_vc::tasks::levels::SkillLevelEnum> enumerateds;
 	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::levels::NONE);
 	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::levels::LOW);
 	enumerateds.push_back(unifei::expertinos::mrta_vc::tasks::levels::MODERATE);

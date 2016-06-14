@@ -16,27 +16,32 @@
  */
 unifei::expertinos::mrta_vc::tasks::Allocation::Allocation()
 {
+	state_ = unifei::expertinos::mrta_vc::tasks::states::NOT_ALLOCATED;
+	satisfaction_ = unifei::expertinos::mrta_vc::tasks::satisfactions::NONE;
 }
 
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(unifei::expertinos::mrta_vc::tasks::Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots, unifei::expertinos::mrta_vc::tasks::TaskStateEnum state, unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum satisfaction) : task_(task), robots_(robots)
+unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(unifei::expertinos::mrta_vc::tasks::Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots, unifei::expertinos::mrta_vc::tasks::AllocationStateEnum state, unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum satisfaction, ros::Time allocation_timestamp, ros::Time dispatch_timestamp, ros::Time start_timestamp, ros::Time end_timestamp) : task_(task), robots_(robots)
 {
 	state_ = state;
 	satisfaction_ = satisfaction;
-}
-
-/**
- *
- */
-unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(unifei::expertinos::mrta_vc::tasks::Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots, unifei::expertinos::mrta_vc::tasks::TaskStateEnum state, unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum satisfaction, ros::Time allocation_timestamp, ros::Time start_timestamp, ros::Time end_timestamp) : task_(task), robots_(robots)
-{
-	state_ = state;
-	satisfaction_ = satisfaction;
+	state_ = unifei::expertinos::mrta_vc::tasks::states::NOT_ALLOCATED;
 	allocation_timestamp_ = allocation_timestamp;
+	setDispatchTimestamp(dispatch_timestamp);
 	setStartTimestamp(start_timestamp);
 	setEndTimestamp(end_timestamp);
+}
+
+/**
+ *
+ */
+unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(unifei::expertinos::mrta_vc::tasks::Task task, std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots) : task_(task)
+{
+	state_ = unifei::expertinos::mrta_vc::tasks::states::NOT_ALLOCATED;
+	satisfaction_ = unifei::expertinos::mrta_vc::tasks::satisfactions::NONE;
+	allocate(robots);
 }
 
 /**
@@ -49,9 +54,10 @@ unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(const ::mrta_vc::Allo
 		unifei::expertinos::mrta_vc::agents::Robot robot(allocation_msg->robots.at(i));
 		robots_.push_back(robot);
 	}
-	state_ = TaskStates::toEnumerated(allocation_msg->state);
+	state_ = AllocationStates::toEnumerated(allocation_msg->state);
 	satisfaction_ = TaskSatisfactions::toEnumerated(allocation_msg->satisfaction);
 	allocation_timestamp_ = allocation_msg->allocation_timestamp;
+	setDispatchTimestamp(allocation_msg->dispatch_timestamp);
 	setStartTimestamp(allocation_msg->start_timestamp);
 	setEndTimestamp(allocation_msg->end_timestamp);
 }
@@ -66,9 +72,10 @@ unifei::expertinos::mrta_vc::tasks::Allocation::Allocation(::mrta_vc::Allocation
 		unifei::expertinos::mrta_vc::agents::Robot robot(allocation_msg.robots.at(i));
 		robots_.push_back(robot);
 	}
-	state_ = TaskStates::toEnumerated(allocation_msg.state);
+	state_ = AllocationStates::toEnumerated(allocation_msg.state);
 	satisfaction_ = TaskSatisfactions::toEnumerated(allocation_msg.satisfaction);
 	allocation_timestamp_ = allocation_msg.allocation_timestamp;
+	setDispatchTimestamp(allocation_msg.dispatch_timestamp);
 	setStartTimestamp(allocation_msg.start_timestamp);
 	setEndTimestamp(allocation_msg.end_timestamp);	
 }
@@ -99,7 +106,7 @@ std::vector<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta
 /**
  *
  */
-unifei::expertinos::mrta_vc::tasks::TaskStateEnum unifei::expertinos::mrta_vc::tasks::Allocation::getState() 
+unifei::expertinos::mrta_vc::tasks::AllocationStateEnum unifei::expertinos::mrta_vc::tasks::Allocation::getState() 
 {
 	return state_;
 }
@@ -115,9 +122,17 @@ unifei::expertinos::mrta_vc::tasks::TaskSatisfactionEnum unifei::expertinos::mrt
 /**
  *
  */
-ros::Time unifei::expertinos::mrta_vc::tasks::Allocation::getAllocationTimestamp() 
+ros::Time unifei::expertinos::mrta_vc::tasks::Allocation::getAllocationTimestamp()
 {
 	return allocation_timestamp_;
+}
+
+/**
+ *
+ */
+ros::Time unifei::expertinos::mrta_vc::tasks::Allocation::getDispatchTimestamp()
+{
+	return dispatch_timestamp_;
 }
 
 /**
@@ -139,14 +154,6 @@ ros::Time unifei::expertinos::mrta_vc::tasks::Allocation::getEndTimestamp()
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Allocation::wasEvaluated()
-{
-	return satisfaction_ == unifei::expertinos::mrta_vc::tasks::satisfactions::NONE;
-}
-
-/**
- *
- */
 bool unifei::expertinos::mrta_vc::tasks::Allocation::wasAllocated()
 {
 	return state_ != unifei::expertinos::mrta_vc::tasks::states::NOT_ALLOCATED;
@@ -155,9 +162,17 @@ bool unifei::expertinos::mrta_vc::tasks::Allocation::wasAllocated()
 /**
  *
  */
+bool unifei::expertinos::mrta_vc::tasks::Allocation::wasDispatched()
+{
+	return wasAllocated() && state_ != unifei::expertinos::mrta_vc::tasks::states::ALLOCATED;
+}
+
+/**
+ *
+ */
 bool unifei::expertinos::mrta_vc::tasks::Allocation::wasAccepted() 
 {
-	return wasAllocated() && state_ != unifei::expertinos::mrta_vc::tasks::states::WAITING_ACCEPTATION;
+	return wasDispatched() && state_ != unifei::expertinos::mrta_vc::tasks::states::DISPATCHED;
 }
 
 /**
@@ -173,7 +188,9 @@ bool unifei::expertinos::mrta_vc::tasks::Allocation::isExecuting()
  */
 bool unifei::expertinos::mrta_vc::tasks::Allocation::isFinished()
 {
-	return state_ == unifei::expertinos::mrta_vc::tasks::states::SUCCEEDED || state_ == unifei::expertinos::mrta_vc::tasks::states::ABORTED || state_ == unifei::expertinos::mrta_vc::tasks::states::FAILED || state_ == unifei::expertinos::mrta_vc::tasks::states::CANCELLED;
+	return state_ == unifei::expertinos::mrta_vc::tasks::states::SUCCEEDED ||
+			state_ == unifei::expertinos::mrta_vc::tasks::states::ABORTED ||
+			state_ == unifei::expertinos::mrta_vc::tasks::states::CANCELLED;
 }
 
 /**
@@ -198,6 +215,14 @@ bool unifei::expertinos::mrta_vc::tasks::Allocation::wasAborted()
 bool unifei::expertinos::mrta_vc::tasks::Allocation::wasCancelled() 
 {
 	return state_ == unifei::expertinos::mrta_vc::tasks::states::CANCELLED;
+}
+
+/**
+ *
+ */
+bool unifei::expertinos::mrta_vc::tasks::Allocation::wasEvaluated()
+{
+	return satisfaction_ != unifei::expertinos::mrta_vc::tasks::satisfactions::NONE;
 }
 
 /**
@@ -244,28 +269,25 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::removeRobot(unifei::experti
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Allocation::isValid(unifei::expertinos::mrta_vc::tasks::TaskStateEnum state)
+bool unifei::expertinos::mrta_vc::tasks::Allocation::isValid(unifei::expertinos::mrta_vc::tasks::AllocationStateEnum state)
 {
-	return !(state_ == unifei::expertinos::mrta_vc::tasks::states::SUCCEEDED ||
-			state_ == unifei::expertinos::mrta_vc::tasks::states::CANCELLED ||
-			state_ == unifei::expertinos::mrta_vc::tasks::states::ABORTED ||
-			(state_ != unifei::expertinos::mrta_vc::tasks::states::ABORTED &&
-			 state_ != unifei::expertinos::mrta_vc::tasks::states::CANCELLED &&
-			 (state_ == unifei::expertinos::mrta_vc::tasks::states::NOT_ALLOCATED && state != unifei::expertinos::mrta_vc::tasks::states::WAITING_ACCEPTATION) ||
-			 (state_ == unifei::expertinos::mrta_vc::tasks::states::WAITING_ACCEPTATION && state != unifei::expertinos::mrta_vc::tasks::states::EXECUTING) ||
-			 (state_ == unifei::expertinos::mrta_vc::tasks::states::EXECUTING && (state != unifei::expertinos::mrta_vc::tasks::states::SUCCEEDED ||
-																																					 state != unifei::expertinos::mrta_vc::tasks::states::ABORTED ||
-																																					 state != unifei::expertinos::mrta_vc::tasks::states::CANCELLED ||
-																																					 state != unifei::expertinos::mrta_vc::tasks::states::FAILED))));
+	return state_ != unifei::expertinos::mrta_vc::tasks::states::SUCCEEDED &&
+				 (state == unifei::expertinos::mrta_vc::tasks::states::ABORTED || state == unifei::expertinos::mrta_vc::tasks::states::CANCELLED ||
+					state_ != unifei::expertinos::mrta_vc::tasks::states::ABORTED && state_ != unifei::expertinos::mrta_vc::tasks::states::CANCELLED &&
+					(state_ == unifei::expertinos::mrta_vc::tasks::states::NOT_ALLOCATED && state == unifei::expertinos::mrta_vc::tasks::states::ALLOCATED ||
+					 state_ == unifei::expertinos::mrta_vc::tasks::states::ALLOCATED && state == unifei::expertinos::mrta_vc::tasks::states::DISPATCHED ||
+					 state_ == unifei::expertinos::mrta_vc::tasks::states::DISPATCHED && state == unifei::expertinos::mrta_vc::tasks::states::EXECUTING ||
+					 state_ == unifei::expertinos::mrta_vc::tasks::states::EXECUTING && state == unifei::expertinos::mrta_vc::tasks::states::SUCCEEDED));
 }
 
 /**
  *
  */
-void unifei::expertinos::mrta_vc::tasks::Allocation::setState(unifei::expertinos::mrta_vc::tasks::TaskStateEnum state)
+void unifei::expertinos::mrta_vc::tasks::Allocation::setState(unifei::expertinos::mrta_vc::tasks::AllocationStateEnum state)
 {
 	if (isValid(state))
 	{
+		ROS_ERROR("[SET STATE] state: %s", unifei::expertinos::mrta_vc::tasks::AllocationStates::toString(state).c_str());
 		state_ = state;
 	}
 }
@@ -273,7 +295,7 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::setState(unifei::expertinos
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Allocation::hasStateChanged(unifei::expertinos::mrta_vc::tasks::TaskStateEnum state)
+bool unifei::expertinos::mrta_vc::tasks::Allocation::hasStateChanged(unifei::expertinos::mrta_vc::tasks::AllocationStateEnum state)
 {
 	state_ != state;
 }
@@ -291,7 +313,21 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::setSatisfaction(unifei::exp
  */
 void unifei::expertinos::mrta_vc::tasks::Allocation::setAllocationTimestamp(ros::Time allocation_timestamp)
 {
-	allocation_timestamp_ = allocation_timestamp;
+	if (!allocation_timestamp_.isValid())
+	{
+		allocation_timestamp_ = allocation_timestamp;
+	}
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::tasks::Allocation::setDispatchTimestamp(ros::Time dispatch_timestamp)
+{
+	if (allocation_timestamp_.isValid() && !dispatch_timestamp_.isValid() && allocation_timestamp_ < dispatch_timestamp)
+	{
+		dispatch_timestamp_ = dispatch_timestamp;
+	}
 }
 
 /**
@@ -299,7 +335,7 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::setAllocationTimestamp(ros:
  */
 void unifei::expertinos::mrta_vc::tasks::Allocation::setStartTimestamp(ros::Time start_timestamp)
 {
-	if (allocation_timestamp_.isValid() && !end_timestamp_.isValid() && allocation_timestamp_ < start_timestamp) 
+	if (dispatch_timestamp_.isValid() && !start_timestamp_.isValid() && dispatch_timestamp_ < start_timestamp)
 	{
 		start_timestamp_ = start_timestamp;
 	}
@@ -310,7 +346,7 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::setStartTimestamp(ros::Time
  */
 void unifei::expertinos::mrta_vc::tasks::Allocation::setEndTimestamp(ros::Time end_timestamp)
 {
-	if (start_timestamp_.isValid() && start_timestamp_ < end_timestamp)
+	if (start_timestamp_.isValid() && !end_timestamp_.isValid() && start_timestamp_ < end_timestamp)
 	{
 		end_timestamp_ = end_timestamp;
 	}
@@ -321,13 +357,28 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::setEndTimestamp(ros::Time e
  */
 void unifei::expertinos::mrta_vc::tasks::Allocation::allocate(std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots)
 {
-	addRobots(robots);
 	if (!robots_.empty())
 	{
 		return;
 	}
-	setState(unifei::expertinos::mrta_vc::tasks::states::WAITING_ACCEPTATION);
-	if (hasStateChanged(unifei::expertinos::mrta_vc::tasks::states::WAITING_ACCEPTATION))
+	ROS_ERROR("[ALLOCATION] Trying to allocate!!!");
+	addRobots(robots);
+	setState(unifei::expertinos::mrta_vc::tasks::states::ALLOCATED);
+	ROS_INFO("[ALLOCATION] state: %s", unifei::expertinos::mrta_vc::tasks::AllocationStates::toString(state_).c_str());
+	if (hasStateChanged(unifei::expertinos::mrta_vc::tasks::states::ALLOCATED))
+	{
+		setAllocationTimestamp();
+	}
+}
+
+/**
+ *
+ */
+void unifei::expertinos::mrta_vc::tasks::Allocation::dispatch()
+{
+	ROS_ERROR("[ALLOCATION] Trying to dispatch!!!");
+	setState(unifei::expertinos::mrta_vc::tasks::states::DISPATCHED);
+	if (hasStateChanged(unifei::expertinos::mrta_vc::tasks::states::DISPATCHED))
 	{
 		setAllocationTimestamp();
 	}
@@ -338,6 +389,7 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::allocate(std::vector<unifei
  */
 void unifei::expertinos::mrta_vc::tasks::Allocation::start()
 {
+	ROS_ERROR("[ALLOCATION] Trying to start!!!");
 	setState(unifei::expertinos::mrta_vc::tasks::states::EXECUTING);
 	if (hasStateChanged(unifei::expertinos::mrta_vc::tasks::states::EXECUTING))
 	{
@@ -372,18 +424,6 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::abort()
 /**
  *
  */
-void unifei::expertinos::mrta_vc::tasks::Allocation::fail()
-{
-	setState(unifei::expertinos::mrta_vc::tasks::states::FAILED);
-	if (hasStateChanged(unifei::expertinos::mrta_vc::tasks::states::FAILED))
-	{
-		setEndTimestamp();
-	}
-}
-
-/**
- *
- */
 void unifei::expertinos::mrta_vc::tasks::Allocation::cancel()
 {
 	setState(unifei::expertinos::mrta_vc::tasks::states::CANCELLED);
@@ -396,7 +436,7 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::cancel()
 /**
  *
  */
-bool unifei::expertinos::mrta_vc::tasks::Allocation::finish(unifei::expertinos::mrta_vc::tasks::states::TaskStateEnum state)
+bool unifei::expertinos::mrta_vc::tasks::Allocation::finish(unifei::expertinos::mrta_vc::tasks::states::AllocationStateEnum state)
 {
 	if (!isValid(state))
 	{
@@ -409,9 +449,6 @@ bool unifei::expertinos::mrta_vc::tasks::Allocation::finish(unifei::expertinos::
 			break;
 		case unifei::expertinos::mrta_vc::tasks::states::ABORTED:
 			abort();
-			break;
-		case unifei::expertinos::mrta_vc::tasks::states::FAILED:
-			fail();
 			break;
 		case unifei::expertinos::mrta_vc::tasks::states::CANCELLED:
 			cancel();
@@ -456,9 +493,10 @@ bool unifei::expertinos::mrta_vc::tasks::Allocation::isInvolved(unifei::expertin
 	{
 		allocation_msg.robots.push_back(robots_.at(i).toMsg());
 	}
-	allocation_msg.state = unifei::expertinos::mrta_vc::tasks::TaskStates::toCode(state_);
+	allocation_msg.state = unifei::expertinos::mrta_vc::tasks::AllocationStates::toCode(state_);
 	allocation_msg.satisfaction = unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toCode(satisfaction_);
 	allocation_msg.allocation_timestamp = allocation_timestamp_;
+	allocation_msg.dispatch_timestamp = dispatch_timestamp_;
 	allocation_msg.start_timestamp = start_timestamp_;
 	allocation_msg.end_timestamp = end_timestamp_;
 	return allocation_msg;
@@ -480,11 +518,12 @@ std::string unifei::expertinos::mrta_vc::tasks::Allocation::toString()
 	}
 	return "allocation: {" + task_.toString() +
 			", robots: {" + robots_ss.str() +
-			"}, state: " + unifei::expertinos::mrta_vc::tasks::TaskStates::toString(state_) +
+			"}, state: " + unifei::expertinos::mrta_vc::tasks::AllocationStates::toString(state_) +
 			", satisfaction: " + unifei::expertinos::mrta_vc::tasks::TaskSatisfactions::toString(satisfaction_) +
-			", allocation timestamp: " + unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(allocation_timestamp_) +
-			", start timestamp: " + unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(start_timestamp_) +
-			", end timestamp: " + unifei::expertinos::mrta_vc::utilities::TimeManipulator::toString(end_timestamp_) +
+			", allocation timestamp: " + unifei::expertinos::utilities::TimeManipulator::toString(allocation_timestamp_) +
+			", dispatch timestamp: " + unifei::expertinos::utilities::TimeManipulator::toString(dispatch_timestamp_) +
+			", start timestamp: " + unifei::expertinos::utilities::TimeManipulator::toString(start_timestamp_) +
+			", end timestamp: " + unifei::expertinos::utilities::TimeManipulator::toString(end_timestamp_) +
 			"}";
 }
 
@@ -530,6 +569,7 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::operator=(const unifei::exp
 	state_ = allocation.state_;
 	satisfaction_ = allocation.satisfaction_;
 	allocation_timestamp_ = allocation.allocation_timestamp_;
+	dispatch_timestamp_ = allocation.dispatch_timestamp_;
 	start_timestamp_ = allocation.start_timestamp_;
 	end_timestamp_ = allocation.end_timestamp_;
 }

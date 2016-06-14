@@ -33,22 +33,17 @@ mrta_vc::state_machine::S8DeadlineVerificationState::~S8DeadlineVerificationStat
  */
 bool mrta_vc::state_machine::S8DeadlineVerificationState::process(std::string answer)
 {
-	if (unifei::expertinos::mrta_vc::utilities::TimeManipulator::isDeadline(answer))
-  {
-		mrta_vc::state_machine::AbstractState::getController()->setTaskDeadline(unifei::expertinos::mrta_vc::utilities::TimeManipulator::getTime(answer));
-  } 
-	else if (unifei::expertinos::mrta_vc::utilities::TimeManipulator::isDuration(answer))
-  {
-		mrta_vc::state_machine::AbstractState::getController()->setTaskDeadline(unifei::expertinos::mrta_vc::utilities::TimeManipulator::getDuration(answer));
-	}
-  else if (answer == "")
+	ros::Time deadline = unifei::expertinos::utilities::TimeManipulator::getTime(answer);
+	if (!unifei::expertinos::utilities::TimeManipulator::isDeadline(deadline))
 	{
-		mrta_vc::state_machine::AbstractState::getController()->setTaskDeadline(ros::Time::now() + ros::Duration(DEFAULT_DURATION));
-  }
-	else
-	{
-		return false;
+		ros::Duration duration = unifei::expertinos::utilities::TimeManipulator::getDuration(answer);
+		if (!unifei::expertinos::utilities::TimeManipulator::isDuration(duration))
+		{
+			return false;
+		}
+		deadline = unifei::expertinos::utilities::TimeManipulator::getDeadline(duration);
 	}
+	mrta_vc::state_machine::AbstractState::getController()->setTaskDeadline(deadline);
 	return next(answer);
 }
 

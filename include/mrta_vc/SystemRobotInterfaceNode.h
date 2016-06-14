@@ -13,11 +13,13 @@
 
 #include <sstream>
 #include <ros/ros.h>
+#include <actionlib/server/simple_action_server.h>
+#include "mrta_vc/ExecuteAction.h"
 #include "mrta_vc/FinishAllocation.h"
 #include "unifei/expertinos/mrta_vc/agents/Robot.h"
 #include "unifei/expertinos/mrta_vc/tasks/Allocation.h"
 
-#define ALLOCATION_INTERVAL_DURATION 2
+#define ALLOCATION_INTERVAL_DURATION 5
 
 namespace mrta_vc 
 {
@@ -35,23 +37,19 @@ namespace mrta_vc
 		ros::NodeHandle nh_;
 		ros::Timer beacon_timer_;
 		ros::Timer task_end_timer_; // para testes
-		ros::Timer allocation_timer_;
 		ros::Publisher beacon_pub_;
-		ros::Publisher allocation_pub_;
-		ros::Subscriber allocation_sub_;
-		ros::Subscriber allocation_cancellation_sub_;
-		ros::Subscriber allocation_abortion_sub_;
 		ros::ServiceServer finish_allocation_srv_;
+		actionlib::SimpleActionServer<mrta_vc::ExecuteAction> execute_action_srv_;
     bool setted_up_;
 		unifei::expertinos::mrta_vc::tasks::Allocation allocation_;
 
 		void beaconTimerCallback(const ros::TimerEvent& event);
 		void taskEndTimerCallback(const ros::TimerEvent& event); // para testes
-		void allocationTimerCallback(const ros::TimerEvent& event);
-		void allocationsCallback(const mrta_vc::Allocation::ConstPtr& allocation_msg);
-		void allocationCancellationsCallback(const mrta_vc::Task::ConstPtr& allocation_msg);
-		void allocationAbortionsCallback(const mrta_vc::Task::ConstPtr& allocation_msg);
 		bool finishAllocationCallback(mrta_vc::FinishAllocation::Request& request, mrta_vc::FinishAllocation::Response& response);
+		void executeCallback(const mrta_vc::ExecuteGoal::ConstPtr& goal);
+		void executingTask();
+		void publishExecuteFeedback();
+		void publishExecuteResult(std::string message = "");
 		void setUp();
 		bool isAvailable();
 		bool isBusy();

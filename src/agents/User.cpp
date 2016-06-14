@@ -44,14 +44,6 @@ unifei::expertinos::mrta_vc::agents::User::User(int id, std::string name, unifei
 /**
  *
  */
-unifei::expertinos::mrta_vc::agents::User::User(int id, std::string name, unifei::expertinos::mrta_vc::agents::HierarchyLevelEnum hierarchy_level, std::string login_name, unifei::expertinos::mrta_vc::agents::Computer computer) : unifei::expertinos::mrta_vc::agents::Person(id, name, hierarchy_level, computer.getLocation()), computer_(computer)
-{
-	login_name_ = login_name;
-}
-
-/**
- *
- */
 unifei::expertinos::mrta_vc::agents::User::User(const ::mrta_vc::Agent::ConstPtr& user_msg) : unifei::expertinos::mrta_vc::agents::Person(user_msg), computer_(::mrta_vc::Agent())
 {
   login_name_ = user_msg->login_name;

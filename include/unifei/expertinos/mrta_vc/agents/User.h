@@ -31,10 +31,9 @@ namespace unifei
 
 				public:
 					User();
-					User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, double x, double y = 0.0, double theta = 0.0);
+					User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, double x = 0.0, double y = 0.0, double theta = 0.0);
 					User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, geometry_msgs::Pose pose_msg);
 					User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer, unifei::expertinos::mrta_vc::places::Location location);
-					User(int id, std::string name, HierarchyLevelEnum hierarchy_level, std::string login_name, Computer computer);
 					User(const ::mrta_vc::Agent::ConstPtr& user_msg);
 					User(::mrta_vc::Agent user_msg);
 					virtual ~User();

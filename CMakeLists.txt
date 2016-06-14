@@ -5,14 +5,27 @@ set(ROS_BUILD_TYPE Debug)
 set(CMAKE_BUILD_TYPE Debug)
 
 find_package(catkin REQUIRED COMPONENTS
+	actionlib
+	actionlib_msgs
+	genmsg
 	geometry_msgs
 	message_generation
+	nav_msgs
 	roscpp
 	std_msgs
 	std_srvs
 	)
 
-add_message_files(
+find_package(Boost REQUIRED COMPONENTS
+	system
+	)
+
+add_action_files(DIRECTORY action
+	FILES
+	Execute.action
+	)
+
+add_message_files(DIRECTORY msg
 	FILES
 	Agent.msg
 	Allocation.msg
@@ -24,8 +37,9 @@ add_message_files(
 	Task.msg
 	)
 	
-add_service_files(
+add_service_files(DIRECTORY srv
 	FILES
+	GenerateNewId.srv
 	GetComputer.srv
 	GetPerson.srv
 	GetRobot.srv
@@ -34,10 +48,11 @@ add_service_files(
 	FinishAllocation.srv
 	SetUser.srv
 	ValidatePassword.srv
-)
+	)
 
 generate_messages(
 	DEPENDENCIES
+	actionlib_msgs
 	geometry_msgs
 	mrta_vc
 	std_msgs
@@ -46,12 +61,14 @@ generate_messages(
 
 catkin_package(
 	CATKIN_DEPENDS 
+	actionlib_msgs
 	message_runtime
 	)
 
 include_directories(
 	include 
 	${catkin_INCLUDE_DIRS}
+	${Boost_INCLUDE_DIRS}
 	)
 
 add_executable(system_manager_node 
@@ -66,8 +83,8 @@ add_executable(system_manager_node
 	src/tasks/Task.cpp
 	include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
 	src/tasks/TaskPriorities.cpp
-	include/unifei/expertinos/mrta_vc/tasks/TaskStates.h
-	src/tasks/TaskStates.cpp
+	include/unifei/expertinos/mrta_vc/tasks/AllocationStates.h
+	src/tasks/AllocationStates.cpp
 	include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
 	src/tasks/TaskSatisfactions.cpp
 	include/unifei/expertinos/mrta_vc/tasks/Skill.h
@@ -104,11 +121,11 @@ add_executable(system_manager_node
 	src/agents/Robot.cpp
 	include/unifei/expertinos/mrta_vc/agents/User.h
 	src/agents/User.cpp
-	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
-	 src/utilities/StringManipulator.cpp
-	 include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
-	 src/utilities/TimeManipulator.cpp
-	include/unifei/expertinos/mrta_vc/utilities/MathManipulator.h
+	include/unifei/expertinos/utilities/StringManipulator.h
+	src/utilities/StringManipulator.cpp
+	include/unifei/expertinos/utilities/TimeManipulator.h
+	src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/utilities/MathManipulator.h
 	src/utilities/MathManipulator.cpp
 	)
 
@@ -145,8 +162,8 @@ add_executable(system_user_interface_node
 	src/tasks/Task.cpp
 	include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
 	src/tasks/TaskPriorities.cpp
-	include/unifei/expertinos/mrta_vc/tasks/TaskStates.h
-	src/tasks/TaskStates.cpp
+	include/unifei/expertinos/mrta_vc/tasks/AllocationStates.h
+	src/tasks/AllocationStates.cpp
 	include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
 	src/tasks/TaskSatisfactions.cpp
 	include/unifei/expertinos/mrta_vc/tasks/Skill.h
@@ -155,11 +172,11 @@ add_executable(system_user_interface_node
 	src/tasks/SkillLevels.cpp
 	include/unifei/expertinos/mrta_vc/tasks/Resource.h
 	src/tasks/Resource.cpp
-	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
-	 src/utilities/StringManipulator.cpp
-	 include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
-	 src/utilities/TimeManipulator.cpp
-	include/unifei/expertinos/mrta_vc/utilities/MathManipulator.h
+	include/unifei/expertinos/utilities/StringManipulator.h
+	src/utilities/StringManipulator.cpp
+	include/unifei/expertinos/utilities/TimeManipulator.h
+	src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/utilities/MathManipulator.h
 	src/utilities/MathManipulator.cpp
 	)
 
@@ -194,8 +211,8 @@ add_executable(system_robot_interface_node
 	src/tasks/Task.cpp
 	include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
 	src/tasks/TaskPriorities.cpp
-	include/unifei/expertinos/mrta_vc/tasks/TaskStates.h
-	src/tasks/TaskStates.cpp
+	include/unifei/expertinos/mrta_vc/tasks/AllocationStates.h
+	src/tasks/AllocationStates.cpp
 	include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
 	src/tasks/TaskSatisfactions.cpp
 	include/unifei/expertinos/mrta_vc/tasks/Skill.h
@@ -206,11 +223,11 @@ add_executable(system_robot_interface_node
 	src/tasks/Resource.cpp
 	include/unifei/expertinos/mrta_vc/places/Location.h
 	src/places/Location.cpp
-	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
-	 src/utilities/StringManipulator.cpp
-	 include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
-	 src/utilities/TimeManipulator.cpp
-	include/unifei/expertinos/mrta_vc/utilities/MathManipulator.h
+	include/unifei/expertinos/utilities/StringManipulator.h
+	src/utilities/StringManipulator.cpp
+	include/unifei/expertinos/utilities/TimeManipulator.h
+	src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/utilities/MathManipulator.h
 	src/utilities/MathManipulator.cpp
 	)
 
@@ -229,14 +246,16 @@ add_executable(system_database_interface_node
 	src/SystemDatabaseInterfaceNode.cpp
 	include/unifei/expertinos/mrta_vc/system/DatabaseInterface.h
 	src/system/DatabaseInterface.cpp
+	include/unifei/expertinos/mrta_vc/system/EntityTypes.h
+	src/system/EntityTypes.cpp
 	include/unifei/expertinos/mrta_vc/tasks/Allocation.h
 	src/tasks/Allocation.cpp
 	include/unifei/expertinos/mrta_vc/tasks/Task.h
 	src/tasks/Task.cpp
 	include/unifei/expertinos/mrta_vc/tasks/TaskPriorities.h
 	src/tasks/TaskPriorities.cpp
-	include/unifei/expertinos/mrta_vc/tasks/TaskStates.h
-	src/tasks/TaskStates.cpp
+	include/unifei/expertinos/mrta_vc/tasks/AllocationStates.h
+	src/tasks/AllocationStates.cpp
 	include/unifei/expertinos/mrta_vc/tasks/TaskSatisfactions.h
 	src/tasks/TaskSatisfactions.cpp
 	include/unifei/expertinos/mrta_vc/tasks/Skill.h
@@ -273,11 +292,11 @@ add_executable(system_database_interface_node
 	src/agents/Robot.cpp
 	include/unifei/expertinos/mrta_vc/agents/User.h
 	src/agents/User.cpp
-	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
-	 src/utilities/StringManipulator.cpp
-	 include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
-	 src/utilities/TimeManipulator.cpp
-	include/unifei/expertinos/mrta_vc/utilities/MathManipulator.h
+	include/unifei/expertinos/utilities/StringManipulator.h
+	src/utilities/StringManipulator.cpp
+	include/unifei/expertinos/utilities/TimeManipulator.h
+	src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/utilities/MathManipulator.h
 	src/utilities/MathManipulator.cpp
 	)
 
@@ -348,12 +367,14 @@ add_executable(task_builder_node
 	src/state_machine/S8DeadlineVerificationState.cpp
 	include/mrta_vc/state_machine/S9FinalState.h
 	src/state_machine/S9FinalState.cpp
-	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
-    src/utilities/StringManipulator.cpp
-    include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
-    src/utilities/TimeManipulator.cpp
-	include/unifei/expertinos/mrta_vc/utilities/MathManipulator.h
+	include/unifei/expertinos/utilities/StringManipulator.h
+	src/utilities/StringManipulator.cpp
+	include/unifei/expertinos/utilities/TimeManipulator.h
+	src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/utilities/MathManipulator.h
 	src/utilities/MathManipulator.cpp
+	include/unifei/expertinos/mrta_vc/system/EntityTypes.h
+	src/system/EntityTypes.cpp
 	)
 
 add_dependencies(task_builder_node 
@@ -369,11 +390,11 @@ add_executable(speech_analyser_node
 	src/speech_analyser_node.cpp
 	include/mrta_vc/SpeechAnalyserNode.h
 	src/SpeechAnalyserNode.cpp
-	include/unifei/expertinos/mrta_vc/utilities/StringManipulator.h
-    src/utilities/StringManipulator.cpp
-    include/unifei/expertinos/mrta_vc/utilities/TimeManipulator.h
-    src/utilities/TimeManipulator.cpp
-	include/unifei/expertinos/mrta_vc/utilities/MathManipulator.h
+	include/unifei/expertinos/utilities/StringManipulator.h
+	src/utilities/StringManipulator.cpp
+	include/unifei/expertinos/utilities/TimeManipulator.h
+	src/utilities/TimeManipulator.cpp
+	include/unifei/expertinos/utilities/MathManipulator.h
 	src/utilities/MathManipulator.cpp
 	)
 
@@ -385,3 +406,15 @@ add_dependencies(speech_analyser_node
 target_link_libraries(speech_analyser_node
 	${catkin_LIBRARIES}
 	)
+	
+# Qt Creator Stuff:
+
+file(GLOB children ${CMAKE_SOURCE_DIR}/*)
+foreach(child ${children})
+	if(IS_DIRECTORY ${child} AND NOT ${child} STREQUAL ${PROJECT_SOURCE_DIR}/.git)
+		file(GLOB_RECURSE dir_files "${child}/*")
+		list(APPEND extra_files ${dir_files})
+	endif()
+endforeach()
+add_custom_target(${PROJECT_NAME}_OTHER_FILES ALL WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} SOURCES ${extra_files})
+

@@ -41,6 +41,8 @@ Thumbs.db
 
 # ROS Bags#
 ###########
+bag/*
+bags/*
 *.bag
 *.pyc
 

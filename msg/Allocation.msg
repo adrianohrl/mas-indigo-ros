@@ -1,6 +1,7 @@
 mrta_vc/Task task
 mrta_vc/Agent[] robots
 time allocation_timestamp
+time dispatch_timestamp
 time start_timestamp
 time end_timestamp
 uint8 state
@@ -8,12 +9,11 @@ int8 satisfaction
 
 # States:
 # 0 -> NOT_ALLOCATED
-# 1 -> WAITING_ACCEPTATION
+# 1 -> DISPATCHED
 # 2 -> EXECUTING
 # 3 -> SUCCEEDED
 # 4 -> ABORTED
-# 5 -> FAILED
-# 6 -> CANCELLED
+# 5 -> CANCELLED
 
 # Satiscation Levels:
 # -3 -> VERY_DISSATISFIED (or HORRIBLE)
@@ -23,5 +23,3 @@ int8 satisfaction
 #  1 -> SOMEWHAT_SATISFIED (or GOOD)
 #  2 -> SATISFIED (or VERY_GOOD)
 #  3 -> VERY_SATISFIED (or EXCELLENT)
-
-

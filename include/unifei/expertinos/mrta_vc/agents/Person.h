@@ -27,7 +27,7 @@ namespace unifei
 
 				public:
           Person();
-					Person(int id, std::string name, HierarchyLevelEnum hierarchy_level, double x = 0, double y = 0, double theta = 0);
+					Person(int id, std::string name, HierarchyLevelEnum hierarchy_level, double x = 0.0, double y = 0.0, double theta = 0.0);
 					Person(int id, std::string name, HierarchyLevelEnum hierarchy_level, geometry_msgs::Pose pose_msg);
 					Person(int id, std::string name, HierarchyLevelEnum hierarchy_level, unifei::expertinos::mrta_vc::places::Location location);
 					Person(const ::mrta_vc::Agent::ConstPtr& person_msg);
@@ -38,6 +38,7 @@ namespace unifei
 					HierarchyLevelEnum getHierarchyLevel();
 					::mrta_vc::Agent toMsg();
 					std::string toString();
+					int compareTo(Person person);
 					bool operator==(const Person& person);
 					void operator=(const Person& person);
 					

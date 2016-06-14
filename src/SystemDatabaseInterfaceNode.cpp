@@ -14,8 +14,9 @@
 /**
  * Constructor
  */
-mrta_vc::SystemDatabaseInterfaceNode::SystemDatabaseInterfaceNode(ros::NodeHandle nh) : unifei::expertinos::mrta_vc::system::DatabaseInterface(), nh_(nh)
+mrta_vc::SystemDatabaseInterfaceNode::SystemDatabaseInterfaceNode(ros::NodeHandle nh) : nh_(nh)
 {
+	generate_new_id_srv_ = nh_.advertiseService("/generate_new_id", &mrta_vc::SystemDatabaseInterfaceNode::generateNewId, this);
   get_computer_srv_ = nh_.advertiseService("/get_computer", &mrta_vc::SystemDatabaseInterfaceNode::getComputer, this);
   get_person_srv_ = nh_.advertiseService("/get_person", &mrta_vc::SystemDatabaseInterfaceNode::getPerson, this);
   get_robot_srv_ = nh_.advertiseService("/get_robot", &mrta_vc::SystemDatabaseInterfaceNode::getRobot, this);
@@ -29,6 +30,7 @@ mrta_vc::SystemDatabaseInterfaceNode::SystemDatabaseInterfaceNode(ros::NodeHandl
  */
 mrta_vc::SystemDatabaseInterfaceNode::~SystemDatabaseInterfaceNode()
 {
+	generate_new_id_srv_.shutdown();
   get_computer_srv_.shutdown();
   get_person_srv_.shutdown();
   get_robot_srv_.shutdown();
@@ -49,6 +51,37 @@ void mrta_vc::SystemDatabaseInterfaceNode::spin()
 		ros::spinOnce();
 		loop_rate.sleep();
 	}
+}
+
+/**
+ *
+ */
+bool mrta_vc::SystemDatabaseInterfaceNode::generateNewId(mrta_vc::GenerateNewId::Request &request, mrta_vc::GenerateNewId::Response &response)
+{
+	switch (unifei::expertinos::mrta_vc::system::EntityTypes::toEnumerated(request.type))
+	{
+		case unifei::expertinos::mrta_vc::system::types::AGENT:
+			response.id = unifei::expertinos::mrta_vc::system::DatabaseInterface::generateNewAgentId();
+			break;
+		case unifei::expertinos::mrta_vc::system::types::ALLOCATION:
+			response.id = unifei::expertinos::mrta_vc::system::DatabaseInterface::generateNewAllocationId();
+			break;
+		case unifei::expertinos::mrta_vc::system::types::PLACE:
+			response.id = unifei::expertinos::mrta_vc::system::DatabaseInterface::generateNewPlaceId();
+			break;
+		case unifei::expertinos::mrta_vc::system::types::RESOURCE:
+			response.id = unifei::expertinos::mrta_vc::system::DatabaseInterface::generateNewResourceId();
+			break;
+		case unifei::expertinos::mrta_vc::system::types::SKILL:
+			response.id = unifei::expertinos::mrta_vc::system::DatabaseInterface::generateNewSkillId();
+			break;
+		case unifei::expertinos::mrta_vc::system::types::TASK:
+			response.id = unifei::expertinos::mrta_vc::system::DatabaseInterface::generateNewTaskId();
+			break;
+		default:
+			return false;
+	}
+	return true;
 }
 
 /**

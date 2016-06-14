@@ -17,7 +17,7 @@
 #include "unifei/expertinos/mrta_vc/places/Location.h"
 
 #define NON_AGENT -1
-#define AGENT 0
+#define AGENT_ 0
 #define PERSON 1
 #define COMPUTER 2
 #define ROBOT 3
@@ -35,7 +35,7 @@ namespace unifei
 				{
 
 				public:
-					Agent(int id, double x = 0, double y = 0, double theta = 0);
+					Agent(int id, double x = 0.0, double y = 0.0, double theta = 0.0);
 					Agent(int id, geometry_msgs::Pose pose_msg);
 					Agent(int id, unifei::expertinos::mrta_vc::places::Location location);
 					Agent(const ::mrta_vc::Agent::ConstPtr& agent_msg);
@@ -44,7 +44,7 @@ namespace unifei
 
 					int getId();
 					unifei::expertinos::mrta_vc::places::Location getLocation();
-					void setLocation(double x = 0, double y = 0, double theta = 0);
+					void setLocation(double x = 0.0, double y = 0.0, double theta = 0.0);
 					void setLocation(geometry_msgs::Pose pose_msg);
 					void setLocation(unifei::expertinos::mrta_vc::places::Location location);
           virtual ::mrta_vc::Agent toMsg();

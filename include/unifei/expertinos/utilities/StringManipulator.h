@@ -20,20 +20,17 @@ namespace unifei
 {
 	namespace expertinos
 	{
-            namespace mrta_vc
-            {
-                  namespace utilities
-                  {
-                        class StringManipulator
-                        {
-                        
-                        public:
-                              static std::vector<std::string> split(std::string str, char delimiter);
-                              
-                        };
-                  }
-            }
+		namespace utilities
+		{
+			class StringManipulator
+			{
+
+			public:
+				static std::vector<std::string> split(std::string str, char delimiter);
+
+			};
+		}
 	}
 }		
-					
+
 #endif /* STRING_MANIPULATOR_H_ */

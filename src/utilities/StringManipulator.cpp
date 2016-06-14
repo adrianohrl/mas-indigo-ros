@@ -9,12 +9,12 @@
  *  Maintainer: Expertinos UNIFEI (expertinos.unifei@gmail.com)
  */
 
-#include "unifei/expertinos/mrta_vc/utilities/StringManipulator.h"
+#include "unifei/expertinos/utilities/StringManipulator.h"
 
 /**
  *
  */
-std::vector<std::string> unifei::expertinos::mrta_vc::utilities::StringManipulator::split(std::string str, char delimiter)
+std::vector<std::string> unifei::expertinos::utilities::StringManipulator::split(std::string str, char delimiter)
 {
 	std::vector<std::string> internal;
 	std::stringstream ss(str);

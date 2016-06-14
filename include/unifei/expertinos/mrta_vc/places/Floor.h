@@ -26,7 +26,7 @@ namespace unifei
 				{
 
 				public:
-					Floor(int id, std::string name, Building building, geometry_msgs::Polygon boundary, double x, double y, double theta = 0);
+					Floor(int id, std::string name, Building building, geometry_msgs::Polygon boundary, double x, double y, double theta = 0.0);
 					Floor(int id, std::string name, Building building, geometry_msgs::Polygon boundary, geometry_msgs::Pose pose_msg);
 					Floor(const ::mrta_vc::Place::ConstPtr& place_msg);
 					Floor(::mrta_vc::Place place_msg);		

@@ -18,6 +18,7 @@
 mrta_vc::state_machine::TaskVerificationState::TaskVerificationState(mrta_vc::state_machine::MachineController* controller, std::string question) : mrta_vc::state_machine::AbstractState(controller, question)
 {
 	get_task_cli_ = mrta_vc::state_machine::AbstractState::getNodeHandle().serviceClient<mrta_vc::GetTask>("/get_task");
+	generate_new_id_cli_ = mrta_vc::state_machine::AbstractState::getNodeHandle().serviceClient<mrta_vc::GenerateNewId>("/generate_new_id");
 }
 
 /**
@@ -26,6 +27,7 @@ mrta_vc::state_machine::TaskVerificationState::TaskVerificationState(mrta_vc::st
 mrta_vc::state_machine::TaskVerificationState::~TaskVerificationState()
 {
   get_task_cli_.shutdown();
+	generate_new_id_cli_.shutdown();
 }
 
 /**
@@ -34,13 +36,21 @@ mrta_vc::state_machine::TaskVerificationState::~TaskVerificationState()
 bool mrta_vc::state_machine::TaskVerificationState::process(std::string answer)
 { 
   mrta_vc::GetTask task_srv;
-  task_srv.request.name = answer;
-  if (!get_task_cli_.call(task_srv))
-  {
-    ROS_ERROR("There is no task registered as %s!!!", task_srv.request.name.c_str());
-    ROS_ERROR("%s", task_srv.response.message.c_str());
+	task_srv.request.name = answer;
+	if (!get_task_cli_.call(task_srv))
+	{
+		ROS_ERROR("There is no task registered as %s!!!", task_srv.request.name.c_str());
+		ROS_ERROR("%s", task_srv.response.message.c_str());
 		return task_srv.response.valid;
 	}
+	mrta_vc::GenerateNewId generate_new_id_srv;
+	generate_new_id_srv.request.type = unifei::expertinos::mrta_vc::system::EntityTypes::toCode(unifei::expertinos::mrta_vc::system::types::TASK);
+	if (!generate_new_id_cli_.call(generate_new_id_srv))
+	{
+		ROS_ERROR("Unexpected error while generating new task id!!!");
+		return false;
+	}
+	task_srv.response.task.id = generate_new_id_srv.response.id;
 	mrta_vc::state_machine::AbstractState::getController()->setTask(unifei::expertinos::mrta_vc::tasks::Task(task_srv.response.task));
 	return task_srv.response.valid;
 }

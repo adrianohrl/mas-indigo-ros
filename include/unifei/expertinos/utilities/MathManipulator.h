@@ -18,20 +18,17 @@ namespace unifei
 {
 	namespace expertinos
 	{
-            namespace mrta_vc
-            {
-                  namespace utilities
-                  {
-												class MathManipulator
-												{
+		namespace utilities
+		{
+			class MathManipulator
+			{
 
-                        public:
-                              static int getUnsignedRest(long dividend, int divisor);
-															static long getUnsignedDivision(long dividend, int divisor);
+			public:
+				static int getUnsignedRest(long dividend, int divisor);
+				static long getUnsignedDivision(long dividend, int divisor);
 
-                        };
-                  }
-            }
+			};
+		}
 	}
 }
 

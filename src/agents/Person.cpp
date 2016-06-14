@@ -15,6 +15,7 @@
  */
 unifei::expertinos::mrta_vc::agents::Person::Person() : unifei::expertinos::mrta_vc::agents::Agent()
 {
+	hierarchy_level_ = unifei::expertinos::mrta_vc::agents::levels::INTERN;
 }
 
 /**
@@ -137,6 +138,14 @@ std::string unifei::expertinos::mrta_vc::agents::Person::toString()
 			", name: " + name_ +
 			", hierarchy level: " + unifei::expertinos::mrta_vc::agents::HierarchyLevels::toString(hierarchy_level_) +
 			"}";
+}
+
+/**
+ *
+ */
+int unifei::expertinos::mrta_vc::agents::Person::compareTo(Person person)
+{
+	return unifei::expertinos::mrta_vc::agents::HierarchyLevels::compare(hierarchy_level_, person.hierarchy_level_);
 }
 
 /**
