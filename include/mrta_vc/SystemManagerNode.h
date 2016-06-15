@@ -12,8 +12,6 @@
 #define SYSTEM_MANAGER_NODE_H_
 
 #include <ros/ros.h>
-#include <boost/shared_ptr.hpp>
-#include <boost/thread/recursive_mutex.hpp>
 #include "unifei/expertinos/mrta_vc/system/AllocationManager.h"
 #include "mrta_vc/Allocation.h"
 #include "mrta_vc/ManagerState.h"
@@ -21,7 +19,6 @@
 #include <actionlib/client/simple_action_client.h>
 
 #define TASK_INTERVAL_DURATION 2.0
-#define ALLOCATION_INTERVAL_DURATION 1.0
 
 namespace mrta_vc 
 {
@@ -34,6 +31,9 @@ namespace mrta_vc
 		~SystemManagerNode();
 
 		void spin();
+
+	protected:
+		virtual void dispatch(unifei::expertinos::mrta_vc::tasks::Allocation allocation);
 
 	private:
     ros::NodeHandle nh_;

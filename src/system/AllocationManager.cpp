@@ -140,10 +140,26 @@ bool unifei::expertinos::mrta_vc::system::AllocationManager::isAvailable(unifei:
 }
 
 /**
+ * This function adds the input allocation
+ */
+void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::expertinos::mrta_vc::tasks::Allocation allocation)
+{
+	std::list<unifei::expertinos::mrta_vc::tasks::Allocation>::iterator allocation_it = allocations_.begin();
+	while (allocation_it != allocations_.end())
+	{
+		if (allocation == *allocation_it)
+		{
+			return;
+		}
+	}
+	allocations_.push_back(allocation);
+}
+
+/**
  * This function adds the input task to the unallocated tasks group according to prioirity queue policy (no
  * duplicated are added to this group)
  */
-void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::expertinos::mrta_vc::tasks::Task task) 
+void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::expertinos::mrta_vc::tasks::Task task)
 {
 	unallocated_tasks_.push(task);
 }
@@ -158,8 +174,8 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::experti
 	{
 		if(robot == *robot_it)
 		{
-			(*robot_it).setLastBeaconTimestamp(robot.getLastBeaconTimestamp());
-			(*robot_it).setLocation(robot.getLocation());
+			robot_it->setLastBeaconTimestamp(robot.getLastBeaconTimestamp());
+			robot_it->setLocation(robot.getLocation());
 			return;
 		}
 		++robot_it;
@@ -169,8 +185,8 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::experti
 	{
 		if(robot == *robot_it)
 		{
-			(*robot_it).setLastBeaconTimestamp(robot.getLastBeaconTimestamp());
-			(*robot_it).setLocation(robot.getLocation());
+			robot_it->setLastBeaconTimestamp(robot.getLastBeaconTimestamp());
+			robot_it->setLocation(robot.getLocation());
 			return;
 		}
 		++robot_it;
@@ -186,10 +202,10 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::add(unifei::experti
 	std::list<unifei::expertinos::mrta_vc::agents::User>::iterator user_it = logged_users_.begin();
 	while (user_it != logged_users_.end())
 	{
-		if(user.equals(*user_it))
+		if (user == *user_it)
 		{
-			(*user_it).setLastBeaconTimestamp(user.getLastBeaconTimestamp());
-			(*user_it).setLocation(user.getLocation());
+			user_it->setLastBeaconTimestamp(user.getLastBeaconTimestamp());
+			user_it->setLocation(user.getLocation());
 			return;
 		}
 		++user_it;
@@ -254,11 +270,11 @@ std::vector<unifei::expertinos::mrta_vc::agents::Robot> unifei::expertinos::mrta
 	std::list<unifei::expertinos::mrta_vc::agents::Robot>::iterator it = available_robots_.begin();
 	while (it != available_robots_.end())
 	{
-		double utility = (*it).getUtility(task);
+		double utility = it->getUtility(task);
 		if (utility > best_utility)
 		{
 			best_utility = utility;
-			best_robot = (*it);
+			best_robot = *it;
 		}
 		++it;
 	}
@@ -277,8 +293,22 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::allocate(unifei::ex
 {
 	transfer(task);
 	transfer(robots);
-	unifei::expertinos::mrta_vc::tasks::Allocation allocation(task, robots);
-	allocations_.push_back(allocation);
+	dispatch(unifei::expertinos::mrta_vc::tasks::Allocation(task, robots));
+}
+
+/**
+ * This function dispatched the input allocation.
+ */
+void unifei::expertinos::mrta_vc::system::AllocationManager::dispatch(unifei::expertinos::mrta_vc::tasks::Allocation allocation)
+{
+	if (!allocation.wasDispatched())
+	{
+		allocation.dispatch();
+	}
+	else if (!allocation.isExecuting())
+	{
+		add(allocation);
+	}
 }
 
 /**

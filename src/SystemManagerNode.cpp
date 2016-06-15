@@ -18,8 +18,7 @@ mrta_vc::SystemManagerNode::SystemManagerNode(ros::NodeHandle nh) : nh_(nh), exe
 	robots_sub_ = nh_.subscribe("/robots", 100, &mrta_vc::SystemManagerNode::robotsCallback, this);
 	tasks_sub_ = nh_.subscribe("/tasks", 100, &mrta_vc::SystemManagerNode::tasksCallback, this);
 	users_sub_ = nh_.subscribe("/users", 100, &mrta_vc::SystemManagerNode::usersCallback, this);;
-	manager_state_pub_ = nh.advertise<mrta_vc::ManagerState>("/manager_state", 1);
-	allocation_timer_ = nh_.createTimer(ros::Duration(ALLOCATION_INTERVAL_DURATION), &mrta_vc::SystemManagerNode::allocationTimerCallback, this);
+	manager_state_pub_ = nh.advertise<mrta_vc::ManagerState>("/manager_state", 1);\
 	robots_timer_ = nh_.createTimer(ros::Duration(.75 * ROBOT_BEACON_INTERVAL_DURATION), &mrta_vc::SystemManagerNode::robotsTimerCallback, this);
 	tasks_timer_ = nh_.createTimer(ros::Duration(TASK_INTERVAL_DURATION), &mrta_vc::SystemManagerNode::tasksTimerCallback, this);
 	users_timer_ = nh_.createTimer(ros::Duration(.75 * USER_BEACON_INTERVAL_DURATION), &mrta_vc::SystemManagerNode::usersTimerCallback, this);
@@ -31,7 +30,6 @@ mrta_vc::SystemManagerNode::SystemManagerNode(ros::NodeHandle nh) : nh_(nh), exe
 mrta_vc::SystemManagerNode::~SystemManagerNode()
 {
 	execute_action_cli_.stopTrackingGoal();
-	allocation_timer_.stop();
 	robots_timer_.stop();
 	tasks_timer_.stop();
 	users_timer_.stop();
@@ -63,7 +61,6 @@ void mrta_vc::SystemManagerNode::spin()
 void mrta_vc::SystemManagerNode::robotsCallback(const mrta_vc::Agent::ConstPtr& robot_msg)
 {
 	unifei::expertinos::mrta_vc::agents::Robot robot(robot_msg);
-	ROS_ERROR("[ROBOT CB] %s", robot.toString().c_str());
 	robot.setLastBeaconTimestamp();
 	unifei::expertinos::mrta_vc::system::AllocationManager::add(robot);
 }
@@ -80,7 +77,7 @@ void mrta_vc::SystemManagerNode::tasksCallback(const mrta_vc::Task::ConstPtr& ta
 								//task = unifei::expertinos::mrta_vc::system::AllocationManager::getUnallocatedTasks().top();
 								ROS_WARN("[MANAGER] ------- NEW TASK -------");
 								ROS_ERROR("[MANAGER] id: %d, name: %s", task.getId(), task.getName().c_str());
-								/*ROS_INFO("[MANAGER] skills:");
+								ROS_INFO("[MANAGER] skills:");
 								std::vector<unifei::expertinos::mrta_vc::tasks::Skill> skills = task.getDesiredSkills();
 								for (int i = 0; i < skills.size(); i++)
 								{
@@ -127,42 +124,25 @@ void mrta_vc::SystemManagerNode::usersTimerCallback(const ros::TimerEvent& event
 }
 
 /**
- * This callback is responsible for keeping allocations up-to-date. That is, whenever there are any
- * unallocated task that can be developed by available robots whose skills match to task desired skills.
+ *
  */
-void mrta_vc::SystemManagerNode::allocationTimerCallback(const ros::TimerEvent& event)
+void mrta_vc::SystemManagerNode::dispatch(unifei::expertinos::mrta_vc::tasks::Allocation allocation)
 {
 	ROS_ERROR_COND(unifei::expertinos::mrta_vc::system::AllocationManager::areThereAnyAvailableRobots() &&
 								 !execute_action_cli_.isServerConnected(), "There is no execute server connected!!!");
-	std::list<unifei::expertinos::mrta_vc::tasks::Allocation>::iterator allocation_it = unifei::expertinos::mrta_vc::system::AllocationManager::getAllocations().begin();
-	int counter = 0;
-	while (allocation_it != unifei::expertinos::mrta_vc::system::AllocationManager::getAllocations().end())
+	if (!allocation.wasDispatched())
 	{
-		ROS_INFO("(%d) allocation state: %s", ++counter, unifei::expertinos::mrta_vc::tasks::AllocationStates::toString(allocation_it->getState()).c_str());
-		std::string task_name(allocation_it->getTask().getName());
-		ROS_INFO_COND(allocation_it->wasAllocated(), "%s task was allocated!!!", task_name.c_str());
-		ROS_INFO_COND(allocation_it->wasDispatched(), "%s task was dispatched!!!", task_name.c_str());
-		ROS_INFO_COND(allocation_it->wasAccepted(), "%s task was accepted!!!", task_name.c_str());
-		ROS_INFO_COND(allocation_it->isExecuting(), "%s task is executing!!!", task_name.c_str());
-		ROS_INFO_COND(allocation_it->wasSucceeded(), "%s task has successfully ended!!!", task_name.c_str());
-		if (!allocation_it->wasDispatched())
+		ROS_DEBUG("[MANAGER] Sending %s allocation!!!", allocation.getTask().getName().c_str());
+		allocation.dispatch();
+		if (allocation.wasDispatched())
 		{
-			ROS_DEBUG("[MANAGER] Sending allocation!!!");
-			allocation_it->dispatch();
-			ROS_ERROR("antes!!");
 			mrta_vc::ExecuteGoal goal;
-			goal.allocation = allocation_it->toMsg();
-			ROS_ERROR("cheguei aki!!");
-			ROS_WARN("Seding allocation in state: %s", unifei::expertinos::mrta_vc::tasks::AllocationStates::toString(allocation_it->getState()).c_str());
-			ROS_WARN_COND(allocation_it->wasDispatched(), "%s task was dispatched!!!", task_name.c_str());
-			ROS_INFO("%s", allocation_it->toString().c_str());
+			goal.allocation = allocation.toMsg();
 			execute_action_cli_.sendGoal(goal, boost::bind(&mrta_vc::SystemManagerNode::allocationResultCallback, this, _1, _2),
-																	 boost::bind(&mrta_vc::SystemManagerNode::allocationActiveCallback, this),
-																	 boost::bind(&mrta_vc::SystemManagerNode::allocationFeedbackCallback, this, _1));
+																				 boost::bind(&mrta_vc::SystemManagerNode::allocationActiveCallback, this),
+																				 boost::bind(&mrta_vc::SystemManagerNode::allocationFeedbackCallback, this, _1));
+			unifei::expertinos::mrta_vc::system::AllocationManager::dispatch(allocation);
 		}
-		ROS_ERROR("%s", allocation_it->getTask().toString().c_str());
-		++allocation_it;
-		ROS_WARN("-----------------------");
 	}
 }
 
@@ -195,7 +175,7 @@ void mrta_vc::SystemManagerNode::allocationActiveCallback()
 void mrta_vc::SystemManagerNode::allocationFeedbackCallback(const mrta_vc::ExecuteFeedback::ConstPtr& feedback)
 {
 	unifei::expertinos::mrta_vc::tasks::Allocation allocation(feedback->allocation);
-	//ROS_INFO("Allocation state: %s", unifei::expertinos::mrta_vc::tasks::AllocationStates::toString(allocation->getState()).c_str());
+	ROS_INFO("%s allocation state: %s", allocation.getTask().getName().c_str(), unifei::expertinos::mrta_vc::tasks::AllocationStates::toString(allocation.getState()).c_str());
 	unifei::expertinos::mrta_vc::system::AllocationManager::updateAllocations(allocation);
 }
 
@@ -205,6 +185,6 @@ void mrta_vc::SystemManagerNode::allocationFeedbackCallback(const mrta_vc::Execu
 void mrta_vc::SystemManagerNode::allocationResultCallback(const actionlib::SimpleClientGoalState& state, const mrta_vc::ExecuteResult::ConstPtr& result)
 {
 	unifei::expertinos::mrta_vc::tasks::Allocation allocation(result->allocation);
-	ROS_INFO("Finished in state [%s]", state.toString().c_str());
+	ROS_INFO("%s allocation finished in state [%s]", allocation.getTask().getName().c_str(), state.toString().c_str());
 	unifei::expertinos::mrta_vc::system::AllocationManager::updateAllocations(allocation);
 }
