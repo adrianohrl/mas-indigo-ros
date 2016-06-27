@@ -222,7 +222,7 @@ bool unifei::expertinos::mrta_vc::tasks::Allocation::wasCancelled()
  */
 bool unifei::expertinos::mrta_vc::tasks::Allocation::wasEvaluated()
 {
-	return satisfaction_ != unifei::expertinos::mrta_vc::tasks::satisfactions::NONE;
+	return isFinished();
 }
 
 /**
@@ -287,7 +287,6 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::setState(unifei::expertinos
 {
 	if (isValid(state))
 	{
-		ROS_ERROR("[SET STATE] state: %s", unifei::expertinos::mrta_vc::tasks::AllocationStates::toString(state).c_str());
 		state_ = state;
 	}
 }
@@ -361,10 +360,8 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::allocate(std::vector<unifei
 	{
 		return;
 	}
-	ROS_ERROR("[ALLOCATION] Trying to allocate!!!");
 	addRobots(robots);
 	setState(unifei::expertinos::mrta_vc::tasks::states::ALLOCATED);
-	ROS_INFO("[ALLOCATION] state: %s", unifei::expertinos::mrta_vc::tasks::AllocationStates::toString(state_).c_str());
 	if (hasStateChanged(unifei::expertinos::mrta_vc::tasks::states::ALLOCATED))
 	{
 		setAllocationTimestamp();
@@ -376,7 +373,6 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::allocate(std::vector<unifei
  */
 void unifei::expertinos::mrta_vc::tasks::Allocation::dispatch()
 {
-	ROS_ERROR("[ALLOCATION] Trying to dispatch!!!");
 	setState(unifei::expertinos::mrta_vc::tasks::states::DISPATCHED);
 	if (hasStateChanged(unifei::expertinos::mrta_vc::tasks::states::DISPATCHED))
 	{
@@ -389,7 +385,6 @@ void unifei::expertinos::mrta_vc::tasks::Allocation::dispatch()
  */
 void unifei::expertinos::mrta_vc::tasks::Allocation::start()
 {
-	ROS_ERROR("[ALLOCATION] Trying to start!!!");
 	setState(unifei::expertinos::mrta_vc::tasks::states::EXECUTING);
 	if (hasStateChanged(unifei::expertinos::mrta_vc::tasks::states::EXECUTING))
 	{

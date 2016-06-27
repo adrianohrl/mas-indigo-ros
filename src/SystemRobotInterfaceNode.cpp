@@ -132,6 +132,7 @@ void mrta_vc::SystemRobotInterfaceNode::executeCallback(const mrta_vc::ExecuteGo
 		{
 			publishExecuteResult();
 			ROS_INFO("Sending result!!!");
+			return;
 		}
 		ros::spinOnce();
 		loop_rate.sleep();
@@ -154,7 +155,10 @@ void mrta_vc::SystemRobotInterfaceNode::executingTask()
  */
 void mrta_vc::SystemRobotInterfaceNode::publishExecuteFeedback()
 {
-	//ROS_INFO("[ROBOT] Publishing Feedback!!!");
+	if (allocation_.isFinished())
+	{
+		return;
+	}
 	mrta_vc::ExecuteFeedback feedback;
 	feedback.allocation = allocation_.toMsg();
 	execute_action_srv_.publishFeedback(feedback);
@@ -165,8 +169,7 @@ void mrta_vc::SystemRobotInterfaceNode::publishExecuteFeedback()
  * this server to receive a new goal allocation
  */
 void mrta_vc::SystemRobotInterfaceNode::publishExecuteResult(std::string message)
-{
-	ROS_INFO("[ROBOT] Publishing Result!!!");
+{	
 	mrta_vc::ExecuteResult result;
 	result.allocation = allocation_.toMsg();
 	result.message = message;

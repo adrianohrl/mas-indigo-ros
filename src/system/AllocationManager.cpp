@@ -368,6 +368,7 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::transfer(unifei::ex
  */
 void unifei::expertinos::mrta_vc::system::AllocationManager::transfer(unifei::expertinos::mrta_vc::agents::Robot robot)
 {
+	ROS_WARN("[TRANSFERING] robot: %s", robot.getHostname().c_str());
 	if (isAvailable(robot))
 	{
 		available_robots_.remove(robot);
@@ -385,6 +386,7 @@ void unifei::expertinos::mrta_vc::system::AllocationManager::transfer(unifei::ex
  */
 void unifei::expertinos::mrta_vc::system::AllocationManager::transfer(std::vector<unifei::expertinos::mrta_vc::agents::Robot> robots)
 {
+	ROS_ERROR("[TRANSFERING] robots");
 	for (int i = 0; i < robots.size(); i++)
 	{
 		unifei::expertinos::mrta_vc::agents::Robot robot = robots.at(i);
