@@ -175,7 +175,7 @@ void mrta_vc::SystemManagerNode::allocationActiveCallback()
 void mrta_vc::SystemManagerNode::allocationFeedbackCallback(const mrta_vc::ExecuteFeedback::ConstPtr& feedback)
 {
 	unifei::expertinos::mrta_vc::tasks::Allocation allocation(feedback->allocation);
-	ROS_INFO("%s allocation state: %s", allocation.getTask().getName().c_str(), unifei::expertinos::mrta_vc::tasks::AllocationStates::toString(allocation.getState()).c_str());
+	//ROS_INFO("%s allocation state: %s", allocation.getTask().getName().c_str(), unifei::expertinos::mrta_vc::tasks::AllocationStates::toString(allocation.getState()).c_str());
 	unifei::expertinos::mrta_vc::system::AllocationManager::updateAllocations(allocation);
 }
 

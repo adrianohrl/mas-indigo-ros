@@ -60,16 +60,67 @@ generate_messages(
 	)
 
 catkin_package(
-	CATKIN_DEPENDS 
-	actionlib_msgs
-	message_runtime
+	INCLUDE_DIRS include
+	LIBRARIES mrta_vc_lib
+	CATKIN_DEPENDS actionlib_msgs message_runtime
 	)
 
 include_directories(
-	include 
+	include
 	${catkin_INCLUDE_DIRS}
 	${Boost_INCLUDE_DIRS}
 	)
+
+#add_library(mrta_vc_lib
+#	src/agents/Agent.cpp
+#	src/agents/Computer.cpp
+#	src/agents/HierarchyLevels.cpp
+#	src/agents/Person.cpp
+#	src/agents/Robot.cpp
+#	src/agents/User.cpp
+#	src/places/Building.cpp
+#	src/places/Campus.cpp
+#	src/places/Desk.cpp
+#	src/places/ExternalArea.cpp
+#	src/places/Floor.cpp
+#	src/places/Location.cpp
+#	src/places/Office.cpp
+#	src/places/Place.cpp
+#	src/state_machine/AbstractState.cpp
+#	src/state_machine/MachineController.cpp
+#	src/state_machine/PersonVerificationState.cpp
+#	src/state_machine/S0InitialState.cpp
+#	src/state_machine/S1TaskVerificationState.cpp
+#	src/state_machine/S2TaskVerificationState.cpp
+#	src/state_machine/S3TaskVerificationState.cpp
+#	src/state_machine/S4SenderVerificationState.cpp
+#	src/state_machine/S5SenderVerificationState.cpp
+#	src/state_machine/S6ReceiverVerificationState.cpp
+#	src/state_machine/S7PriorityVerificationState.cpp
+#	src/state_machine/S8DeadlineVerificationState.cpp
+#	src/state_machine/S9FinalState.cpp
+#	src/state_machine/SenderVerificationState.cpp
+#	src/state_machine/TaskVerificationState.cpp
+#	src/system/AllocationManager.cpp
+#	src/system/DatabaseInterface.cpp
+#	src/system/EntityTypes.cpp
+#	src/tasks/Allocation.cpp
+#	src/tasks/AllocationStates.cpp
+#	src/tasks/Resource.cpp
+#	src/tasks/Skill.cpp
+#	src/tasks/SkillLevels.cpp
+#	src/tasks/Task.cpp
+#	src/tasks/TaskPriorities.cpp
+#	src/tasks/TaskSatisfactions.cpp
+#	src/utilities/MathManipulator.cpp
+#	src/utilities/StringManipulator.cpp
+#	src/utilities/TimeManipulator.cpp
+#	)
+
+#add_dependencies(mrta_vc_lib
+#	${${PROJECT_NAME}_EXPORTED_TARGETS}
+#	${catkin_EXPORTED_TARGETS}
+#	)
 
 add_executable(system_manager_node 
 	src/system_manager_node.cpp
@@ -130,8 +181,8 @@ add_executable(system_manager_node
 	)
 
 add_dependencies(system_manager_node 
-	mrta_vc_gen_cpp
-	${mrta_vc_EXPORTED_TARGETS}
+	${PROJECT_NAME}_gen_cpp
+	${${PROJECT_NAME}_EXPORTED_TARGETS}
 	)
 
 target_link_libraries(system_manager_node
@@ -181,8 +232,8 @@ add_executable(system_user_interface_node
 	)
 
 add_dependencies(system_user_interface_node 
-	mrta_vc_gen_cpp
-	${mrta_vc_EXPORTED_TARGETS}
+	${PROJECT_NAME}_gen_cpp
+	${${PROJECT_NAME}_EXPORTED_TARGETS}
 	)
 
 target_link_libraries(system_user_interface_node
@@ -232,8 +283,8 @@ add_executable(system_robot_interface_node
 	)
 
 add_dependencies(system_robot_interface_node 
-	mrta_vc_gen_cpp
-	${mrta_vc_EXPORTED_TARGETS}
+	${PROJECT_NAME}_gen_cpp
+	${${PROJECT_NAME}_EXPORTED_TARGETS}
 	)
 
 target_link_libraries(system_robot_interface_node
@@ -301,8 +352,8 @@ add_executable(system_database_interface_node
 	)
 
 add_dependencies(system_database_interface_node 
-	mrta_vc_gen_cpp
-	${mrta_vc_EXPORTED_TARGETS}
+	${PROJECT_NAME}_gen_cpp
+	${${PROJECT_NAME}_EXPORTED_TARGETS}
 	)
 
 target_link_libraries(system_database_interface_node
@@ -378,8 +429,8 @@ add_executable(task_builder_node
 	)
 
 add_dependencies(task_builder_node 
-	mrta_vc_gen_cpp
-	${mrta_vc_EXPORTED_TARGETS}
+	${PROJECT_NAME}_gen_cpp
+	${${PROJECT_NAME}_EXPORTED_TARGETS}
 	)
 
 target_link_libraries(task_builder_node
@@ -398,9 +449,9 @@ add_executable(speech_analyser_node
 	src/utilities/MathManipulator.cpp
 	)
 
-add_dependencies(speech_analyser_node 
-	mrta_vc_gen_cpp
-	${mrta_vc_EXPORTED_TARGETS}
+add_dependencies(speech_analyser_node
+	${PROJECT_NAME}_gen_cpp
+	${${PROJECT_NAME}_EXPORTED_TARGETS}
 	)
 
 target_link_libraries(speech_analyser_node

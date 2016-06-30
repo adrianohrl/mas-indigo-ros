@@ -63,7 +63,7 @@ void mrta_vc::SystemRobotInterfaceNode::beaconTimerCallback(const ros::TimerEven
  */
 void mrta_vc::SystemRobotInterfaceNode::taskEndTimerCallback(const ros::TimerEvent& event)
 {
-	ROS_INFO("task end cb!!!");
+	//ROS_INFO("task end cb!!!");
 	if (isBusy())
 	{
 		allocation_.end();
