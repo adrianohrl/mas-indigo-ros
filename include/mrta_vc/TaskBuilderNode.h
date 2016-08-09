@@ -15,11 +15,11 @@
 #include <ros/ros.h>
 #include <std_srvs/Empty.h>
 #include <std_msgs/String.h>
+#include <mrta_vc/state_machine/MachineController.h> /* libmas */
+#include <unifei/expertinos/mrta_vc/tasks/Task.h> /* libmas */
 #include "mrta_vc/GetPerson.h"
 #include "mrta_vc/GetUser.h"
 #include "mrta_vc/SetUser.h"
-#include "mrta_vc/state_machine/MachineController.h"
-#include "unifei/expertinos/mrta_vc/tasks/Task.h"
 
 namespace mrta_vc 
 {

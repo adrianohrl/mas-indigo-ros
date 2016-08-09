@@ -1,0 +1,5 @@
+extends: mrta_vc/Agent
+string hostname
+bool mobile				
+
+

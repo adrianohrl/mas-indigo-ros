@@ -13,11 +13,11 @@
 
 #include <ros/ros.h>
 #include <std_msgs/String.h>
+#include <unifei/expertinos/mrta_vc/agents/User.h> /* libmas */
+#include <unifei/expertinos/mrta_vc/tasks/Allocation.h> /* libmas */
 #include "mrta_vc/GetComputer.h"
 #include "mrta_vc/SetUser.h"
 #include "mrta_vc/ValidatePassword.h"
-#include "unifei/expertinos/mrta_vc/agents/User.h"
-#include "unifei/expertinos/mrta_vc/tasks/Allocation.h"
 
 namespace mrta_vc 
 {

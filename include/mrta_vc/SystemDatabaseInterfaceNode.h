@@ -13,6 +13,8 @@
 #define SYSTEM_DATABASE_INTERFACE_NODE_H_
 
 #include <ros/ros.h>
+#include <unifei/expertinos/mrta_vc/system/DatabaseInterface.h> /* libmas */
+#include <unifei/expertinos/mrta_vc/system/EntityTypes.h> /* libmas */
 #include "mrta_vc/GenerateNewId.h"
 #include "mrta_vc/GetComputer.h"
 #include "mrta_vc/GetPerson.h"
@@ -20,8 +22,6 @@
 #include "mrta_vc/GetTask.h"
 #include "mrta_vc/GetUser.h"
 #include "mrta_vc/ValidatePassword.h"
-#include "unifei/expertinos/mrta_vc/system/DatabaseInterface.h"
-#include "unifei/expertinos/mrta_vc/system/EntityTypes.h"
 
 namespace mrta_vc 
 {

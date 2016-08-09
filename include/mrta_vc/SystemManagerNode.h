@@ -12,7 +12,7 @@
 #define SYSTEM_MANAGER_NODE_H_
 
 #include <ros/ros.h>
-#include "unifei/expertinos/mrta_vc/system/AllocationManager.h"
+#include <unifei/expertinos/mrta_vc/system/AllocationManager.h> /* libmas */
 #include "mrta_vc/Allocation.h"
 #include "mrta_vc/ManagerState.h"
 #include "mrta_vc/ExecuteAction.h"

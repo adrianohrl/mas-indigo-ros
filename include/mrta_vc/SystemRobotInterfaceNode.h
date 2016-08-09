@@ -13,11 +13,11 @@
 
 #include <sstream>
 #include <ros/ros.h>
+#include <unifei/expertinos/mrta_vc/agents/Robot.h> /* libmas */
+#include <unifei/expertinos/mrta_vc/tasks/Allocation.h> /* libmas */
 #include <actionlib/server/simple_action_server.h>
 #include "mrta_vc/ExecuteAction.h"
 #include "mrta_vc/FinishAllocation.h"
-#include "unifei/expertinos/mrta_vc/agents/Robot.h"
-#include "unifei/expertinos/mrta_vc/tasks/Allocation.h"
 
 #define ALLOCATION_INTERVAL_DURATION 5
 
