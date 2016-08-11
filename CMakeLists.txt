@@ -3,7 +3,6 @@ project(mrta_vc)
 
 set(ROS_BUILD_TYPE Debug)
 set(CMAKE_BUILD_TYPE Debug)
-set(libmas ~/libmas-1.0)
 
 find_package(catkin REQUIRED COMPONENTS
 	actionlib
@@ -20,6 +19,10 @@ find_package(catkin REQUIRED COMPONENTS
 find_package(Boost REQUIRED COMPONENTS
 	system
 )
+
+set(libmas_VERSION 1.0.0)
+set(libmas_DIR ~/libmas-${libmas_VERSION}/release)
+find_package(libmas ${libmas_VERSION} REQUIRED EXACT)
 
 add_action_files(DIRECTORY action
 	FILES
@@ -62,7 +65,6 @@ generate_messages(
 
 catkin_package(
 	INCLUDE_DIRS include
-	LIBRARIES mrta_vc_lib
 	CATKIN_DEPENDS actionlib_msgs message_runtime
 )
 
@@ -70,13 +72,11 @@ include_directories(
 	include
 	${catkin_INCLUDE_DIRS}
 	${Boost_INCLUDE_DIRS}
-	${libmas}/release/bin
-	${libmas}
+	${libmas_INCLUDE_DIRS}
 )
 
 link_directories(
-	${libmas}/release/bin
-	${libmas}
+	${libmas_INCLUDE_DIRS}
 )
 
 add_executable(system_manager_node 
@@ -92,7 +92,7 @@ add_dependencies(system_manager_node
 
 target_link_libraries(system_manager_node
 	${catkin_LIBRARIES}
-	libmas
+	${libmas_LIBRARIES}
 )
 
 add_executable(system_user_interface_node 
@@ -108,7 +108,7 @@ add_dependencies(system_user_interface_node
 
 target_link_libraries(system_user_interface_node
 	${catkin_LIBRARIES}
-	libmas
+	${libmas_LIBRARIES}
 )
 
 add_executable(system_robot_interface_node 
@@ -124,7 +124,7 @@ add_dependencies(system_robot_interface_node
 
 target_link_libraries(system_robot_interface_node
 	${catkin_LIBRARIES}
-	libmas
+	${libmas_LIBRARIES}
 )
 
 add_executable(system_database_interface_node 
@@ -140,7 +140,7 @@ add_dependencies(system_database_interface_node
 
 target_link_libraries(system_database_interface_node
 	${catkin_LIBRARIES}
-	libmas
+	${libmas_LIBRARIES}
 )
 
 add_executable(task_builder_node 
@@ -156,7 +156,7 @@ add_dependencies(task_builder_node
 
 target_link_libraries(task_builder_node
 	${catkin_LIBRARIES}
-	libmas
+	${libmas_LIBRARIES}
 )
 
 add_executable(speech_analyser_node 
@@ -172,7 +172,7 @@ add_dependencies(speech_analyser_node
 
 target_link_libraries(speech_analyser_node
 	${catkin_LIBRARIES}
-	libmas
+	${libmas_LIBRARIES}
 )
 
 ########################
