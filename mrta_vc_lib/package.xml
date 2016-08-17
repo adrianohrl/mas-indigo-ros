@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package>
+	<name>mrta_vc_lib</name>
+	<version>1.1.0</version>
+	<description>The modular Multi-Agent System ROS library</description>
+	<author email="adrianohrl@unifei.edu.br">Adriano Henrique Rossette Leite</author>
+	<maintainer email="expertinos.unifei@gmail.com">Expertinos UNIFEI</maintainer>
+	<license>BSD</license>
+
+	<buildtool_depend>catkin</buildtool_depend>
+	
+	<build_depend>geometry_msgs</build_depend>
+	<build_depend>mrta_vc</build_depend>
+  	<build_depend>nav_msgs</build_depend>
+	<build_depend>roscpp</build_depend>
+	<build_depend>std_msgs</build_depend>
+	<build_depend>std_srvs</build_depend>
+	
+	<run_depend>geometry_msgs</run_depend>
+	<run_depend>mrta_vc</run_depend>
+	<run_depend>roscpp</run_depend>
+  	<run_depend>nav_msgs</run_depend>
+	<run_depend>roscpp</run_depend>
+	<run_depend>std_msgs</run_depend>
+	<run_depend>std_srvs</run_depend>
+
+</package>

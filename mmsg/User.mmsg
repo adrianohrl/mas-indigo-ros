@@ -1,3 +1,0 @@
-extends: mrta_vc/Person
-string login_name			# Only users use this parameter.
-mrta_vc/Computer computer
