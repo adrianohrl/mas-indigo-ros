@@ -13,6 +13,7 @@
 	<run_depend>mas_lib</run_depend>
 	<run_depend>mas_msgs</run_depend>
 	<run_depend>mas_srvs</run_depend>
+	<run_depend>mrs</run_depend>
 
 	<export>
 		<metapackage/>
