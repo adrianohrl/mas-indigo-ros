@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+	<group ns="master">
+		<node name="system_database_interface_node" pkg="mas_database" type="system_database_interface_node" output="screen">
+		</node>
+	</group>
+</launch>

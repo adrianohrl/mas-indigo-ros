@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+	<include file="$(find mrta)/launch/debug_master.launch"/>
+	<include file="$(find mas_agents)/launch/vc_adrianohrl.launch"/>
+	<include file="$(find mas_agents)/launch/vc_luis.launch"/>
+	<include file="$(find mrs_agents)/launch/robotino1.launch"/>
+</launch>

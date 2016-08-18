@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="_name" default="adrianohrl"/>
+	<arg name="_computer_yaml" default="$(find mas_agents)/config/adrianohrl_pc.yaml"/>
+	<arg name="_mic_name" default="alsa_input.pci-0000_00_1b.0.analog-stereo"/>
+	<group ns="$(arg _name)">
+		<node name="system_user_interface_node" pkg="mas_agents" type="system_user_interface_node" output="screen">
+			<rosparam file="$(arg _computer_yaml)" command="load"/>
+		</node>
+	</group>
+	<include file="$(find mas_task_builder)/launch/task_builder.launch">
+		<arg name="_name" value="$(arg _name)"/>
+	</include>
+	<include file="$(find speech_analyser)/launch/speech_analyser.launch">
+		<arg name="_name" value="$(arg _name)"/>
+		<arg name="_mic_name" value="$(arg _mic_name)"/>
+	</include>
+</launch>

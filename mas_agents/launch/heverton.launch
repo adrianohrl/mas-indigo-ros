@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="_name" default="heverton"/>
+	<arg name="_computer_yaml" default="$(find mas_agents)/config/heverton_pc.yaml"/>
+	<include file="$(find mas_agents)/launch/user.launch">
+		<arg name="_name" value="$(arg _name)"/>
+		<arg name="_computer_yaml" value="$(arg _computer_yaml)"/>
+	</include>	
+</launch>

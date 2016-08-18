@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="_name" default="robotino2"/>
+	<arg name="_robot_yaml" default="$(find mrs_agents)/config/robotino2.yaml"/>
+	<include file="$(find mrs_agents)/launch/robot.launch">
+		<arg name="_name" value="$(arg _name)"/>
+		<arg name="_robot_yaml" value="$(arg _robot_yaml)"/>
+	</include>	
+	<!--<arg name="_port" default="192.168.0.171:12080"/>
+	<group ns="$(arg _name)">
+		<include file="$(find robotino_node)/launch/robotino_node.launch">
+			<arg name="hostname" value="$(arg _port)"/>
+		</include>	
+		<include file="$(find robotino_navigation)/launch/navigation.launch">
+			<arg name="lro" value="$(find mrs_agents)/map/lro.yaml"/>
+		</include>	
+	</group>-->
+</launch>

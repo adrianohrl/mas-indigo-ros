@@ -10,6 +10,7 @@
 	<buildtool_depend>catkin</buildtool_depend>
 
 	<run_depend>mrs_actions</run_depend>
+	<run_depend>mrs_agents</run_depend>
 	<run_depend>mrs_msgs</run_depend>
 	<run_depend>mrs_srvs</run_depend>
 	<run_depend>mrta</run_depend>

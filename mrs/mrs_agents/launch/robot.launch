@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="_name" default="p3_dx"/>
+	<arg name="_robot_yaml" default="$(find mrs_agents)/config/p3_dx.yaml"/>
+	<group ns="$(arg _name)">
+		<node name="system_robot_interface_node" pkg="mrs_agents" type="system_robot_interface_node" output="screen">
+			<rosparam file="$(arg _robot_yaml)" command="load"/>
+		</node>
+	</group>l
+</launch>

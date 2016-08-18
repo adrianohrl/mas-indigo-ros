@@ -2,11 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 
 project(mrs_srvs)
 
-find_package(catkin REQUIRED 
-	COMPONENTS mrs_msgs
-		message_generation
-		std_msgs
-)
+find_package(catkin REQUIRED COMPONENTS mrs_msgs message_generation std_msgs)
 
 add_service_files(
 	DIRECTORY srv

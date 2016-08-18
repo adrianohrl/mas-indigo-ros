@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
 	<name>mas</name>
-	<version>1.2.1</version>
+	<version>1.2.3</version>
 	<description>The Multi-Agent System metapackage</description>
 	<author email="adrianohrl@gmail.com">Adriano Henrique Rossette Leite</author>
 	<maintainer email="expertinos.unifei@gmail.com">Expertinos UNIFEI</maintainer>
@@ -10,9 +10,12 @@
 	<buildtool_depend>catkin</buildtool_depend>
 
 	<run_depend>mas_actions</run_depend>
+	<run_depend>mas_agetns</run_depend>
+	<run_depend>mas_database</run_depend>
 	<run_depend>mas_lib</run_depend>
 	<run_depend>mas_msgs</run_depend>
 	<run_depend>mas_srvs</run_depend>
+	<run_depend>mas_task_builder</run_depend>
 	<run_depend>mrs</run_depend>
 
 	<export>
