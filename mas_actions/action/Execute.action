@@ -1,0 +1,11 @@
+## ------------------ goal definition ------------------ ##
+mas_msgs/Allocation allocation
+
+---
+## ----------------- result definition ----------------- ##
+mas_msgs/Allocation allocation
+string message
+
+---
+## ---------------- feedback definition ---------------- ##
+mas_msgs/Allocation allocation

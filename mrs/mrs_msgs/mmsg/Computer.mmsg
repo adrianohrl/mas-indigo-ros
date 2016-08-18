@@ -1,0 +1,5 @@
+extends: mrs_msgs/Agent
+string hostname
+bool mobile				
+
+

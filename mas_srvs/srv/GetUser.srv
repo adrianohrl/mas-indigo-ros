@@ -1,0 +1,11 @@
+string name
+
+---
+
+bool valid					# true if input name is a registered user, otherwise it is false
+string message
+mas_msgs/Agent user				# when user is valid
+bool logged					# true if this user is logged, otherwise it is false
+
+
+

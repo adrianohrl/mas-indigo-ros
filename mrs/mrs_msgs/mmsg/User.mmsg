@@ -1,0 +1,3 @@
+extends: mrs_msgs/Person
+string login_name			# Only users use this parameter.
+mrs_msgs/Computer computer

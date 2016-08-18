@@ -1,7 +1,0 @@
-string name
-
----
-
-bool valid					# true if input name is a registered task, otherwise it is false
-string message
-mrta_vc/Task task			# when task is valid

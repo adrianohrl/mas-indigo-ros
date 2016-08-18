@@ -1,0 +1,14 @@
+uint8 type
+
+---
+
+uint32 id
+
+# Entity Types:
+#
+# 0 -> Agent
+# 1 -> Allocation
+# 2 -> Place
+# 3 -> Resource
+# 4 -> Skill
+# 5 -> Task

@@ -1,0 +1,10 @@
+string hostname
+
+---
+
+bool valid					# true if input hostname is a registered computer (not a robot), otherwise it is false
+string message
+mrs_msgs/Agent computer			# when computer is valid
+
+
+

@@ -1,4 +1,4 @@
-mrta-vc-ros-pkg
+mas-ros-indigo
 ============
 
 This repository contains Expertinos' ROS package (for ROS Indigo Distro) that were developed to an office multi robot task allocation problem by voice command.
