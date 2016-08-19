@@ -1,7 +1,7 @@
 /**
  *  StringManipulator.cpp
  *
- *  Version: 1.2.2
+ *  Version: 1.2.4
  *  Created on: 16/05/2016
  *  Modified on: 17/08/2016
  *  Authors: Adriano Henrique Rossette Leite (adrianohrl@gmail.com)
@@ -9,19 +9,24 @@
  *  Maintainer: Expertinos UNIFEI (expertinos.unifei@gmail.com)
  */
 
-#include "unifei/expertinos/utilities/StringManipulator.h"
+#include "utilities/StringManipulator.h"
 
-/**
- *
- */
-std::vector<std::string> unifei::expertinos::utilities::StringManipulator::split(std::string str, char delimiter)
+namespace utilities
 {
-	std::vector<std::string> internal;
-	std::stringstream ss(str);
-	std::string tok;
-	while(std::getline(ss, tok, delimiter))
+	
+	/**
+	 *
+	 */
+	std::vector<std::string> StringManipulator::split(std::string str, char delimiter)
 	{
-		internal.push_back(tok);
+		std::vector<std::string> internal;
+		std::stringstream ss(str);
+		std::string tok;
+		while(std::getline(ss, tok, delimiter))
+		{
+			internal.push_back(tok);
+		}
+		return internal;
 	}
-	return internal;
+	
 }
