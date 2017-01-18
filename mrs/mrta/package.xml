@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
 	<name>mrta</name>
-	<version>1.2.3</version>
+        <version>1.4.0</version>
 	<description>The Multi-Robot Task Allocation package</description>
 	<author email="adrianohrl@unifei.edu.br">Adriano Henrique Rossette Leite</author>
 	<maintainer email="expertinos.unifei@gmail.com">Expertinos UNIFEI</maintainer>
@@ -11,7 +11,7 @@
 	
 	<build_depend>actionlib</build_depend>
 	<build_depend>mas_actions</build_depend>
-	<build_depend>mas_lib</build_depend>
+        <build_depend>mas</build_depend>
 	<build_depend>mas_msgs</build_depend>
 	<build_depend>mas_srvs</build_depend>
 	<build_depend>roscpp</build_depend>
@@ -20,7 +20,7 @@
 
 	<run_depend>actionlib</run_depend>
 	<run_depend>mas_actions</run_depend>
-	<run_depend>mas_lib</run_depend>
+        <run_depend>mas</run_depend>
 	<run_depend>mas_msgs</run_depend>
 	<run_depend>mas_srvs</run_depend>
 	<run_depend>roscpp</run_depend>

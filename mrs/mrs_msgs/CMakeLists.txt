@@ -8,6 +8,7 @@ add_message_files(
 	DIRECTORY msg
 	FILES Agent.msg
 		Allocation.msg
+		Capability.msg
 		Computer.msg
 		Location.msg
 		ManagerState.msg

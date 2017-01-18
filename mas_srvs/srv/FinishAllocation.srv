@@ -5,7 +5,6 @@ uint8 state
 bool valid
 string message
 
-
 # state:
 # 3 -> SUCCEEDED
 # 4 -> ABORTED

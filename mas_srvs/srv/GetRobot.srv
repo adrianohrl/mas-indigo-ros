@@ -6,6 +6,3 @@ bool valid					# true if input hostname is a registered robot, otherwise it is f
 string message
 mas_msgs/Agent robot				# when robot is valid
 bool logged					# true if this robot is logged, otherwise it is false
-
-
-

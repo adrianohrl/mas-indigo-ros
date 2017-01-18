@@ -3,7 +3,7 @@
 	<arg name="_name" default="adrianohrl"/>
 	<arg name="_computer_yaml" default="$(find mas_agents)/config/adrianohrl_pc.yaml"/>
 	<group ns="$(arg _name)">
-		<node name="system_user_interface_node" pkg="mas_agents" type="system_user_interface_node" output="screen">
+                <node name="system_user_interface_node" pkg="mas_agents" type="system_user_interface_node" output="screen">
 			<rosparam file="$(arg _computer_yaml)" command="load"/>
 		</node>
 	</group>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
 	<name>mrs</name>
-	<version>1.2.2</version>
+        <version>1.2.3</version>
 	<description>The Multi-Robot System metapackage</description>
 	<author email="adrianohrl@gmail.com">Adriano Henrique Rossette Leite</author>
 	<maintainer email="expertinos.unifei@gmail.com">Expertinos UNIFEI</maintainer>
@@ -11,6 +11,7 @@
 
 	<run_depend>mrs_actions</run_depend>
 	<run_depend>mrs_agents</run_depend>
+        <run_depend>mrs_launches</run_depend>
 	<run_depend>mrs_msgs</run_depend>
 	<run_depend>mrs_srvs</run_depend>
 	<run_depend>mrta</run_depend>

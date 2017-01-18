@@ -1,7 +1,7 @@
 uint32 id
 string name
 string description
-mas_msgs/Skill[] desired_skills
+mas_msgs/Skill[] skills
 mas_msgs/Agent user
 mas_msgs/Agent sender
 mas_msgs/Agent receiver

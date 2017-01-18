@@ -1,5 +1,0 @@
-extends: mas_msgs/Agent
-string hostname
-bool mobile				
-
-

@@ -12,8 +12,7 @@ add_service_files(
 		GetRobot.srv
 		GetTask.srv
 		GetUser.srv
-		FinishAllocation.srv
-		SetUser.srv
+                FinishAllocation.srv
 		ValidatePassword.srv
 )
 
